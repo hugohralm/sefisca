@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:define name="corpo">
+
+		<p:panel id="panelUsuario" header="Dados do usuário">
+			<a:field label="CPF">
+				<p:inputMask readonly="true"
+					style="background-color:#E0E0E0;width:180px;" mask="999.999.999-99"
+					value="#{UsuarioControl.usuario.pessoaFisica.cpf}" />
+			</a:field>
+
+			<a:field label="Data de nascimento" spaceLeft="10px">
+				<p:inputMask styleClass="obrigatorio"
+					value="#{UsuarioControl.usuario.pessoaFisica.dataNascimento }"
+					style="width:188px;" mask="99/99/9999">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="Nome">
+				<p:inputText styleClass="obrigatorio"
+					value="#{UsuarioControl.usuario.pessoaFisica.nome}"
+					style="width:600px;" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="E-mail">
+				<p:inputText styleClass="obrigatorio"
+					value="#{UsuarioControl.usuario.pessoaFisica.email}"
+					style="width:340px;" />
+			</a:field>
+
+			<a:field label="Telefone" spaceLeft="10px">
+				<p:inputText styleClass="obrigatorio"
+					onkeydown="mascaraTelefone(this);"
+					value="#{UsuarioControl.usuario.pessoaFisica.telefone}"
+					style="width:110px;" />
+			</a:field>
+
+			<a:field label="Celular" spaceLeft="10px">
+				<p:inputText styleClass="obrigatorio"
+					onkeydown="mascaraTelefone(this);"
+					value="#{UsuarioControl.usuario.pessoaFisica.celular}"
+					style="width:128px;" />
+			</a:field>
+
+			<a:newLine />
+			<a:field label="Sexo">
+				<p:selectOneMenu style="width:150px;" styleClass="obrigatorio"
+					value="#{UsuarioControl.usuario.pessoaFisica.sexo}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{UsuarioControl.sexos}" />
+				</p:selectOneMenu>
+			</a:field>
+
+			<a:field label="Estado civil" spaceLeft="10px">
+				<p:selectOneMenu style="width:165px;" styleClass="obrigatorio"
+					autoWidth="false"
+					value="#{UsuarioControl.usuario.pessoaFisica.estadoCivil}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{UsuarioControl.estadosCivis}" />
+				</p:selectOneMenu>
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="CEP">
+				<p:inputMask styleClass="obrigatorio" mask="99.999-999"
+					value="#{UsuarioControl.usuario.pessoaFisica.endereco.cep }"
+					style="width:110px;" />
+			</a:field>
+			<a:field>
+				<p:commandButton title="Clique aqui para pesquisar o cep"
+					icon="ui-icon-search" ajax="false"
+					actionListener="#{UsuarioControl.consultarCep}"
+					update="opEnderecoEmpreendedor" />
+			</a:field>
+
+			<a:field label="Endereço" spaceLeft="10px;">
+				<p:inputText styleClass="obrigatorio"
+					value="#{UsuarioControl.usuario.pessoaFisica.endereco.endereco}"
+					style="width:435px;" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="Estado">
+				<p:selectOneMenu id="estado" styleClass="obrigatorio"
+					value="#{UsuarioControl.uf}" style="width:180px;">
+					<f:selectItems value="#{UsuarioControl.ufs }" />
+					<p:ajax event="change"
+						listener="#{UsuarioControl.listarMunicipiosPorUfs}"
+						update="estado cidade" />
+				</p:selectOneMenu>
+			</a:field>
+
+			<a:field label="Município" spaceLeft="10px">
+				<p:selectOneMenu id="cidade" styleClass="obrigatorio"
+					converter="objectConverter"
+					value="#{UsuarioControl.usuario.pessoaFisica.endereco.municipio}"
+					style="width:410px" filter="true" filterFunction="filtrarSemAcento"
+					filterMatchMode="custom">
+					<f:selectItem itemLabel="Selecione o município" itemValue="#{null}"
+						noSelectionOption="true" />
+					<f:selectItems value="#{UsuarioControl.municipios}" var="cidade"
+						itemLabel="#{cidade.descricao}" itemValue="#{cidade}" />
+				</p:selectOneMenu>
+			</a:field>
+
+			<a:newLine />
+
+			<a:field>
+				<p:commandButton actionListener="#{UsuarioControl.confirmar}"
+					value="Salvar" ajax="false" icon="ui-icon-disk" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton id="btnAlterarSenha" icon="ui-icon-refresh"
+					onclick="PF('dialogAlterarSenha').show();" value="Alterar Senha" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+		</p:panel>
+
+		<p:dialog id="dialogAlterarSenha" header="Alteração de Senha"
+			widgetVar="dialogAlterarSenha" maximizable="true" dynamic="true"
+			modal="true" hideEffect="explode">
+			<a:field label="Informe a senha atual">
+				<p:password styleClass="obrigatorio"
+					value="#{UsuarioControl.confirmarSenha}" id="snh"
+					style="width:200px" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="Informe uma nova senha">
+				<p:password styleClass="obrigatorio" minLength="6"
+					value="#{UsuarioControl.senha1}" promptLabel="Digite a senha"
+					goodLabel="Senha boa" strongLabel="Senha forte"
+					weakLabel="Senha Fraca" style="width:200px" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="Reinforme a nova senha">
+				<p:password styleClass="obrigatorio" minLength="6"
+					value="#{UsuarioControl.senha2}" style="width:200px" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field>
+				<p:commandButton value="Alterar Senha"
+					action="#{UsuarioControl.alterarSenha}" ajax="false"
+					icon="ui-icon-refresh"
+					oncomplete="PF('dialogAlterarSenha').close();" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton id="btnCancelarTransf" icon="ui-icon-circle-close"
+					onclick="PF('dialogAlterarSenha').close();" value="Cancelar" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+		</p:dialog>
+	</ui:define>
+</ui:composition>

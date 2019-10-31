@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel widgetVar="panel" id="horizontal"
+			header="Pesquisar municípios cadastrados" toggleable="true"
+			toggleOrientation="horizontal">
+
+			<a:field label="Descrição">
+				<p:inputText value="#{MunicipioListControl.descricaoMunicipio}"
+					style="width:350px;" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton actionListener="#{MunicipioListControl.listar}"
+					value="Pesquisar" ajax="false" icon="ui-icon ui-icon-search"
+					update="tblMunicipios" />
+			</a:field>
+			<a:field spaceLeft="10px">
+				<p:commandButton value="Imprimir"
+					actionListener="#{MunicipioListControl.imprimirMunicipio}"
+					ajax="false" icon="ui-icon ui-icon-print" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton value="Limpar"
+					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+					action="municipioList?faces-redirect=true"
+					icon="ui-icon ui-icon-trash" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+
+		</p:panel>
+		<p:dataTable id="tblMunicipios"
+			value="#{MunicipioListControl.municipios }" var="municipio"
+			emptyMessage="Sem registros" paginatorAlwaysVisible="false"
+			paginator="true" rows="30">
+			<f:facet name="header">
+				<h:outputText value="Municípios cadastradas" />
+			</f:facet>
+			<p:column headerText="Código IBGE" style="width:100px">
+				<p:outputLabel value="#{municipio.codigoIbge }" />
+			</p:column>
+			<p:column headerText="Descrição">
+				<p:outputLabel value="#{municipio.descricao }" />
+			</p:column>
+			<p:column headerText="UF" style="width:50px;text-align: center;">
+				<p:outputLabel value="#{municipio.uf }" />
+			</p:column>
+			<p:column headerText="Valor" style="width:100px;text-align:center">
+				<p:outputLabel value="#{municipio.valor}" />
+			</p:column>
+
+
+			<p:column headerText="Editar" style="width:80px;text-align: center;">
+				<p:commandButton id="btnEditar" icon="ui-icon-pencil"
+					action="municipio?faces-redirect=true"
+					actionListener="#{MenuControl.gerenciarSessao}">
+					<f:setPropertyActionListener value="#{municipio}"
+						target="#{MunicipioControl.municipio}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>

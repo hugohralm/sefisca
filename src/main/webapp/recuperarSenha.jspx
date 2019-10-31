@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="templateExterna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel header="Recuperação de Senha" id="panelRecuperarSenha">
+
+			<p:outputLabel
+				value="Preencha os campos abaixo e clique no botão Recuperar senha." />
+
+			<a:newLine />
+			<a:newLine />
+
+			<a:field label="CPF">
+				<p:inputMask styleClass="obrigatorio" mask="999.999.999-99"
+					value="#{RecuperarSenhaControl.cpf }" style=" width:200px;" />
+			</a:field>
+
+			<a:field label="E-mail" spaceLeft="20px;">
+				<p:inputText styleClass="obrigatorio"
+					value="#{RecuperarSenhaControl.email }" style=" width:480px;" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field>
+				<p:commandButton value="Recuperar senha"
+					icon="ui-icon-arrowrefresh-1-w"
+					actionListener="#{RecuperarSenhaControl.recuperarSenha }"
+					update="panelRecuperarSenha" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton value="Pagina inicial"
+					onclick="document.location.href='sair.jsp'" immediate="true"
+					icon="ui-icon-home" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+
+			<h3 style="color: red">Observações:</h3>
+			<ul style="width: 700px; text-align: justify;">
+				<li>A senha do sistema Sefisca é individual e intransferível e
+					configura a assinatura eletrônica da pessoa física que a cadastrou,
+					podendo ser alterada a qualquer momento pelo seu detentor.</li>
+				<li>Alertamos que caberá exclusivamente ao usuário toda
+					responsabilidade decorrente do uso indevido da senha, que deverá
+					ser guardada em total segurança.</li>
+				<li>Será enviado um e-mail para confirmação desta solicitação.</li>
+				<li>É necessário acessar o link disponível no e-mail de
+					confirmação para que você possa cadastrar uma nova senha.</li>
+				<li>Caso desista da alteração basta ignorar o e-mail enviado.</li>
+			</ul>
+			<a:newLine />
+			<a:newLine />
+		</p:panel>
+	</ui:define>
+</ui:composition>

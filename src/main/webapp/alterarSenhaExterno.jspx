@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="templateExterna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<h:outputText value="#{AlterarSenhaExternoControl.atualizar}" />
+		<p:panel header="Pagina de redefinição de senha" style="align:center"
+			id="panel">
+
+			<p:outputPanel id="opAlterarSenha"
+				rendered="#{!AlterarSenhaExternoControl.alterou}">
+
+				<a:field label="Informe uma nova senha">
+					<p:password styleClass="obrigatorio" minLength="6"
+						value="#{AlterarSenhaExternoControl.senha1}"
+						promptLabel="Digite a senha" goodLabel="Senha boa"
+						strongLabel="Senha forte" weakLabel="Senha Fraca"
+						style="width:200px" />
+				</a:field>
+
+				<a:newLine />
+
+				<a:field label="Confirme a nova senha">
+					<p:password styleClass="obrigatorio" minLength="6"
+						value="#{AlterarSenhaExternoControl.senha2}" style="width:200px" />
+				</a:field>
+
+				<a:newLine />
+
+				<a:field>
+					<p:commandButton value="Alterar"
+						action="#{AlterarSenhaExternoControl.alterarSenha}" ajax="false"
+						icon="ui-icon-refresh" />
+				</a:field>
+
+				<a:newLine />
+				<a:newLine />
+
+			</p:outputPanel>
+
+			<p:outputPanel id="opAlterarSenhaMsg"
+				rendered="#{AlterarSenhaExternoControl.alterou}">
+				<h:outputText value="Prezado(a), " />
+				<b><h:outputText
+						value="#{AlterarSenhaExternoControl.usuario.pessoaFisica.nome }" /></b>
+				<a:newLine />
+				<h:outputLink value="/sefisca/login.jsp" style="color: blue">
+					<h:outputText value="Clique aqui para efetuar o login" />
+				</h:outputLink>
+				<a:newLine />
+				<a:newLine />
+			</p:outputPanel>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

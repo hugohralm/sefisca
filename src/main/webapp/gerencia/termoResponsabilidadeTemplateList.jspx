@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel header="TEMPLATES DO TERMO DE RESPONSABILIDADE DO USUÁRIO"
+			id="panelTermoResponsabilidade">
+
+			<a:field>
+				<p:commandButton value="Adicionar Termo de Responsabilidade"
+					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+					action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
+					icon="ui-icon-plusthick" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+
+			<p:dataTable id="tblTermosResponsabilidade"
+				var="termoResponsabilidade" widgetVar="tblTermosResponsabilidade"
+				value="#{TermoResponsabilidadeTemplateListControl.termosResponsabilidade}"
+				emptyMessage="Sem registros" paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rows="25" rowsPerPageTemplate="25,50,100,150,200">
+
+				<f:facet name="header">
+					TEMPLATES DE TERMOS DE RESPONSABILIDADE ADICIONADOS
+				</f:facet>
+
+				<p:column style="width:100px;text-align:center" headerText="Código">
+					<p:outputLabel value="#{termoResponsabilidade.id}" />
+				</p:column>
+
+				<p:column headerText="Prévia do texto">
+					<p:outputLabel value="#{termoResponsabilidade.previaTexto}" />
+				</p:column>
+
+				<p:column headerText="Data cadastro"
+					style="width:170px;text-align:center">
+					<p:outputLabel value="#{termoResponsabilidade.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</p:outputLabel>
+				</p:column>
+
+
+				<p:column headerText="Usuário responsável">
+					<p:outputLabel value="#{termoResponsabilidade.usuario}" />
+				</p:column>
+
+				<p:column style="width:120px;text-align:center">
+					<p:commandButton
+						action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
+						ajax="false" icon="ui-icon-pencil" value="Editar"
+						title="Clique aqui para editar esse cadastro">
+						<f:setPropertyActionListener
+							target="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade}"
+							value="#{termoResponsabilidade}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<a:newLine />
+			<a:newLine />
+		</p:panel>
+	</ui:define>
+</ui:composition>

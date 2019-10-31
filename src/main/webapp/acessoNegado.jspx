@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	<ui:composition template="template.xhtml">
+		<ui:define name="corpo">
+			<!-- page content -->
+			<p:panel>
+				<div class="container">
+					<div class="col-lg-8 col-lg-offset-2 text-center">
+						<div class="logo">
+							<h1>403</h1>
+						</div>
+						<p class="lead text-muted">Oops, um erro encontrado. Acesso
+							negado!</p>
+						<div class="clearfix"></div>
+						<div class="clearfix"></div>
+						<div class="sr-only"></div>
+						<a:newLine />
+						<div class="col-lg-6 col-lg-offset-3">
+							<div class="btn-group btn-group-justified">
+								<a href="../inicio.ovs" class="btn btn-info">Retornar para a
+									página inicial</a>
+							</div>
+						</div>
+					</div>
+					<!-- /.col-lg-8 col-offset-2 -->
+				</div>
+				<!-- /page content -->
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</jsp:root>

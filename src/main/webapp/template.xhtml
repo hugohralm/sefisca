@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head>
+	<meta http-equiv="refresh"
+		content="#{session.maxInactiveInterval};url=inicio.ovs" />
+	<meta http-equiv="Cache-Control"
+		content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+
+	<meta name="Description" content="Sefisca" />
+	<meta name="Distribution" content="Global" />
+	<meta name="Robots" content="index,follow" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+	<title>Sefisca</title>
+	<link rel="shortcut icon" href="resources/imagens/favicon.ico"
+		type="image/x-icon" />
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="font-awesome" name="css/font-awesome.css" />
+
+	<h:outputScript library="js" name="sefisca.js" />
+
+	<ui:insert name="cabecalho" />
+</h:head>
+
+<h:body style="margin: 0px;">
+	<div id="pagewrapper">
+		<ui:include src="/menuUsuario.jspx" />
+		<h:form id="formCorpo">
+			<div id="main-content">
+				<ui:insert name="corpo" />
+			</div>
+
+			<p:ajaxStatus onstart="PF('statusDialog').show();"
+				onsuccess="PF('statusDialog').hide();" />
+
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:row>
+					<p:column style="text-align: center;">
+						<h1>Processando sua solicitação...</h1>
+					</p:column>
+				</p:row>
+				<p:graphicImage alt="ajax" url="/resources/imagens/ajax.gif"
+					style="display: block; margin: 0px auto;" />
+			</p:dialog>
+		</h:form>
+	</div>
+</h:body>
+</html>

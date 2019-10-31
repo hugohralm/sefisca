@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    					http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<global-method-security secured-annotations="enabled">
+
+	</global-method-security>
+	
+	<http pattern="/javax.faces.resource/*" security="none"/>
+	<http pattern="/login.jsp*" security="none"/>
+	<http pattern="/recuperarSenha.ovs" security="none" />
+	<http pattern="/confirmacao.ovs" security="none" />
+	<http pattern="/alterarSenhaExterno.ovs" security="none" />
+	<http pattern="/auth.ovs" security="none" />
+	<http pattern="/erroToken.ovs" security="none" />
+	<http pattern="/usuario.ovs" security="none" />
+
+	<http auto-config="true" access-denied-page="/acessoNegado.ovs" access-decision-manager-ref="accessDecisionManager">
+
+		<intercept-url pattern="/admin/*" access="ADMIN" />
+		
+		<intercept-url pattern="/gerencia/usuarioList.ovs" access="ADMIN,GERENTE" />
+		<intercept-url pattern="/gerencia/*" access="ADMIN,GERENTE,ORGAO" />
+		
+		<intercept-url pattern="/**.ovs" access="USUARIO" />
+		<intercept-url pattern="/**.jspx" access="USUARIO" />
+		<intercept-url pattern="/**.xhtml" access="USUARIO" />
+		<intercept-url pattern="/**.html" access="USUARIO" />
+		
+		<form-login authentication-failure-url="/login.jsp?msg=erro" login-page="/login.jsp" />
+		<logout logout-success-url="/inicio.ovs" />
+		<session-management>
+			<concurrency-control max-sessions="1" expired-url="/inicio.ovs" />
+		</session-management>
+	</http>
+
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:ref bean="roleVoter" />
+				<beans:ref bean="authenticatedVoter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+		<beans:property name="rolePrefix" value="" />
+	</beans:bean>
+
+	<beans:bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+
+
+	<beans:bean id="usuarioService" class="br.com.oversight.sefisca.util.UsuarioService">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="usuarioService">
+			<password-encoder hash="md5" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

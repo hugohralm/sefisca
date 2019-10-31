@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+
+		<p:panel
+			header="Cadastro de Template de Termo de Responsabilidade do Usuário"
+			id="panelGeral" style="width:100%">
+
+			<a:field label="Data de cadastro">
+				<p:inputMask styleClass="obrigatorio" disabled="true"
+					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.dataCadastro}"
+					style="width:200px;" mask="99/99/9999">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+			</a:field>
+
+			<a:field label="Usuário responsável" spaceLeft="10px">
+				<p:inputText
+					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.usuario}"
+					disabled="true" style="width:400px;" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field label="Texto">
+				<p:editor id="txtTexto"
+					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.texto}"
+					disabled="#{not TermoResponsabilidadeTemplateControl.editavel}"
+					width="850" height="400" maxlength="5000"
+					style="width:850px;height:400px" />
+			</a:field>
+
+			<a:newLine />
+
+			<a:field>
+				<p:commandButton id="btnSalvar"
+					actionListener="#{TermoResponsabilidadeTemplateControl.confirmar}"
+					disabled="#{not TermoResponsabilidadeTemplateControl.editavel}"
+					value="Salvar" icon="ui-icon-disk" update=":formCorpo:panelGeral" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton actionListener="#{MenuControl.gerenciarSessao}"
+					action="termoResponsabilidadeTemplate?faces-redirect=true"
+					value="Limpar" icon="ui-icon-trash" ajax="false" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton value="Fechar"
+					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+					action="termoResponsabilidadeTemplateList?faces-redirect=true"
+					icon="ui-icon-close" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="templateExterna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<p:panel header="Pagina de redefinição de senha" id="panel">
+			<h:outputText
+				value="O link de redefinição de senha já espirou, ou já foi utilizado"
+				style="color: red" />
+			<h2>O que você pode fazer?</h2>
+			<h:outputLink value="index.html" style="color: blue">
+				<h:outputText
+					value="1. Clique aqui para voltar para a pagina inicial." />
+			</h:outputLink>
+			<a:newLine />
+			<h:outputLink value="recuperarSenha.ovs" style="color: blue">
+				<h:outputText
+					value="2. Clique aqui para voltar a pagina de redefinição de senha." />
+			</h:outputLink>
+		</p:panel>
+	</ui:define>
+</ui:composition>

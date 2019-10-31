@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="corpo">
+
+		<p:panel>
+
+			<div class="col-md-12 row">
+				<div class="menu-principal"></div>
+			</div>
+			<div class="col-md-12 row ">
+				<div class="col-md-12 ">BODY</div>
+			</div>
+			<a:newLine />
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel widgetVar="panel" id="horizontal"
+			header="Cadastro de parâmetros do sistema" toggleable="true"
+			toggleOrientation="horizontal">
+
+			<a:field label="Chave do parâmetro">
+				<p:inputText styleClass="obrigatorio" id="chave"
+					value="#{ParametroControl.parametro.chave}" style="width:200px;" />
+			</a:field>
+
+			<a:field label="Valor do parâmetro" spaceLeft="10px">
+				<p:inputText styleClass="obrigatorio" id="valor"
+					value="#{ParametroControl.parametro.valor}" style="width:400px;" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton id="btnSalvar"
+					actionListener="#{ParametroControl.confirmar }" icon="ui-icon-disk"
+					value="Salvar" update="@form" />
+			</a:field>
+			<a:newLine />
+		</p:panel>
+
+		<p:dataTable id="tblParametro" value="#{ParametroControl.parametros}"
+			var="parametro" emptyMessage="Sem registros">
+			<f:facet name="header">
+				<h:outputText value="Parâmetros cadastrados" />
+			</f:facet>
+			<p:column headerText="Chave do parâmetro" style="width:300px">
+				<p:outputLabel value="#{parametro.chave }" />
+			</p:column>
+			<p:column headerText="Valor do parâmetro">
+				<p:outputLabel value="#{parametro.valor }" />
+			</p:column>
+			<p:column style="width:60px;">
+				<p:commandButton icon="ui-icon-pencil"
+					actionListener="#{ParametroControl.editarParametro }"
+					update="@form">
+					<f:param name="parametro" value="#{parametro}" id="parametro" />
+				</p:commandButton>
+			</p:column>
+			<p:column style="width:60px;">
+				<p:commandButton id="btnConfirmarExclusao"
+					onclick="PF('confirmacaoExclusao').show();" icon="ui-icon-trash"
+					update="tblParametro">
+					<f:setPropertyActionListener value="#{parametro}"
+						target="#{ParametroControl.parametroExcluir }" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog message="Confirma a exclusão deste registro?"
+			showEffect="slide" hideEffect="explode"
+			header="Confirmação de exclusão" severity="alert"
+			widgetVar="confirmacaoExclusao">
+			<p:commandButton id="btnSim" value="Sim"
+				oncomplete="PF('confirmacaoExclusao').hide();"
+				actionListener="#{ParametroControl.excluir }" update="tblParametro" />
+			<p:commandButton id="btnNao" value="Não"
+				onclick="PF('confirmacaoExclusao').hide();" type="button" />
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>

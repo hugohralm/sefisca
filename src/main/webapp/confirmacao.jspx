@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="templateExterna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel header="Confirmação de cadastro" id="panel">
+			<h:outputText value="Prezado(a), " />
+			<b><h:outputText
+					value="#{Confirmacao.usuario.pessoaFisica.nome }" /></b>
+			<a:newLine />
+			<h:outputText value="Seu cadastro foi confirmado com sucesso." />
+			<a:newLine />
+			<h:outputLink value="/sefisca/login.jsp" style="color: blue">
+				<h:outputText value="Clique aqui para efetuar o login" />
+			</h:outputLink>
+		</p:panel>
+	</ui:define>
+</ui:composition>

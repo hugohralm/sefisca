@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="templateExterna.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<p:panel header="Erro na confirmação de Cadastro" id="panel">
+			<h:outputText value="Não foi possivel confirmar o seu cadastro."></h:outputText>
+			<a:newLine></a:newLine>
+			<h:outputLink value="/sefisca/inicio.ovs" style="color: blue">
+				<h:outputText value="Clique aqui para retorna a pagina inicial."></h:outputText>
+			</h:outputLink>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

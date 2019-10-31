@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context displayName="sefisca" path="/sefisca" reloadable="true">
+
+   <Resource 
+      auth="Container" 
+      driverClassName="org.postgresql.Driver"
+      maxTotal="10" 
+      maxIdle="3" 
+      name="jdbc/sefisca" 
+      password="123456"
+      type="javax.sql.DataSource" 
+      url="jdbc:postgresql://localhost:5432/sefisca"
+      username="postgres" />
+
+</Context>
