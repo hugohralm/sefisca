@@ -17,7 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ambientinformatica.util.UtilLog;
-import br.com.oversight.sefisca.controle.dto.EstabelecimentoDTO;
+import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
+import br.com.oversight.sefisca.entidade.EnumUf;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.util.UtilSefisca;
 
@@ -29,14 +30,14 @@ public class DataSusService {
 	@Autowired
 	private MunicipioDao municipioDao;
 
-	public EstabelecimentoDTO consultarEstabelecimentoSaude(String codigoCNES)
+	public InstituicaoDTO consultarEstabelecimentoSaude(String codigoCNES)
 			throws SOAPException, IOException, TransformerFactoryConfigurationError, TransformerException {
 		try {
 			String envelope = getEnvelope(getBodyConsultarEstabelecimentoSaude(codigoCNES));
 			SOAPMessage soapResponse = soapRequest(envelope, URL_ESTABELECIMENTO_SERVICE);
 
-			EstabelecimentoDTO estabelecimentoDTO = montarEstabelecimentoDTO(soapResponse);
-			return estabelecimentoDTO;
+			InstituicaoDTO instituicaoDTO = montarInstituicaoDTO(soapResponse);
+			return instituicaoDTO;
 		} catch (Exception e) {
 			UtilLog.getLog().error(e.getMessage(), e);
 		}
@@ -54,7 +55,20 @@ public class DataSusService {
 		envelope.append("    xmlns:cod=\"http://servicos.saude.gov.br/schema/cnes/v1r0/codigocnes\"\r\n");
 		envelope.append(
 				"    xmlns:cnpj=\"http://servicos.saude.gov.br/schema/corporativo/pessoajuridica/v1r0/cnpj\">\r\n");
-		envelope.append(getHeader());
+		envelope.append("    <soap:Header>\r\n");
+		envelope.append("        <wsse:Security soap:mustUnderstand=\"true\"\r\n");
+		envelope.append(
+				"            xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"\r\n");
+		envelope.append(
+				"            xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\r\n");
+		envelope.append(
+				"            <wsse:UsernameToken wsu:Id=\"UsernameToken-5FCA58BED9F27C406E14576381084652\">\r\n");
+		envelope.append("                <wsse:Username>CNES.PUBLICO</wsse:Username>\r\n");
+		envelope.append(
+				"                <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">cnes#2015public</wsse:Password>\r\n");
+		envelope.append("            </wsse:UsernameToken>\r\n");
+		envelope.append("        </wsse:Security>\r\n");
+		envelope.append("    </soap:Header>\r\n");
 		envelope.append(body);
 		envelope.append("</soap:Envelope>");
 		return envelope.toString();
@@ -74,24 +88,6 @@ public class DataSusService {
 		return body.toString();
 	}
 
-	private String getHeader() {
-		StringBuilder header = new StringBuilder();
-		header.append("    <soap:Header>\r\n");
-		header.append("        <wsse:Security soap:mustUnderstand=\"true\"\r\n");
-		header.append(
-				"            xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"\r\n");
-		header.append(
-				"            xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\r\n");
-		header.append("            <wsse:UsernameToken wsu:Id=\"UsernameToken-5FCA58BED9F27C406E14576381084652\">\r\n");
-		header.append("                <wsse:Username>CNES.PUBLICO</wsse:Username>\r\n");
-		header.append(
-				"                <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">cnes#2015public</wsse:Password>\r\n");
-		header.append("            </wsse:UsernameToken>\r\n");
-		header.append("        </wsse:Security>\r\n");
-		header.append("    </soap:Header>\r\n");
-		return header.toString();
-	}
-	
 	private static SOAPMessage soapRequest(String envelope, String url)
 			throws SOAPException, IOException, TransformerFactoryConfigurationError, TransformerException {
 		SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
@@ -103,33 +99,29 @@ public class DataSusService {
 		MessageFactory messageFactory = MessageFactory.newInstance();
 
 		SOAPMessage msg = messageFactory.createMessage(headers, (new ByteArrayInputStream(envelope.getBytes())));
-		System.out.println("Request SOAP:");
-		msg.writeTo(System.out);
-		System.out.println("\n");
 
 		return soapConnection.call(msg, url);
 	}
-	
-	
 
-	public EstabelecimentoDTO montarEstabelecimentoDTO(SOAPMessage soapResponse) throws SOAPException {
+	public InstituicaoDTO montarInstituicaoDTO(SOAPMessage soapResponse) throws SOAPException {
 		SOAPBody soapBody = soapResponse.getSOAPBody();
-		EstabelecimentoDTO estabelecimentoDTO = new EstabelecimentoDTO();
-		estabelecimentoDTO.setCodigoCNES(UtilSefisca.getElementsByTagNameXML(soapBody, "ns2:CodigoCNES"));
-		estabelecimentoDTO.setNomeEmpresarial(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeEmpresarial"));
-		estabelecimentoDTO.setNomeFantasia(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeFantasia"));
-		estabelecimentoDTO.setTipoUnidade(UtilSefisca.getElementsByTagNameXML(soapBody, "ns28:descricao"));
-		estabelecimentoDTO.setLogradouro(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:nomeLogradouro"));
-		estabelecimentoDTO.setNumero(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:numero"));
-		estabelecimentoDTO.setComplemento(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:complemento"));
-		estabelecimentoDTO.setBairro(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:Bairro"));
-		estabelecimentoDTO.setCep(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:CEP"));
+		InstituicaoDTO instituicaoDTO = new InstituicaoDTO();
+		instituicaoDTO.setCodigoCNES(UtilSefisca.getElementsByTagNameXML(soapBody, "ns2:CodigoCNES"));
+		instituicaoDTO.setRazaoSocial(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeEmpresarial"));
+		instituicaoDTO.setNomeFantasia(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeFantasia"));
+		instituicaoDTO.setTipoUnidade(UtilSefisca.getElementsByTagNameXML(soapBody, "ns28:descricao"));
+		instituicaoDTO.setLogradouro(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:nomeLogradouro"));
+		instituicaoDTO.setNumero(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:numero"));
+		instituicaoDTO.setComplemento(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:complemento"));
+		instituicaoDTO.setBairro(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:Bairro"));
+		instituicaoDTO.setCep(UtilSefisca.getElementsByTagNameXML(soapBody, "ns11:CEP"));
 		//Integer codigoIBGE = Integer.parseInt(UtilSefisca.getElementsByTagNameXML(soapBody, "ns15:codigoMunicipio"));
-		//estabelecimentoDTO.setMunicipio(municipioDao.municipioPorCodigoIBGE(codigoIBGE));
-		estabelecimentoDTO.setUf(UtilSefisca.getElementsByTagNameXML(soapBody, "ns16:siglaUF"));
-		estabelecimentoDTO.setLatitude(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:latitude"));
-		estabelecimentoDTO.setLongitude(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:longitude"));
-		estabelecimentoDTO.setGeoJson(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:geoJson"));
-		return estabelecimentoDTO;
+		EnumUf uf = EnumUf.valueOf(UtilSefisca.getElementsByTagNameXML(soapBody, "ns16:siglaUF"));
+		String municipio = UtilSefisca.getElementsByTagNameXML(soapBody, "ns15:nomeMunicipio");
+		instituicaoDTO.setMunicipio(municipioDao.listarPorUfNome(uf, municipio).get(0));
+		instituicaoDTO.setLatitude(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:latitude"));
+		instituicaoDTO.setLongitude(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:longitude"));
+		instituicaoDTO.setGeoJson(UtilSefisca.getElementsByTagNameXML(soapBody, "ns30:geoJson"));
+		return instituicaoDTO;
 	}
 }

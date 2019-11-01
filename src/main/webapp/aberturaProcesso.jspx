@@ -26,23 +26,8 @@
 
 				<a:field label="Nome" spaceLeft="10px;">
 					<p:inputText styleClass="obrigatorio"
-						value="#{AberturaProcessoControl.estabelecimentoDTO.nomeFantasia}"
+						value="#{AberturaProcessoControl.instituicao.nomeFantasia}"
 						style="width:355px;" />
-				</a:field>
-
-				<a:newLine />
-
-				<a:field label="CEP">
-					<p:inputMask styleClass="obrigatorio" mask="99.999-999"
-						value="#{AberturaProcessoControl.estabelecimentoDTO.cep }"
-						style="width:110px;" />
-				</a:field>
-
-
-				<a:field label="Endereço" spaceLeft="10px;">
-					<p:inputText styleClass="obrigatorio"
-						value="#{AberturaProcessoControl.estabelecimentoDTO.logradouro}"
-						style="width:435px;" />
 				</a:field>
 
 				<a:newLine />

@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
-import br.com.oversight.sefisca.controle.dto.EstabelecimentoDTO;
+import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
+import br.com.oversight.sefisca.entidade.Instituicao;
+import br.com.oversight.sefisca.entidade.Processo;
 import br.com.oversight.sefisca.entidade.Usuario;
-import br.com.oversight.sefisca.persistencia.MunicipioDao;
-import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.DataSusService;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,18 +27,18 @@ public class AberturaProcessoControl implements Serializable {
 	@Getter
 	@Setter
 	private String codigoCNES;
-	
+
 	@Getter
 	private Usuario usuarioLogado;
+
+	@Getter
+	private InstituicaoDTO instituicaoDTO;
+
+	@Getter @Setter
+	private Processo processo;
 	
 	@Getter
-	private EstabelecimentoDTO estabelecimentoDTO;
-
-	@Autowired
-	private UsuarioDao usuarioDao;
-
-	@Autowired
-	private MunicipioDao municipioDao;
+	private Instituicao instituicao;
 
 	@Autowired
 	private UsuarioLogadoControl usuarioLogadoControl;
@@ -49,7 +49,8 @@ public class AberturaProcessoControl implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.usuarioLogado = usuarioLogadoControl.getUsuario();
-		this.estabelecimentoDTO = new EstabelecimentoDTO();
+		this.processo = new Processo();
+		this.instituicao = new Instituicao();
 	}
 
 	public void consultarEstabelecimento() {
@@ -59,11 +60,11 @@ public class AberturaProcessoControl implements Serializable {
 				return;
 			}
 
-			estabelecimentoDTO = dataSusService.consultarEstabelecimentoSaude(this.codigoCNES);
-
-			if (estabelecimentoDTO != null) {
-
+			instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(this.codigoCNES);
+			if (instituicaoDTO != null) {
+				this.instituicao.setDto(this.instituicaoDTO);
 			} else {
+				this.instituicao = new Instituicao();
 				UtilFaces.addMensagemFaces("CNES não encontrado.", FacesMessage.SEVERITY_WARN);
 				UtilFaces.addMensagemFaces("Caso seja uma instituicao nova preencha todos os campos.",
 						FacesMessage.SEVERITY_WARN);

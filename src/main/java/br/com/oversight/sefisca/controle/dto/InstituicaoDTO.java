@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EstabelecimentoDTO {
+public class InstituicaoDTO {
 
 	private String codigoCNES;
 	private String cnpj;
 	private String nomeFantasia;
-	private String nomeEmpresarial;
+	private String razaoSocial;
 	private String logradouro;
 	private String tipoUnidade;
 	private String numero;
@@ -19,7 +19,6 @@ public class EstabelecimentoDTO {
 	private String bairro;
 	private String cep;
 	private Municipio municipio;
-	private String uf;
 	private String longitude;
 	private String latitude;
 	private String geoJson;
