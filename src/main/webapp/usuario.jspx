@@ -4,16 +4,17 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" 
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="corpo">
 
 		<p:panel header="Cadastro de usuário" id="panelGeral"
 			style="width:100%">
-
 			<a:field label="CPF">
 				<p:inputMask styleClass="obrigatorio" mask="999.999.999-99"
-					value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" style="width:186px;" />
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}"
+					style="width:186px;" />
 			</a:field>
 
 			<a:field label="Data de nascimento" spaceLeft="10px">
@@ -28,26 +29,30 @@
 
 			<a:field label="Nome">
 				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioNovoControl.usuario.pessoaFisica.nome}" style="width:600px;" />
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.nome}"
+					style="width:600px;" />
 			</a:field>
 
 			<a:newLine />
 
 			<a:field label="E-mail">
 				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioNovoControl.usuario.pessoaFisica.email}" style="width:326px;" />
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.email}"
+					style="width:326px;" />
 			</a:field>
 
 			<a:field label="Telefone" spaceLeft="10px">
 				<p:inputText styleClass="obrigatorio"
 					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioNovoControl.usuario.pessoaFisica.telefone}" style="width:126px;" />
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.telefone}"
+					style="width:126px;" />
 			</a:field>
 
 			<a:field label="Celular" spaceLeft="10px">
 				<p:inputText styleClass="obrigatorio"
 					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioNovoControl.usuario.pessoaFisica.celular}" style="width:128px;" />
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.celular}"
+					style="width:128px;" />
 			</a:field>
 
 			<a:newLine />
@@ -61,7 +66,8 @@
 
 			<a:field label="Estado civil" spaceLeft="10px">
 				<p:selectOneMenu style="width:165px;" styleClass="obrigatorio"
-					autoWidth="false" value="#{UsuarioNovoControl.usuario.pessoaFisica.estadoCivil}">
+					autoWidth="false"
+					value="#{UsuarioNovoControl.usuario.pessoaFisica.estadoCivil}">
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{UsuarioNovoControl.estadosCivis}" />
 				</p:selectOneMenu>
@@ -71,7 +77,8 @@
 			<p:outputPanel id="opEnderecoUsuario">
 				<a:field label="CEP">
 					<p:inputMask styleClass="obrigatorio" mask="99.999-999"
-						value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.cep}" style="width:110px;" />
+						value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.cep}"
+						style="width:110px;" />
 				</a:field>
 				<a:field>
 					<p:commandButton title="Clique aqui para pesquisar o cep"
