@@ -19,6 +19,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.ambientinformatica.util.AmbientValidator;
 import br.com.ambientinformatica.util.Entidade;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
@@ -27,17 +29,21 @@ public class TermoResponsabilidadeTemplate extends Entidade implements Serializa
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Getter
     @GeneratedValue(generator = "termo_responsabilidade_template_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "termo_responsabilidade_template_seq", sequenceName = "termo_responsabilidade_template_seq", allocationSize = 1, initialValue = 1)
     private Integer id;
 
+    @Getter @Setter
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCadastro;
 
+    @Getter @Setter
     @ManyToOne(optional = false)
     private Usuario usuario;
 
+    @Getter @Setter
     @NotEmpty(message = "Informe o texto", groups = AmbientValidator.class)
     @Length(min = 0, max = 5000, message = "O limite do campo texto é de 5000 caracteres.", groups = AmbientValidator.class)
     @Column(nullable = false, length = 5000)
@@ -54,11 +60,6 @@ public class TermoResponsabilidadeTemplate extends Entidade implements Serializa
         this.dataCadastro = new Date();
     }
 
-    @Override
-    public Object getId() {
-        return id;
-    }
-
     public boolean isNovo() {
         return this.id == null;
     }
@@ -66,21 +67,4 @@ public class TermoResponsabilidadeTemplate extends Entidade implements Serializa
     public String getPreviaTexto() {
         return (texto != null && texto.length() > 100 ? texto.substring(0, 100) + "..." : texto);
     }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public Date getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
 }
