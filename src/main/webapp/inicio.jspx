@@ -11,15 +11,23 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<ui:define name="corpo">
 
-		<p:panel>
 
-			<div class="col-md-12 row">
-				<div class="menu-principal"></div>
-			</div>
-			<div class="col-md-12 row ">
-				<div class="col-md-12 ">BODY</div>
-			</div>
-			<a:newLine />
-		</p:panel>
+		<b:container fluid="true">
+			<b:row>
+				<b:column tiny-screen="8">
+					<b:panel title="Processos" collapsible="false" look="primary">
+						<b:dataTable>
+							<b:dataTableColumn label="Nr. do processo" />
+							<b:dataTableColumn label="Fiscal responsável" />
+							<b:dataTableColumn label="Data limite da etapa" />
+							<b:dataTableColumn label="Etapa" />
+						</b:dataTable>
+					</b:panel>
+				</b:column>
+			</b:row>
+		</b:container>
+
+
+
 	</ui:define>
 </ui:composition>

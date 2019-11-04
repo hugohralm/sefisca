@@ -6,6 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+		
 	<ui:define name="corpo">
 
 
@@ -84,16 +85,16 @@
 					<b:row>
 						<b:column tiny-screen="6">
 							<b:selectOneMenu id="estado" label="Estado *" render-label="true"
-								label-style="width:100%" labelTinyScreen="6"
-								value="#{UsuarioNovoControl.uf}"
-								onchange="ajax:UsuarioNovoControl.listarMunicipiosPorUfs()"
+								labelTinyScreen="6" value="#{UsuarioNovoControl.uf}" select2="true" style="width:100%;"
 								update="estado municipio">
 								<f:selectItems value="#{UsuarioNovoControl.ufs }" />
+								<f:ajax listener="#{UsuarioNovoControl.listarMunicipiosPorUfs}"
+									process="@this" update="municRequerente" />
 							</b:selectOneMenu>
 						</b:column>
 						<b:column tiny-screen="6">
 							<b:selectOneMenu id="municipio" label="Município"
-								label-style="width:100%" render-label="true"
+								style="width:100%;" render-label="true" select2="true"
 								value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.municipio}">
 								<f:selectItems value="#{UsuarioNovoControl.municipios}" />
 							</b:selectOneMenu>
@@ -126,19 +127,21 @@
 					</b:row>
 					<b:row>
 						<b:column small-screen="4" offset-md="6" medium-screen="2">
-							<b:commandButton iconAwesome="home"  style="width:100%; margin-top:5px"
+							<b:commandButton iconAwesome="home"
 								onclick="document.location.href='sair.jsp"
 								value="Página inicial" iconAlign="right" />
 						</b:column>
 						<b:column small-screen="4" medium-screen="2">
-							<b:commandButton id="btnLimpar" icon="trash"  style="width:100%; margin-top:5px"
+							<b:commandButton id="btnLimpar" icon="trash"
 								actionListener="#{UsuarioNovoControl.novoUsuario}"
 								value="Limpar " look="danger" iconAlign="right" />
 						</b:column>
 						<b:column small-screen="4" medium-screen="2">
 							<b:commandButton id="btnConcluir" iconAwesome="save"
-								actionListener="#{UsuarioNovoControl.concluir}" style="width:100%; margin-top:5px"
-								value="Concluir " look="primary" iconAlign="right" />
+							
+								actionListener="#{UsuarioNovoControl.concluir}"
+								value="Concluir " class="commandButton"
+								look="primary" iconAlign="right" />
 						</b:column>
 					</b:row>
 				</b:container>
