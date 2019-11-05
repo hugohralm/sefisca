@@ -6,146 +6,151 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
-		
-	<ui:define name="corpo">
 
+	<ui:define name="corpo">
+		<h:outputStylesheet library="css" name="sefisca.css" />
 
 		<b:form>
-
-			<b:panel title="Cadastro de usuário" look="primary"
-				collapsible="false">
-
-				<b:container>
-					<b:row>
-						<b:column smallScreen="6" medium-screen="3">
-							<b:inputText label="CPF" render-label="true"
-								mask="999.999.999-99"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column medium-screen="6" large-screen="8">
-							<b:inputText label="Nome" render-label="true"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column smallScreen="12" medium-screen="6" large-screen="6">
-							<b:inputText label="Email" render-label="true" mask="email"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
-						</b:column>
-						<b:column smallScreen="6" medium-screen="3">
-							<b:inputText label="Telefone" render-label="true"
-								mask="(99) 9999-9999"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.telefone}" />
-						</b:column>
-						<b:column smallScreen="6" medium-screen="3">
-							<b:inputText label="Celular" render-label="true"
-								mask="(99) 99999-9999"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.celular}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column tiny-screen="6" small-screen="4">
-							<b:selectOneMenu label="Sexo" render-label="true"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.sexo}">
-								<f:selectItems value="#{UsuarioNovoControl.sexos}" />
-							</b:selectOneMenu>
-						</b:column>
-						<b:column tiny-screen="6" small-screen="4">
-							<b:selectOneMenu label="Estado civil" render-label="true"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.estadoCivil}">
-								<f:selectItems value="#{UsuarioNovoControl.estadosCivis}" />
-							</b:selectOneMenu>
-						</b:column>
-						<b:column small-screen="4">
-							<b:datepicker id="nascDate" label="Data de nascimento *"
-								mode="popup-icon"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.dataNascimento }" />
-							<b:message for="nascDate" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column tiny-screen="4" medium-screen="3">
-							<b:inputText
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.cep}"
-								label="CEP" mask="99.999-999">
-								<f:facet name="append">
-									<b:commandButton look="primary" iconAwesome="search"
-										icon-align="right"
-										actionListener="#{UsuarioNovoControl.consultarCep}" />
-								</f:facet>
-							</b:inputText>
-						</b:column>
-						<b:column tiny-screen="8" medium-screen="9">
-							<b:inputText label="Endereço" render-label="true"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.endereco}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column tiny-screen="6">
-							<b:selectOneMenu id="estado" label="Estado *" render-label="true"
-								labelTinyScreen="6" value="#{UsuarioNovoControl.uf}" select2="true" style="width:100%;"
-								update="estado municipio">
-								<f:selectItems value="#{UsuarioNovoControl.ufs }" />
-								<f:ajax listener="#{UsuarioNovoControl.listarMunicipiosPorUfs}"
-									process="@this" update="municRequerente" />
-							</b:selectOneMenu>
-						</b:column>
-						<b:column tiny-screen="6">
-							<b:selectOneMenu id="municipio" label="Município"
-								style="width:100%;" render-label="true" select2="true"
-								value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.municipio}">
-								<f:selectItems value="#{UsuarioNovoControl.municipios}" />
-							</b:selectOneMenu>
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column tiny-screen="6">
-							<b:inputSecret label="Senha" render-label="true"
-								value="#{UsuarioNovoControl.usuario.senha}" />
-						</b:column>
-						<b:column tiny-screen="6">
-							<b:inputSecret label="Confirme sua senha *" render-label="true"
-								value="#{UsuarioNovoControl.confirmarSenha}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column>
-							<b:panel title="Termo de responsabilidade">
-								<h:outputText
-									value="#{UsuarioNovoControl.termoResponsabilidade.template.texto}" />
-							</b:panel>
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column>
-							<b:selectBooleanCheckbox id="aceitou"
-								caption="Declaro, para os devidos fins e efeitos legais, serem pessoais e verdadeiras as informações inseridas no sistema Sefisca sobre as quais assumo todas as responsabilidades, sob pena de incorrer nas sanções previstas nos artigos 299 e 307 do Código Penal (falsidade ideológica e falsa identidade).*"
-								value="#{UsuarioNovoControl.termoResponsabilidade.aceitou}" />
-						</b:column>
-					</b:row>
-					<b:row>
-						<b:column small-screen="4" offset-md="6" medium-screen="2">
-							<b:commandButton iconAwesome="home"
-								onclick="document.location.href='sair.jsp"
-								value="Página inicial" iconAlign="right" />
-						</b:column>
-						<b:column small-screen="4" medium-screen="2">
-							<b:commandButton id="btnLimpar" icon="trash"
-								actionListener="#{UsuarioNovoControl.novoUsuario}"
-								value="Limpar " look="danger" iconAlign="right" />
-						</b:column>
-						<b:column small-screen="4" medium-screen="2">
-							<b:commandButton id="btnConcluir" iconAwesome="save"
-							
-								actionListener="#{UsuarioNovoControl.concluir}"
-								value="Concluir " class="commandButton"
-								look="primary" iconAlign="right" />
-						</b:column>
-					</b:row>
-				</b:container>
-			</b:panel>
+			<b:container>
+				<b:row>
+					<b:column>
+						<b:panel title="Cadastro de usuário" look="primary"
+							collapsible="false">
+							<b:container fluid="true">
+								<b:row>
+									<b:column smallScreen="6" medium-screen="3">
+										<b:inputText label="CPF" render-label="true"
+											mask="999.999.999-99"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="6" large-screen="8">
+										<b:inputText label="Nome" render-label="true"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column smallScreen="12" medium-screen="6" large-screen="6">
+										<b:inputText label="Email" render-label="true" mask="email"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
+									</b:column>
+									<b:column smallScreen="6" medium-screen="3">
+										<b:inputText label="Telefone" render-label="true"
+											mask="(99) 9999-9999"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.telefone}" />
+									</b:column>
+									<b:column smallScreen="6" medium-screen="3">
+										<b:inputText label="Celular" render-label="true"
+											mask="(99) 99999-9999"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.celular}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="4">
+										<b:selectOneMenu label="Sexo" render-label="true"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.sexo}">
+											<f:selectItems value="#{UsuarioNovoControl.sexos}" />
+										</b:selectOneMenu>
+									</b:column>
+									<b:column small-screen="4">
+										<b:selectOneMenu label="Estado civil" render-label="true"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.estadoCivil}">
+											<f:selectItems value="#{UsuarioNovoControl.estadosCivis}" />
+										</b:selectOneMenu>
+									</b:column>
+									<b:column small-screen="4">
+										<b:datepicker id="nascDate" label="Data de nascimento *"
+											mode="popup-icon"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.dataNascimento }" />
+										<b:message for="nascDate" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="4">
+										<b:inputText
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.cep}"
+											label="CEP" mask="99.999-999">
+											<f:facet name="append">
+												<b:commandButton look="primary" iconAwesome="search"
+													icon-align="right"
+													actionListener="#{UsuarioNovoControl.consultarCep}" />
+											</f:facet>
+										</b:inputText>
+									</b:column>
+									<b:column medium-screen="8">
+										<b:inputText label="Endereço" render-label="true"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.endereco}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="6">
+										<b:selectOneMenu id="estado" label="Estado *"
+											render-label="true" style="width:100%;"
+											value="#{UsuarioNovoControl.uf}" select2="true"
+											update="estado municipio">
+											<f:selectItems value="#{UsuarioNovoControl.ufs }" />
+											<f:ajax
+												listener="#{UsuarioNovoControl.listarMunicipiosPorUfs}"
+												process="@this" update="municRequerente" />
+										</b:selectOneMenu>
+									</b:column>
+									<b:column medium-screen="6">
+										<b:selectOneMenu id="municipio" label="Município"
+											render-label="true" select2="true" style="width:100%;"
+											value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.municipio}">
+											<f:selectItems value="#{UsuarioNovoControl.municipios}" />
+										</b:selectOneMenu>
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="6">
+										<b:inputSecret label="Senha" render-label="true"
+											value="#{UsuarioNovoControl.usuario.senha}" />
+									</b:column>
+									<b:column medium-screen="6">
+										<b:inputSecret label="Confirme sua senha *"
+											render-label="true"
+											value="#{UsuarioNovoControl.confirmarSenha}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:panel title="Termo de responsabilidade">
+											<h:outputText
+												value="#{UsuarioNovoControl.termoResponsabilidade.template.texto}" />
+										</b:panel>
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:selectBooleanCheckbox id="aceitou"
+											caption="Declaro, para os devidos fins e efeitos legais, serem pessoais e verdadeiras as informações inseridas no sistema Sefisca sobre as quais assumo todas as responsabilidades, sob pena de incorrer nas sanções previstas nos artigos 299 e 307 do Código Penal (falsidade ideológica e falsa identidade).*"
+											value="#{UsuarioNovoControl.termoResponsabilidade.aceitou}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="4" offset-md="6" medium-screen="2">
+										<b:commandButton iconAwesome="home" style="margin-top:5px;"
+											onclick="document.location.href='sair.jsp"
+											value="Página inicial" iconAlign="right" />
+									</b:column>
+									<b:column small-screen="4" medium-screen="2">
+										<b:commandButton id="btnLimpar" icon="trash" style="margin-top:5px;"
+											actionListener="#{UsuarioNovoControl.novoUsuario}"
+											value="Limpar " look="danger" iconAlign="right" />
+									</b:column>
+									<b:column small-screen="4" medium-screen="2">
+										<b:commandButton id="btnConcluir" iconAwesome="save" style="margin-top:5px;"
+											actionListener="#{UsuarioNovoControl.concluir}"
+											value="Concluir" look="primary" iconAlign="right" />
+									</b:column>
+								</b:row>
+							</b:container>
+						</b:panel>
+					</b:column>
+				</b:row>
+			</b:container>
 		</b:form>
 
 		<p:ajaxStatus onstart="PF('statusDialog').show();"

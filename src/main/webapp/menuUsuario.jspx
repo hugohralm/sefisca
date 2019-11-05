@@ -32,6 +32,11 @@
 						rendered="#{securityScope.userInRole['ADMIN']}"
 						action="/admin/parametroList?faces-redirect=true"
 						iconAwesome="wrench" />
+					<b:navCommandLink value="Termos de uso"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/gerencia/termoResponsabilidadeTemplateList?faces-redirect=true"
+						iconAwesome="wrench" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
 					<b:navLink value="Modelagem de Negócio" iconAwesome="file"

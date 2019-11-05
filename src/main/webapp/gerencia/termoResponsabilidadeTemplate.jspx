@@ -10,60 +10,51 @@
 
 	<ui:define name="corpo">
 
-		<p:panel
-			header="Cadastro de Template de Termo de Responsabilidade do Usuário"
+		<b:panel look="primary" collapsible="false"
+			title="Cadastro de Template de Termo de Responsabilidade do Usuário"
 			id="panelGeral" style="width:100%">
-
-			<a:field label="Data de cadastro">
-				<p:inputMask styleClass="obrigatorio" disabled="true"
-					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.dataCadastro}"
-					style="width:200px;" mask="99/99/9999">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
-				</p:inputMask>
-			</a:field>
-
-			<a:field label="Usuário responsável" spaceLeft="10px">
-				<p:inputText
-					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.usuario}"
-					disabled="true" style="width:400px;" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field label="Texto">
-				<p:editor id="txtTexto"
-					value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.texto}"
-					disabled="#{not TermoResponsabilidadeTemplateControl.editavel}"
-					width="850" height="400" maxlength="5000"
-					style="width:850px;height:400px" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field>
-				<p:commandButton id="btnSalvar"
-					actionListener="#{TermoResponsabilidadeTemplateControl.confirmar}"
-					disabled="#{not TermoResponsabilidadeTemplateControl.editavel}"
-					value="Salvar" icon="ui-icon-disk" update=":formCorpo:panelGeral" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton actionListener="#{MenuControl.gerenciarSessao}"
-					action="termoResponsabilidadeTemplate?faces-redirect=true"
-					value="Limpar" icon="ui-icon-trash" ajax="false" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton value="Fechar"
-					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-					action="termoResponsabilidadeTemplateList?faces-redirect=true"
-					icon="ui-icon-close" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-
-		</p:panel>
+			<b:container>
+				<b:row>
+					<b:column medium-screen="6">
+						<b:dateTimePicker label="Data de criação"
+							value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.dataCadastro}"
+							readonly="true" />
+					</b:column>
+					<b:column medium-screen="6">
+						<b:inputText readonly="true" label="Usuário responsável"
+							value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.usuario}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<p:textEditor widgetVar="editor1" height="300"
+							style="margin-bottom:10px"
+							value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.texto}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column small-screen="4" offset-md="6" medium-screen="2">
+						<b:commandButton iconAwesome="close" style="margin-top:5px;"
+							onclick="document.location.href='sair.jsp" value="Fechar"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							action="termoResponsabilidadeTemplateList?faces-redirect=true"
+							iconAlign="left" />
+					</b:column>
+					<b:column small-screen="4" medium-screen="2">
+						<b:commandButton id="btnLimpar" iconAwesome="trash"
+							style="margin-top:5px;"
+							actionListener="#{UsuarioNovoControl.novoUsuario}"
+							value="Limpar " look="danger" iconAlign="left" />
+					</b:column>
+					<b:column small-screen="4" medium-screen="2">
+						<b:commandButton id="btnSalvar" iconAwesome="save"
+							style="margin-top:5px;"
+							actionListener="#{UsuarioNovoControl.concluir}" value="Salvar"
+							look="primary" iconAlign="left" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 
 	</ui:define>
 
