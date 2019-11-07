@@ -65,6 +65,7 @@ public class TermoResponsabilidadeTemplate extends Entidade implements Serializa
     }
 
     public String getPreviaTexto() {
-        return (texto != null && texto.length() > 100 ? texto.substring(0, 100) + "..." : texto);
+    	String textoLocal = texto.replaceAll("\\<[^>]*>","");;
+        return (textoLocal != null && textoLocal.length() > 50 ? textoLocal.substring(0, 50) + "..." : textoLocal).replaceAll("\\<[^>]*>","");
     }
 }

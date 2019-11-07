@@ -36,10 +36,12 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 				if (!usuarioBanco.isConfirmado()) {
 					usuarioBanco.setSenhaNaoCriptografada(usuario.getSenha());
 					usuarioBanco.setPessoaFisica(usuario.getPessoaFisica());
+					validarUsuario(usuario);
 					usuario = alterar(usuarioBanco);
 				}
 			} else {
 				usuario.setSenhaNaoCriptografada(usuario.getSenha());
+				validarUsuario(usuario);
 				incluir(usuario);
 			}
 			enviarEmailConfirmacaoCadastro(usuario);
@@ -47,6 +49,12 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		} catch (Exception e) {
 			UtilLog.getLog().error(e.getMessage(), e);
 			throw new PersistenciaException("Erro ao salvar usuário", e);
+		}
+	}
+
+	public void validarUsuario(Usuario usario) throws Exception {
+		if (usario == null) {
+			throw new Exception("");
 		}
 	}
 
@@ -137,7 +145,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			sql.append("select distinct u from Usuario u ");
 			sql.append("left join fetch u.pessoaFisica ps ");
 			sql.append("left join fetch ps.endereco e ");
-			sql.append("where ps.cpf =:cpf ");
+			sql.append("where ps.cpf = :cpf ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
 			query.setParameter("cpf", cpf);
@@ -169,7 +177,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
 			sql.append("left join fetch u.pessoaFisica ps ");
-			sql.append("where ps.email =:email ");
+			sql.append("where ps.email = :email ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
 			query.setParameter("email", email);
@@ -194,7 +202,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
 			sql.append("left join fetch u.pessoaFisica ps ");
-			sql.append("where ps.cpf =:cpf ");
+			sql.append("where ps.cpf = :cpf ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
 			query.setParameter("cpf", cpf);
@@ -210,7 +218,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	}
 
 	private static void validarCpf(String cpf) throws ValidacaoException {
-		if (!UtilCpfCnpj.validar(cpf) | UtilSefisca.isCPFComDigitosIguais(cpf)) {
+		if (!UtilCpfCnpj.validar(cpf.replace(".", "").replace("-", "")) | UtilSefisca.isCPFComDigitosIguais(cpf)) {
 			throw new ValidacaoException("CPF do usuário inválido!");
 		}
 	}
@@ -229,7 +237,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 				sql.append("and ps.cpf != '111.111.111-11' ");
 			}
 			if (cpf != null && !cpf.isEmpty()) {
-				sql.append("and ps.cpf =:cpf ");
+				sql.append("and ps.cpf = :cpf ");
 			}
 			if (nome != null && !nome.isEmpty()) {
 				sql.append("and upper(ps.nome) like upper(:nome) ");
@@ -238,7 +246,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 				sql.append("and upper(ps.email) like upper(:email) ");
 			}
 			if (papelFiltro != null) {
-				sql.append("and p.papel =:papelFiltro ");
+				sql.append("and p.papel = :papelFiltro ");
 			}
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
@@ -269,7 +277,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
-			sql.append("where u.token =:token ");
+			sql.append("where u.token = :token ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
 			query.setParameter("token", token);
@@ -298,7 +306,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
 			query.setParameter("id", id);
-			
+
 			return query.getSingleResult();
 
 		} catch (Exception e) {
@@ -306,5 +314,4 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			throw new PersistenciaException("Erro ao consultar usuário por id", e);
 		}
 	}
-
 }
