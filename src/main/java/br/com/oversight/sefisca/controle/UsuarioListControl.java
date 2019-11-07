@@ -43,7 +43,7 @@ public class UsuarioListControl implements Serializable {
 
 	@Autowired
 	private CepService cepService;
-
+	
 	@Getter
 	private Usuario usuario;
 
@@ -145,7 +145,7 @@ public class UsuarioListControl implements Serializable {
 	}
 
 	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+		this.usuario = usuarioDao.consultarPorId(usuario.getId());
 
 		if (this.usuario != null && this.usuario.getPessoaFisica().getEndereco().getMunicipio() != null) {
 			this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();

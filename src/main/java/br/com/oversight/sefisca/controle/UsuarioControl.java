@@ -124,6 +124,9 @@ public class UsuarioControl implements Serializable {
 			}
 		} catch (Exception e) {
 			UtilFaces.addMensagemFaces(e);
+		}finally {
+			this.setSenha1("");
+			this.setSenha2("");
 		}
 	}
 
