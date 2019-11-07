@@ -9,19 +9,27 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<ui:define name="corpo">
-
 		<p:panel id="panelProcesso" header="Dados do processo">
 			<p:panel id="panelInstituicao" header="Dados da instituicao">
-				<a:field label="CodigoCNES">
-					<p:inputText value="#{AberturaProcessoControl.codigoCNES}"
-						style="width:150px;" />
+				<a:field label="Tipo">
+					<p:selectOneMenu value="#{AberturaProcessoControl.tipo}">
+						<f:selectItem itemLabel="CNES" itemValue="CNES" />
+						<f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
+						<p:ajax event="change" update=":formCorpo:panelInstituicao" />
+					</p:selectOneMenu>
 				</a:field>
 
-				<a:field>
+				<a:field label="#{AberturaProcessoControl.cnes ? 'CNES' : 'CNPJ'}" spaceLeft="10px">
+					<p:inputMask styleClass="obrigatorio"
+						mask="#{AberturaProcessoControl.cnes ? '9999999' : '99.999.999/9999-99'}"
+						value="#{AberturaProcessoControl.cnesCnpj}" style="width:186px;" />
+				</a:field>
+
+				<a:field spaceLeft="10px">
 					<p:commandButton title="Clique aqui para consultar estabelecimento"
 						icon="ui-icon-search" ajax="false"
 						actionListener="#{AberturaProcessoControl.consultarEstabelecimento}"
-						update=":formCorpo:panelUsuario" />
+						update=":formCorpo:panelProcesso" />
 				</a:field>
 
 				<a:field label="Nome" spaceLeft="10px;">

@@ -8,7 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,12 +27,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.soap.SOAPBody;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.bouncycastle.util.encoders.Hex;
@@ -221,6 +214,10 @@ public class UtilSefisca {
 		textoFormatado = textoFormatado.replace(":,", ":");
 		textoFormatado = textoFormatado.replace(",", ", ");
 		return UtilTexto.truncarTamanhoMaximo(textoFormatado.toString(), 1024);
+	}
+	
+	public static String limparMascara(String texto) {
+		return texto.replaceAll("[^0-9]", "");
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -412,28 +409,5 @@ public class UtilSefisca {
 		NodeList nodes = soapBody.getElementsByTagName(tagName);
 		Node node = nodes.item(0);
 		return node != null ? node.getTextContent() : "";
-	}
-	
-	public static String passarXMLParaString(Document xml, int espacosIdentacao) {
-		try {
-			// set up a transformer
-			TransformerFactory transfac = TransformerFactory.newInstance();
-			transfac.setAttribute("indent-number", new Integer(espacosIdentacao));
-			Transformer trans = transfac.newTransformer();
-			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			trans.setOutputProperty(OutputKeys.INDENT, "yes");
-
-			// create string from xml tree
-			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			DOMSource source = new DOMSource((Node) xml);
-			trans.transform(source, result);
-			String xmlString = sw.toString();
-			return xmlString;
-		} catch (TransformerException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		return null;
 	}
 }
