@@ -18,7 +18,9 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -131,6 +133,21 @@ public class UtilSefisca {
 	public static String gerarCodigoAleatorio(int tamanho) {
 		return RandomStringUtils.randomAlphanumeric(tamanho).toUpperCase();
 	}
+	
+	 public static boolean isNullOrEmpty(Object o) {
+	        if (o != null) {
+	            if (o instanceof String) {
+	                return ((String) o).isEmpty();
+	            } else if (o instanceof List && ((List<?>) o).size() == 0) {
+	                return true;
+	            } else if (o instanceof Set && ((Set<?>) o).size() == 0) {
+	                return true;
+	            }
+	            return false;
+	        }
+	        return true;
+	    }
+
 
 	public static boolean validarMenorIdade16(Date dataNascimento) {
 		boolean deMaior = false;
