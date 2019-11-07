@@ -3,6 +3,8 @@ package br.com.oversight.sefisca.controle;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.entidade.TermoResponsabilidadeTemplate;
 import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeTemplateDao;
+import br.com.oversight.sefisca.util.UtilMessages;
 
 @Scope("conversation")
 @Controller("TermoResponsabilidadeTemplateControl")
@@ -39,8 +42,9 @@ public class TermoResponsabilidadeTemplateControl implements Serializable {
             atualizarEditavel();
             termoResponsabilidadeTemplateDao.validarEditavel(this.termoResponsabilidade);
             this.termoResponsabilidade = termoResponsabilidadeTemplateDao.alterar(this.termoResponsabilidade);
-            UtilFaces.addMensagemFaces("Registro confirmado!");
+            UtilMessages.addMessage("Sucesso!",  "Registro confirmado!");
         } catch (Exception e) {
+        	e.printStackTrace();
             UtilFaces.addMensagemFaces(e);
         }
     }
@@ -58,6 +62,7 @@ public class TermoResponsabilidadeTemplateControl implements Serializable {
         try {
             this.editavel = termoResponsabilidadeTemplateDao.isEditavel(termoResponsabilidade);
         } catch (Exception e) {
+        	e.printStackTrace();
             UtilFaces.addMensagemFaces(e);
         }
     }

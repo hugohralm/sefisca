@@ -88,6 +88,7 @@ public class UsuarioNovoControl implements Serializable {
 		try {
 			this.municipios = municipioDao.listarPorUfNome(uf, null);
 		} catch (Exception e) {
+			e.printStackTrace();
 			UtilFaces.addMensagemFaces(e);
 		}
 	}
@@ -101,6 +102,7 @@ public class UsuarioNovoControl implements Serializable {
 						FacesMessage.SEVERITY_ERROR);
 				return;
 			}
+			this.usuario.getPessoaFisica().setTelefone(null);
 			Usuario usuarioCadastrado = usuarioDao.criarNovoUsuario(this.usuario, this.confirmarSenha);
 			this.termoResponsabilidade.setUsuario(usuarioCadastrado);
 			termoResponsabilidadeDao.incluir(this.termoResponsabilidade);
@@ -108,6 +110,7 @@ public class UsuarioNovoControl implements Serializable {
 			UtilFaces.addMensagemFaces("Seu cadastro foi realizado com sucesso. ");
 			UtilFaces.addMensagemFaces("Acesse o seu endereço de email para confirmar o cadastro.");
 		} catch (Exception e) {
+			e.printStackTrace();
 			UtilFaces.addMensagemFaces(e);
 		}
 	}
@@ -135,8 +138,9 @@ public class UsuarioNovoControl implements Serializable {
 				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoaFisica().getEndereco().getCep());
 
 				if (viaCEPDTO != null) {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getEnderecoCompleto());
+					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getLogradouro());
 					this.usuario.getPessoaFisica().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+					this.usuario.getPessoaFisica().getEndereco().setBairro(viaCEPDTO.getBairro());
 					this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
 					listarMunicipiosPorUfs();
 				} else {

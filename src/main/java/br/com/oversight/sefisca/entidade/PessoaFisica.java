@@ -57,8 +57,7 @@ public class PessoaFisica extends Entidade implements Serializable {
 
 	@Getter
 	@Setter
-	@NotBlank(message = "Informe o RG.", groups = AmbientValidator.class)
-	@Column(length = 255, nullable = false)
+	@Column(length = 255, nullable = true)
 	@Length(max = 255, message = "O limite do campo RG é de 255 caracteres.", groups = AmbientValidator.class)
 	private String rg;
 
@@ -84,13 +83,13 @@ public class PessoaFisica extends Entidade implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Length(min = 10, max = 16, message = "Informe corretamente o Telefone (incluindo o prefixo).", groups = AmbientValidator.class)
 	private String telefone;
 
 	@Getter
 	@Setter
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Length(min = 10, max = 16, message = "Informe corretamente o Celular (incluindo o prefixo).", groups = AmbientValidator.class)
 	private String celular;
 

@@ -1,8 +1,15 @@
 /* Botões*/
-.btn {
+.btn-command {
+	width: 100%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.selectOneMenu {
 	width: 100%;
 }
 
-.selectOneMenu{
-	width: 100%;
+.dataTableCell-center {
+	text-align: center;
+	vertical-align: middle;
 }

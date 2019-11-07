@@ -29,28 +29,37 @@
 					<b:column>
 						<p:textEditor widgetVar="editor1" height="300"
 							style="margin-bottom:10px"
-							value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.texto}" />
+							value="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade.texto}">
+							<f:facet name="toolbar">
+								<span class="ql-formats">
+									<button class="ql-bold" />
+									<button class="ql-italic" />
+									<button class="ql-underline" />
+									<button class="ql-strike" />
+								</span>
+								<span class="ql-formats"> <select class="ql-size" />
+									<button class="ql-list" value="ordered" />
+									<button class="ql-list" value="bullet" /> <select
+									class="ql-align" /> <select class="ql-color" title="jsado" />
+								</span>
+							</f:facet>
+						</p:textEditor>
 					</b:column>
 				</b:row>
 				<b:row>
-					<b:column small-screen="4" offset-md="6" medium-screen="2">
-						<b:commandButton iconAwesome="close" style="margin-top:5px;"
+					<b:column small-screen="4" offset-md="8" medium-screen="2">
+						<b:commandButton iconAwesome="close"
 							onclick="document.location.href='sair.jsp" value="Fechar"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
 							action="termoResponsabilidadeTemplateList?faces-redirect=true"
 							iconAlign="left" />
 					</b:column>
 					<b:column small-screen="4" medium-screen="2">
-						<b:commandButton id="btnLimpar" iconAwesome="trash"
-							style="margin-top:5px;"
-							actionListener="#{UsuarioNovoControl.novoUsuario}"
-							value="Limpar " look="danger" iconAlign="left" />
-					</b:column>
-					<b:column small-screen="4" medium-screen="2">
 						<b:commandButton id="btnSalvar" iconAwesome="save"
-							style="margin-top:5px;"
-							actionListener="#{UsuarioNovoControl.concluir}" value="Salvar"
-							look="primary" iconAlign="left" />
+							styleClass="btn-command" style="margin-bottom:5px;"
+							actionListener="#{TermoResponsabilidadeTemplateControl.confirmar}"
+							value="Salvar" look="primary" iconAlign="left" />
 					</b:column>
 				</b:row>
 			</b:container>

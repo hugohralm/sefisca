@@ -36,10 +36,12 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
                 if (!usuarioBanco.isConfirmado()) {
                     usuarioBanco.setSenhaNaoCriptografada(usuario.getSenha());
                     usuarioBanco.setPessoaFisica(usuario.getPessoaFisica());
+                    validarUsuario(usuario);
                     usuario = alterar(usuarioBanco);
                 }
             } else {
                 usuario.setSenhaNaoCriptografada(usuario.getSenha());
+                validarUsuario(usuario);
                 incluir(usuario);
             }
             enviarEmailConfirmacaoCadastro(usuario);
@@ -48,6 +50,13 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
             UtilLog.getLog().error(e.getMessage(), e);
             throw new PersistenciaException("Erro ao salvar usuário", e);
         }
+    }
+    
+    public void validarUsuario(Usuario usario) throws Exception {
+    	if (usario == null) {
+			throw new Exception("");
+		}
+    	
     }
 
     @Override
@@ -210,7 +219,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
     }
 
     private static void validarCpf(String cpf) throws ValidacaoException {
-        if (!UtilCpfCnpj.validar(cpf) | UtilSefisca.isCPFComDigitosIguais(cpf)) {
+        if (!UtilCpfCnpj.validar(cpf.replace(".", "").replace("-", "")) | UtilSefisca.isCPFComDigitosIguais(cpf)) {
             throw new ValidacaoException("CPF do usuário inválido!");
         }
     }

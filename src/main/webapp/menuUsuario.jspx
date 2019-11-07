@@ -8,7 +8,7 @@
 
 	<h:form id="formMenuUsuario">
 		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"
-			id="menubar" style="margin-bottom: 20px;">
+			id="menubar" style="margin-bottom: 1px;">
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
@@ -54,8 +54,10 @@
 					disabled="true" />
 			</b:navbarLinks>
 		</b:navBar>
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+			show-detail="true" show-summary="true" allowDismiss="true" 
+			delay="10000" escape="true" />
+		
 		<p:sticky id="stickyMenu" target=":formMenuUsuario:menubar" />
-		<p:growl autoUpdate="true" id="growl" showDetail="true" sticky="true" />
-		<p:messages autoUpdate="true" closable="true" />
 	</h:form>
 </ui:composition>
