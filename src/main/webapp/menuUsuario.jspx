@@ -5,7 +5,7 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
 		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"

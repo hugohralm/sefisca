@@ -11,171 +11,154 @@
 
 	<ui:define name="corpo">
 
-		<p:panel id="panelUsuario" header="Dados do usuário">
-			<a:field label="CPF">
-				<p:inputMask readonly="true"
-					style="background-color:#E0E0E0;width:180px;" mask="999.999.999-99"
-					value="#{UsuarioControl.usuario.pessoaFisica.cpf}" />
-			</a:field>
+		<b:form>
+			<b:panel id="panelUsuario" title="Dados do usuario" look="primary"
+				collapsible="false">
+				<b:container>
+					<b:row>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:inputText label="CPF" render-label="true"
+								mask="999.999.999-99"
+								value="#{UsuarioControl.usuario.pessoaFisica.cpf}" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:datepicker id="nascDate" label="Data de nascimento"
+								mode="popup-icon"
+								value="#{UsuarioControl.usuario.pessoaFisica.dataNascimento}" />
+							<b:message for="nascDate" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column smallScreen="8" medium-screen="6" large-screen="8">
+							<b:inputText label="Nome" render-label="true"
+								value="#{UsuarioControl.usuario.pessoaFisica.nome}" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column smallScreen="12" medium-screen="6" large-screen="6">
+							<b:inputText label="Email" render-label="true" mask="email"
+								value="#{UsuarioControl.usuario.pessoaFisica.email}" />
+						</b:column>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:inputText label="Telefone" render-label="true"
+								mask="(99) 9999-9999"
+								value="#{UsuarioControl.usuario.pessoaFisica.telefone}" />
 
-			<a:field label="Data de nascimento" spaceLeft="10px">
-				<p:inputMask styleClass="obrigatorio"
-					value="#{UsuarioControl.usuario.pessoaFisica.dataNascimento }"
-					style="width:188px;" mask="99/99/9999">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
-				</p:inputMask>
-			</a:field>
+						</b:column>
 
-			<a:newLine />
+						<b:column smallScreen="6" medium-screen="3">
+							<b:inputText label="Celular" render-label="true"
+								mask="(99) 99999-9999"
+								value="#{UsuarioControl.usuario.pessoaFisica.celular}" />
+						</b:column>
+					</b:row>
 
-			<a:field label="Nome">
-				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioControl.usuario.pessoaFisica.nome}"
-					style="width:600px;" />
-			</a:field>
 
-			<a:newLine />
+					<b:row>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:selectOneMenu label="Sexo" render-label="true"
+								value="#{UsuarioControl.usuario.pessoaFisica.sexo}">
+								<f:selectItems value="#{UsuarioControl.sexos}" />
+							</b:selectOneMenu>
+						</b:column>
 
-			<a:field label="E-mail">
-				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioControl.usuario.pessoaFisica.email}"
-					style="width:340px;" />
-			</a:field>
+						<b:column medium-screen="4">
+							<b:selectOneMenu label="Estado Civil" render-label="true"
+								value="#{UsuarioControl.usuario.pessoaFisica.estadoCivil}">
+								<f:selectItems value="#{UsuarioControl.estadosCivis}" />
+							</b:selectOneMenu>
 
-			<a:field label="Telefone" spaceLeft="10px">
-				<p:inputText styleClass="obrigatorio"
-					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioControl.usuario.pessoaFisica.telefone}"
-					style="width:110px;" />
-			</a:field>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column smallScreen="12" medium-screen="6" large-screen="3">
+							<b:inputText label="CEP" render-label="true" mask="99.999-999"
+								value="#{UsuarioControl.usuario.pessoaFisica.endereco.cep}" />
+						</b:column>
+						<b:column smallScreen="6" medium-screen="3" large-screen="2">
+							<b:commandButton ajax="false" look="primary" icon="search"
+								actionListener="#{UsuarioControl.consultarCep}" />
+						</b:column>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:inputText label="Endreço" render-label="true"
+								value="#{UsuarioControl.usuario.pessoaFisica.endereco.endereco}" />
+						</b:column>
+					</b:row>
 
-			<a:field label="Celular" spaceLeft="10px">
-				<p:inputText styleClass="obrigatorio"
-					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioControl.usuario.pessoaFisica.celular}"
-					style="width:128px;" />
-			</a:field>
+					<b:row>
+						<b:column smallScreen="6" medium-screen="3">
+							<b:selectOneMenu id="estado" label="Estado" render-label="true"
+								ajax="true" value="#{UsuarioControl.uf}"
+								onchange="ajax:UsuarioControl.listarMunicipiosPorUfs"
+								update="estado municipio">
+								<f:selectItems value="#{UsuarioControl.ufs }" />
+							</b:selectOneMenu>
+						</b:column>
 
-			<a:newLine />
-			<a:field label="Sexo">
-				<p:selectOneMenu style="width:150px;" styleClass="obrigatorio"
-					value="#{UsuarioControl.usuario.pessoaFisica.sexo}">
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItems value="#{UsuarioControl.sexos}" />
-				</p:selectOneMenu>
-			</a:field>
+						<b:column medium-screen="4">
+							<b:selectOneMenu id="municipio" label="Municipio"
+								render-label="true"
+								value="#{UsuarioControl.usuario.pessoaFisica.endereco.municipio}">
+								<f:selectItems value="#{UsuarioControl.municipios}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
 
-			<a:field label="Estado civil" spaceLeft="10px">
-				<p:selectOneMenu style="width:165px;" styleClass="obrigatorio"
-					autoWidth="false"
-					value="#{UsuarioControl.usuario.pessoaFisica.estadoCivil}">
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItems value="#{UsuarioControl.estadosCivis}" />
-				</p:selectOneMenu>
-			</a:field>
+					<b:row>
+						<b:column smallScreen="6" medium-screen="1">
+							<b:commandButton value="Salvar" ajax="false" look="success"
+								actionListener="#{UsuarioControl.confirmar}" style="width:80px" />
+						</b:column>
 
-			<a:newLine />
+						<b:column medium-screen="1">
+							<b:button onclick="$('.trocarSenhaModal').modal('show')"
+								value="Alterar Senha" look="primary" />
+						</b:column>
+					</b:row>
 
-			<a:field label="CEP">
-				<p:inputMask styleClass="obrigatorio" mask="99.999-999"
-					value="#{UsuarioControl.usuario.pessoaFisica.endereco.cep }"
-					style="width:110px;" />
-			</a:field>
-			<a:field>
-				<p:commandButton title="Clique aqui para pesquisar o cep"
-					icon="ui-icon-search" ajax="false"
-					actionListener="#{UsuarioControl.consultarCep}"
-					update="opEnderecoEmpreendedor" />
-			</a:field>
+					<b:modal id="trocarSenhaModal" styleClass="trocarSenhaModal"
+						title="Alteração de Senha" closable="false"
+						close-on-escape="false" backdrop="false">
+						<b:form>
+							<b:inputSecret label="Informe a senha atual"
+								large-screen="two-thirds"
+								value="#{UsuarioControl.confirmarSenha}" />
 
-			<a:field label="Endereço" spaceLeft="10px;">
-				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioControl.usuario.pessoaFisica.endereco.endereco}"
-					style="width:435px;" />
-			</a:field>
 
-			<a:newLine />
+							<b:row>
+								<b:column>
+									<b:inputSecret label="Informe uma nova senha"
+										large-screen="two-thirds" value="#{UsuarioControl.senha1}" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column>
+									<b:inputSecret label="Confirme a nova senha"
+										large-screen="two-thirds" value="#{UsuarioControl.senha2}" />
+								</b:column>
+							</b:row>
 
-			<a:field label="Estado">
-				<p:selectOneMenu id="estado" styleClass="obrigatorio"
-					value="#{UsuarioControl.uf}" style="width:180px;">
-					<f:selectItems value="#{UsuarioControl.ufs }" />
-					<p:ajax event="change"
-						listener="#{UsuarioControl.listarMunicipiosPorUfs}"
-						update="estado cidade" />
-				</p:selectOneMenu>
-			</a:field>
 
-			<a:field label="Município" spaceLeft="10px">
-				<p:selectOneMenu id="cidade" styleClass="obrigatorio"
-					converter="objectConverter"
-					value="#{UsuarioControl.usuario.pessoaFisica.endereco.municipio}"
-					style="width:410px" filter="true" filterFunction="filtrarSemAcento"
-					filterMatchMode="custom">
-					<f:selectItem itemLabel="Selecione o município" itemValue="#{null}"
-						noSelectionOption="true" />
-					<f:selectItems value="#{UsuarioControl.municipios}" var="cidade"
-						itemLabel="#{cidade.descricao}" itemValue="#{cidade}" />
-				</p:selectOneMenu>
-			</a:field>
+							<b:row>
+								<b:column>
+									<b:button largeScreen="half" value="Cancelar" dismiss="modal"
+										onclick="return false;" />
+									<b:commandButton largeScreen="half"
+										action="#{UsuarioControl.alterarSenha}" dismiss="modal"
+										value="Salvar" look="success"
+										oncomplete="$('.trocarSenhaModal').modal('hide')" />
+								</b:column>
+							</b:row>
+							<b:fetchBeanInfos />
+							<b:messages />
+						</b:form>
+					</b:modal>
 
-			<a:newLine />
+				</b:container>
+			</b:panel>
+		</b:form>
 
-			<a:field>
-				<p:commandButton actionListener="#{UsuarioControl.confirmar}"
-					value="Salvar" ajax="false" icon="ui-icon-disk" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton id="btnAlterarSenha" icon="ui-icon-refresh"
-					onclick="PF('dialogAlterarSenha').show();" value="Alterar Senha" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-		</p:panel>
-
-		<p:dialog id="dialogAlterarSenha" header="Alteração de Senha"
-			widgetVar="dialogAlterarSenha" maximizable="true" dynamic="true"
-			modal="true" hideEffect="explode">
-			<a:field label="Informe a senha atual">
-				<p:password styleClass="obrigatorio"
-					value="#{UsuarioControl.confirmarSenha}" id="snh"
-					style="width:200px" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field label="Informe uma nova senha">
-				<p:password styleClass="obrigatorio" minLength="6"
-					value="#{UsuarioControl.senha1}" promptLabel="Digite a senha"
-					goodLabel="Senha boa" strongLabel="Senha forte"
-					weakLabel="Senha Fraca" style="width:200px" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field label="Reinforme a nova senha">
-				<p:password styleClass="obrigatorio" minLength="6"
-					value="#{UsuarioControl.senha2}" style="width:200px" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field>
-				<p:commandButton value="Alterar Senha"
-					action="#{UsuarioControl.alterarSenha}" ajax="false"
-					icon="ui-icon-refresh"
-					oncomplete="PF('dialogAlterarSenha').close();" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton id="btnCancelarTransf" icon="ui-icon-circle-close"
-					onclick="PF('dialogAlterarSenha').close();" value="Cancelar" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-		</p:dialog>
 	</ui:define>
 </ui:composition>
