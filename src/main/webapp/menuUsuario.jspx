@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
 		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"
@@ -15,7 +15,8 @@
 				<b:dropMenu value="Consulta" iconAwesome="search">
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						action="/aberturaProcesso?faces-redirect=true" iconAwesome="folder-open" />
+						action="/aberturaProcesso?faces-redirect=true"
+						iconAwesome="folder-open" />
 				</b:dropMenu>
 				<b:dropMenu value="Configurações" iconAwesome="wrench">
 					<b:navCommandLink value="Perfil"
@@ -55,9 +56,9 @@
 			</b:navbarLinks>
 		</b:navBar>
 		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
-			show-detail="true" show-summary="true" allowDismiss="true" 
+			show-detail="true" show-summary="true" allowDismiss="true"
 			delay="10000" escape="true" />
-		
+
 		<p:sticky id="stickyMenu" target=":formMenuUsuario:menubar" />
 	</h:form>
 </ui:composition>
