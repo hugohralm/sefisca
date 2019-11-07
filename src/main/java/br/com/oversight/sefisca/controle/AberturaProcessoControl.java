@@ -15,6 +15,7 @@ import br.com.oversight.sefisca.entidade.Instituicao;
 import br.com.oversight.sefisca.entidade.Processo;
 import br.com.oversight.sefisca.entidade.Usuario;
 import br.com.oversight.sefisca.services.DataSusService;
+import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +27,11 @@ public class AberturaProcessoControl implements Serializable {
 
 	@Getter
 	@Setter
-	private String codigoCNES;
+	private String cnesCnpj;
+	
+	@Getter
+	@Setter
+	private String tipo = "CNES";
 
 	@Getter
 	private Usuario usuarioLogado;
@@ -55,22 +60,33 @@ public class AberturaProcessoControl implements Serializable {
 
 	public void consultarEstabelecimento() {
 		try {
-			if (this.codigoCNES.isEmpty()) {
+			if (this.cnesCnpj.isEmpty()) {
 				UtilFaces.addMensagemFaces("Codigo obrigatorio CNES", FacesMessage.SEVERITY_ERROR);
 				return;
 			}
 
-			instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(this.codigoCNES);
-			if (instituicaoDTO != null) {
+			if(this.tipo.equals("CNES")) {
+				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(this.cnesCnpj, null);
+			} else {
+				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(null, UtilSefisca.limparMascara(this.cnesCnpj));
+			}
+			
+			if (this.instituicaoDTO != null) {
 				this.instituicao.setDto(this.instituicaoDTO);
 			} else {
 				this.instituicao = new Instituicao();
-				UtilFaces.addMensagemFaces("CNES não encontrado.", FacesMessage.SEVERITY_WARN);
-				UtilFaces.addMensagemFaces("Caso seja uma instituicao nova preencha todos os campos.",
+				UtilFaces.addMensagemFaces(this.tipo + " não encontrado.", FacesMessage.SEVERITY_WARN);
+				UtilFaces.addMensagemFaces("Caso seja um novo cadastro preencha todos os campos.",
 						FacesMessage.SEVERITY_WARN);
 			}
 		} catch (Exception e) {
 			UtilFaces.addMensagemFaces(e);
 		}
 	}
+	
+	public boolean isCnes() {
+		return this.tipo.equals("CNES");
+	}
+	
+	
 }
