@@ -2,14 +2,13 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
 		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"
-			id="menubar" style="margin-bottom: 2px;">
+			id="menubar" style="margin-bottom: 1px;">
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
@@ -33,6 +32,11 @@
 						rendered="#{securityScope.userInRole['ADMIN']}"
 						action="/admin/parametroList?faces-redirect=true"
 						iconAwesome="wrench" />
+					<b:navCommandLink value="Termos de uso"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/gerencia/termoResponsabilidadeTemplateList?faces-redirect=true"
+						iconAwesome="wrench" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
 					<b:navLink value="Modelagem de Negócio" iconAwesome="file"
@@ -50,8 +54,10 @@
 					disabled="true" />
 			</b:navbarLinks>
 		</b:navBar>
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+			show-detail="true" show-summary="true" allowDismiss="true" 
+			delay="10000" escape="true" />
+		
 		<p:sticky id="stickyMenu" target=":formMenuUsuario:menubar" />
-		<p:growl autoUpdate="true" id="growl" showDetail="true" sticky="true" />
-		<p:messages autoUpdate="true" closable="true" />
 	</h:form>
 </ui:composition>
