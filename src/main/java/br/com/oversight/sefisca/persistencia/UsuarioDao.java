@@ -28,4 +28,6 @@ public interface UsuarioDao extends Persistencia<Usuario> {
     Usuario consultarPorToken(String token) throws PersistenciaException;
 
     Usuario consultarPorCpfSemValidacao(String cpf) throws PersistenciaException;
+
+	Usuario consultarPorId(Integer id) throws PersistenciaException;
 }
