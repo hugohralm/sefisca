@@ -23,6 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import br.com.ambientinformatica.util.AmbientValidator;
 import br.com.ambientinformatica.util.Entidade;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
+import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,12 +44,12 @@ public class Instituicao extends Entidade implements Serializable {
 	@Getter
 	@Setter
 	@Length(min = 0, max = 50, message = "O limite do campo codigo CNES é de 50 caracteres.", groups = AmbientValidator.class)
-	private String codigoCNES;
+	@Column(unique = true, nullable = false)
+	private String cnes;
 
 	@Getter
 	@Setter
 	@Length(min = 0, max = 20, message = "O limite do campo cnpj é de 20 caracteres.", groups = AmbientValidator.class)
-	@Column(unique = true, nullable = false)
 	private String cnpj;
 
 	@Getter
@@ -74,7 +75,7 @@ public class Instituicao extends Entidade implements Serializable {
 
 	@Getter
 	@Setter
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotNull(message = "Informe o Endereço.", groups = AmbientValidator.class)
 	private Endereco endereco = new Endereco();
 
@@ -94,16 +95,28 @@ public class Instituicao extends Entidade implements Serializable {
 	}
 
 	public void setDto(InstituicaoDTO instituicaoDTO) {
-		this.codigoCNES = instituicaoDTO.getCodigoCNES();
-		this.cnpj = instituicaoDTO.getCnpj();
+		this.cnes = instituicaoDTO.getCnes();
+		this.cnpj = UtilSefisca.isNullOrEmpty(instituicaoDTO.getCnpj()) ? null : instituicaoDTO.getCnpj();
 		this.nomeFantasia = instituicaoDTO.getNomeFantasia();
 		this.razaoSocial = instituicaoDTO.getRazaoSocial();
 		this.tipoUnidade = instituicaoDTO.getTipoUnidade();
 		this.endereco.setEndereco(instituicaoDTO.getLogradouro());
 		this.endereco.setNumero(instituicaoDTO.getNumero());
-		this.endereco.setComplemento(instituicaoDTO.getComplemento());
+		this.endereco.setComplemento(UtilSefisca.isNullOrEmpty(instituicaoDTO.getComplemento()) ? null : instituicaoDTO.getComplemento());
 		this.endereco.setBairro(instituicaoDTO.getBairro());
 		this.endereco.setCep(instituicaoDTO.getCep());
 		this.endereco.setMunicipio(instituicaoDTO.getMunicipio());
+		this.endereco.setLatitude(instituicaoDTO.getLatitude());
+		this.endereco.setLongitude(instituicaoDTO.getLongitude());
+		this.endereco.setGeoJson(instituicaoDTO.getGeoJson());
+	}
+	
+	public Instituicao(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s - %s", cnes, nomeFantasia);
 	}
 }

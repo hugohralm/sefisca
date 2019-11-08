@@ -2,6 +2,7 @@ package br.com.oversight.sefisca.entidade;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +21,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.ambientinformatica.util.AmbientValidator;
 import br.com.ambientinformatica.util.Entidade;
+import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,22 +46,36 @@ public class Processo extends Entidade implements Serializable {
 	@Getter
 	@Setter
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20, nullable = true)
-	private EnumMotivoProcesso motivoProcesso;
+	@Column(length = 20, nullable = false)
+	private EnumTipoProcesso tipoProcesso;
 	
 	@Getter
 	@Setter
-	@Temporal(TemporalType.TIMESTAMP)
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20, nullable = false)
+	private EnumStatusProcesso statusProcesso;
+	
+	@Getter
+	@Setter
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20, nullable = false)
+	private EnumEtapaProcesso etapaProcesso;
+	
+	@Getter
+	@Setter
+	@Temporal(TemporalType.DATE)
+	@NotNull(message = "Informe a data de abertura do processo", groups = AmbientValidator.class)
 	private Date dataAbertura = new Date();
 	
 	@Getter
 	@Setter
+	@NotBlank(message = "Informe o numero do processo", groups = AmbientValidator.class)
 	@Length(min = 0, max = 100, message = "O limite do campo numero é de 100 caracteres.", groups = AmbientValidator.class)
 	private String numero;
 	
 	@Getter
 	@Setter
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	@NotNull(message = "Informe a instituicao", groups = AmbientValidator.class)
 	private Instituicao instituicao;
 
@@ -70,7 +87,7 @@ public class Processo extends Entidade implements Serializable {
 	@Getter
 	@Setter
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataCriacao = new Date();
+	private Date dataCriacao;
 
 	@PrePersist
 	private void atualizarData() {
@@ -79,5 +96,13 @@ public class Processo extends Entidade implements Serializable {
 	
 	public Processo(Usuario usuario) {
 		this.usuario = usuario;
+		this.statusProcesso = EnumStatusProcesso.ATIVO;
+		this.etapaProcesso = EnumEtapaProcesso.ABERTURA;
+		this.instituicao = new Instituicao(usuario);
+		this.numero = UUID.randomUUID().toString();
+	}
+	
+	public String getDataAberturaFormatada() {
+		return UtilSefisca.getDataStringFormatadaMask(this.dataAbertura, "dd/MM/yyyy");
 	}
 }

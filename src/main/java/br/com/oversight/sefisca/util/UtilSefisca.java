@@ -221,6 +221,15 @@ public class UtilSefisca {
 		}
 		return dataString;
 	}
+	
+	public static String getDataStringFormatadaMask(Date data, String mask) {
+		String dataString = "";
+		if (data != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat(mask);
+			dataString = sdf.format(data);
+		}
+		return dataString;
+	}
 
 	public static String limparArrayDeString(String texto) {
 		String textoFormatado = UtilTexto.truncarTamanhoMaximo(texto.toString(), 1024);

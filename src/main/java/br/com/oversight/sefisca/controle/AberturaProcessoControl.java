@@ -1,9 +1,11 @@
 package br.com.oversight.sefisca.controle;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,9 +13,12 @@ import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
+import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
+import br.com.oversight.sefisca.entidade.EnumTipoProcesso;
 import br.com.oversight.sefisca.entidade.Instituicao;
 import br.com.oversight.sefisca.entidade.Processo;
 import br.com.oversight.sefisca.entidade.Usuario;
+import br.com.oversight.sefisca.persistencia.ProcessoDao;
 import br.com.oversight.sefisca.services.DataSusService;
 import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
@@ -25,13 +30,22 @@ public class AberturaProcessoControl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	private UsuarioLogadoControl usuarioLogadoControl;
+
+	@Autowired
+	private DataSusService dataSusService;
+
+	@Autowired
+	private ProcessoDao processoDao;
+
 	@Getter
 	@Setter
 	private String cnesCnpj;
-	
+
 	@Getter
 	@Setter
-	private String tipo = "CNES";
+	private EnumTipoCodigoInstituicao tipoCodigo = EnumTipoCodigoInstituicao.CNES;
 
 	@Getter
 	private Usuario usuarioLogado;
@@ -39,23 +53,16 @@ public class AberturaProcessoControl implements Serializable {
 	@Getter
 	private InstituicaoDTO instituicaoDTO;
 
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Processo processo;
-	
+
 	@Getter
 	private Instituicao instituicao;
 
-	@Autowired
-	private UsuarioLogadoControl usuarioLogadoControl;
-
-	@Autowired
-	private DataSusService dataSusService;
-
 	@PostConstruct
 	public void init() {
-		this.usuarioLogado = usuarioLogadoControl.getUsuario();
-		this.processo = new Processo();
-		this.instituicao = new Instituicao();
+		this.processo = new Processo(usuarioLogadoControl.getUsuario());
 	}
 
 	public void consultarEstabelecimento() {
@@ -65,28 +72,37 @@ public class AberturaProcessoControl implements Serializable {
 				return;
 			}
 
-			if(this.tipo.equals("CNES")) {
+			if (this.tipoCodigo.equals(EnumTipoCodigoInstituicao.CNES)) {
 				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(this.cnesCnpj, null);
 			} else {
-				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(null, UtilSefisca.limparMascara(this.cnesCnpj));
+				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(null,
+						UtilSefisca.limparMascara(this.cnesCnpj));
 			}
-			
+
 			if (this.instituicaoDTO != null) {
-				this.instituicao.setDto(this.instituicaoDTO);
+				this.processo.getInstituicao().setDto(this.instituicaoDTO);
 			} else {
-				this.instituicao = new Instituicao();
-				UtilFaces.addMensagemFaces(this.tipo + " não encontrado.", FacesMessage.SEVERITY_WARN);
-				UtilFaces.addMensagemFaces("Caso seja um novo cadastro preencha todos os campos.",
-						FacesMessage.SEVERITY_WARN);
+				UtilFaces.addMensagemFaces(this.tipoCodigo + " não encontrado.", FacesMessage.SEVERITY_WARN);
 			}
 		} catch (Exception e) {
 			UtilFaces.addMensagemFaces(e);
 		}
 	}
-	
-	public boolean isCnes() {
-		return this.tipo.equals("CNES");
+
+	public void confirmar() {
+		this.processo = processoDao.alterar(this.processo);
+		UtilFaces.addMensagemFaces("Processo salvo com sucesso");
 	}
-	
-	
+
+	public boolean isCnes() {
+		return this.tipoCodigo.equals(EnumTipoCodigoInstituicao.CNES);
+	}
+
+	public List<SelectItem> getTiposProcesso() {
+		return UtilFaces.getListEnum(EnumTipoProcesso.values());
+	}
+
+	public List<SelectItem> getTiposCodigoInstituicao() {
+		return UtilFaces.getListEnum(EnumTipoCodigoInstituicao.values());
+	}
 }

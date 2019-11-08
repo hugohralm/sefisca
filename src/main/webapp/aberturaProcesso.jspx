@@ -10,16 +10,79 @@
 
 	<ui:define name="corpo">
 		<p:panel id="panelProcesso" header="Dados do processo">
+			<a:field label="Número">
+				<p:inputText styleClass="obrigatorio"
+					value="#{AberturaProcessoControl.processo.numero}"
+					style="width:355px;" readonly="true" />
+			</a:field>
+
+			<a:field label="Usuário" spaceLeft="10px">
+				<p:inputText styleClass="obrigatorio"
+					value="#{AberturaProcessoControl.processo.usuario}"
+					style="width:355px;" readonly="true" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
+
+			<a:field label="Tipo processo">
+				<p:selectOneMenu
+					value="#{AberturaProcessoControl.processo.tipoProcesso}"
+					style="width:120px;" autoWidth="false">
+					<f:selectItems value="#{AberturaProcessoControl.tiposProcesso}" />
+					<p:ajax event="change" update=":formCorpo:panelInstituicao" />
+				</p:selectOneMenu>
+			</a:field>
+
+			<a:field label="Data de abertura" spaceLeft="15px">
+				<p:inputMask styleClass="obrigatorio"
+					value="#{AberturaProcessoControl.processo.dataAbertura}"
+					style="width:120px;" mask="99/99/9999">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputMask>
+			</a:field>
+
+			<a:field label="Status" spaceLeft="15px">
+				<p:inputText styleClass="obrigatorio"
+					value="#{AberturaProcessoControl.processo.statusProcesso.descricao}"
+					style="width:120px;" readonly="true" />
+			</a:field>
+
+			<a:field label="Etapa" spaceLeft="15px">
+				<p:inputText styleClass="obrigatorio"
+					value="#{AberturaProcessoControl.processo.etapaProcesso.descricao}"
+					style="width:200px;" readonly="true" />
+			</a:field>
+			
+			<a:newLine />
+
+			<a:field spaceLeft="10px">
+				<p:commandButton
+					title="Clique aqui para confirmar a abertura do processo"
+					icon="ui-icon-folder-open" value="Iniciar processo"
+					actionListener="#{AberturaProcessoControl.confirmar}"
+					update=":formCorpo:panelProcesso" />
+			</a:field>
+
+			<a:field spaceLeft="10px">
+				<p:commandButton actionListener="#{MenuControl.gerenciarSessao}"
+					value="Fechar" ajax="false" action="inicio?faces-redirect=true"
+					icon="ui-icon-close" immediate="true" />
+			</a:field>
+
+			<a:newLine />
+			<a:newLine />
 			<p:panel id="panelInstituicao" header="Dados da instituicao">
 				<a:field label="Tipo">
-					<p:selectOneMenu value="#{AberturaProcessoControl.tipo}">
-						<f:selectItem itemLabel="CNES" itemValue="CNES" />
-						<f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
+					<p:selectOneMenu value="#{AberturaProcessoControl.tipoCodigo}">
+						<f:selectItems
+							value="#{AberturaProcessoControl.tiposCodigoInstituicao}" />
 						<p:ajax event="change" update=":formCorpo:panelInstituicao" />
 					</p:selectOneMenu>
 				</a:field>
 
-				<a:field label="#{AberturaProcessoControl.cnes ? 'CNES' : 'CNPJ'}" spaceLeft="10px">
+				<a:field label="#{AberturaProcessoControl.cnes ? 'CNES' : 'CNPJ'}"
+					spaceLeft="10px">
 					<p:inputMask styleClass="obrigatorio"
 						mask="#{AberturaProcessoControl.cnes ? '9999999' : '99.999.999/9999-99'}"
 						value="#{AberturaProcessoControl.cnesCnpj}" style="width:186px;" />
@@ -27,15 +90,23 @@
 
 				<a:field spaceLeft="10px">
 					<p:commandButton title="Clique aqui para consultar estabelecimento"
-						icon="ui-icon-search" ajax="false"
+						icon="ui-icon-search"
 						actionListener="#{AberturaProcessoControl.consultarEstabelecimento}"
 						update=":formCorpo:panelProcesso" />
 				</a:field>
 
-				<a:field label="Nome" spaceLeft="10px;">
+				<a:newLine />
+
+				<a:field label="Nome Fantasia">
 					<p:inputText styleClass="obrigatorio"
-						value="#{AberturaProcessoControl.instituicao.nomeFantasia}"
-						style="width:355px;" />
+						value="#{AberturaProcessoControl.processo.instituicao.nomeFantasia}"
+						style="width:355px;" readonly="true" />
+				</a:field>
+
+				<a:field label="Razão Social" spaceLeft="10px;">
+					<p:inputText styleClass="obrigatorio"
+						value="#{AberturaProcessoControl.processo.instituicao.razaoSocial}"
+						style="width:355px;" readonly="true" />
 				</a:field>
 
 				<a:newLine />

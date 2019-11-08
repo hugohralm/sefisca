@@ -40,6 +40,7 @@ public class DataSusService {
 			} else {
 				envelope = FileRequestUtils.getEstabelecimentoCNPJXmlRequest(cnpj);
 			}
+			
 			if (envelope != null) {
 				SOAPMessage soapResponse = soapRequest(envelope, URL_ESTABELECIMENTO_SERVICE);
 				InstituicaoDTO instituicaoDTO = montarInstituicaoDTO(soapResponse);
@@ -69,7 +70,8 @@ public class DataSusService {
 	public InstituicaoDTO montarInstituicaoDTO(SOAPMessage soapResponse) throws SOAPException {
 		SOAPBody soapBody = soapResponse.getSOAPBody();
 		InstituicaoDTO instituicaoDTO = new InstituicaoDTO();
-		instituicaoDTO.setCodigoCNES(UtilSefisca.getElementsByTagNameXML(soapBody, "ns2:CodigoCNES"));
+		instituicaoDTO.setCnes(UtilSefisca.getElementsByTagNameXML(soapBody, "ns2:CodigoCNES"));
+		instituicaoDTO.setCnpj(UtilSefisca.getElementsByTagNameXML(soapBody, "ns6:CNPJ"));
 		instituicaoDTO.setRazaoSocial(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeEmpresarial"));
 		instituicaoDTO.setNomeFantasia(UtilSefisca.getElementsByTagNameXML(soapBody, "ns25:nomeFantasia"));
 		instituicaoDTO.setTipoUnidade(UtilSefisca.getElementsByTagNameXML(soapBody, "ns28:descricao"));
