@@ -15,5 +15,15 @@
 }
 
 .ui-scrollpanel {
-	width: 100%;	
+	width: 100%;
 }
+
+/*Color icons*/
+.icon-color-red {
+	color: #e3123c;
+}
+
+.icon-color-green {
+	color: #02b201;
+}
+

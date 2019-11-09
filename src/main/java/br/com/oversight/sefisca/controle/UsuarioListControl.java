@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 
@@ -43,7 +44,7 @@ public class UsuarioListControl implements Serializable {
 
 	@Autowired
 	private CepService cepService;
-	
+
 	@Getter
 	private Usuario usuario;
 
@@ -76,6 +77,11 @@ public class UsuarioListControl implements Serializable {
 
 	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
+
+	@PostConstruct
+	public void init() {
+			listar();
+	}
 
 	public void confirmar() {
 		try {
@@ -125,25 +131,6 @@ public class UsuarioListControl implements Serializable {
 		}
 	}
 
-	public List<SelectItem> getPapeis() {
-		List<SelectItem> listaPapeis = new ArrayList<>();
-		listaPapeis = UtilFaces.getListEnum(EnumPapel.values());
-		listaPapeis.remove(0);
-		return listaPapeis;
-	}
-
-	public List<SelectItem> getUfs() {
-		return UtilFaces.getListEnum(EnumUf.values());
-	}
-
-	public List<SelectItem> getEstadosCivis() {
-		return UtilFaces.getListEnum(EnumEstadoCivil.values());
-	}
-
-	public List<SelectItem> getSexos() {
-		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
-	}
-
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuarioDao.consultarPorId(usuario.getId());
 
@@ -182,4 +169,24 @@ public class UsuarioListControl implements Serializable {
 			}
 		}
 	}
+
+	public List<SelectItem> getPapeis() {
+		List<SelectItem> listaPapeis = new ArrayList<>();
+		listaPapeis = UtilFaces.getListEnum(EnumPapel.values());
+		listaPapeis.remove(0);
+		return listaPapeis;
+	}
+
+	public List<SelectItem> getUfs() {
+		return UtilFaces.getListEnum(EnumUf.values());
+	}
+
+	public List<SelectItem> getEstadosCivis() {
+		return UtilFaces.getListEnum(EnumEstadoCivil.values());
+	}
+
+	public List<SelectItem> getSexos() {
+		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
+	}
+
 }
