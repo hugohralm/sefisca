@@ -26,6 +26,7 @@ import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeDao;
 import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeTemplateDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.CepService;
+import br.com.oversight.sefisca.util.UtilMessages;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -80,7 +81,7 @@ public class UsuarioNovoControl implements Serializable {
 			TermoResponsabilidadeTemplate template = termoResponsabilidadeTemplateDao.consultarUltimo();
 			this.termoResponsabilidade = new TermoResponsabilidade(template);
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
@@ -89,7 +90,7 @@ public class UsuarioNovoControl implements Serializable {
 			this.municipios = municipioDao.listarPorUfNome(uf, null);
 		} catch (Exception e) {
 			e.printStackTrace();
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
@@ -97,9 +98,8 @@ public class UsuarioNovoControl implements Serializable {
 		try {
 			usuarioDao.validarUsuario(this.usuario, this.confirmarSenha);
 			if (this.termoResponsabilidade == null || !this.termoResponsabilidade.isAceitou()) {
-				UtilFaces.addMensagemFaces(
-						"Você deve ler e aceitar o termo de responsabilidade antes de concluir o cadastro.",
-						FacesMessage.SEVERITY_ERROR);
+				UtilMessages.addMessage(FacesMessage.SEVERITY_ERROR,
+						"Você deve ler e aceitar o termo de responsabilidade antes de concluir o cadastro.");
 				return;
 			}
 			this.usuario.getPessoaFisica().setTelefone(null);
@@ -107,29 +107,18 @@ public class UsuarioNovoControl implements Serializable {
 			this.termoResponsabilidade.setUsuario(usuarioCadastrado);
 			termoResponsabilidadeDao.incluir(this.termoResponsabilidade);
 			novoUsuario();
-			UtilFaces.addMensagemFaces("Seu cadastro foi realizado com sucesso. ");
-			UtilFaces.addMensagemFaces("Acesse o seu endereço de email para confirmar o cadastro.");
+			UtilMessages.addMessage("Seu cadastro foi realizado com sucesso. ");
+			UtilMessages.addMessage("Acesse o seu endereço de email para confirmar o cadastro.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
 	public void novoUsuario() {
 		this.usuario = new Usuario();
+		this.confirmarSenha = "";
 		consultarTemplateECriarTermoResponsabilidade();
-	}
-
-	public List<SelectItem> getUfs() {
-		return UtilFaces.getListEnum(EnumUf.values());
-	}
-
-	public List<SelectItem> getEstadosCivis() {
-		return UtilFaces.getListEnum(EnumEstadoCivil.values());
-	}
-
-	public List<SelectItem> getSexos() {
-		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 
 	public void consultarCep() {
@@ -147,13 +136,26 @@ public class UsuarioNovoControl implements Serializable {
 					this.usuario.getPessoaFisica().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
-					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);
-					UtilFaces.addMensagemFaces("Caso seja um endereço novo preencha todos os campos.",
-							FacesMessage.SEVERITY_WARN);
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "CEP não encontrado.");
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN,
+							"Caso seja um endereço novo preencha todos os campos.");
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				UtilFaces.addMensagemFaces(e);
 			}
 		}
+	}
+
+	public List<SelectItem> getUfs() {
+		return UtilFaces.getListEnum(EnumUf.values());
+	}
+
+	public List<SelectItem> getEstadosCivis() {
+		return UtilFaces.getListEnum(EnumEstadoCivil.values());
+	}
+
+	public List<SelectItem> getSexos() {
+		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 }

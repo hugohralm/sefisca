@@ -35,6 +35,14 @@ public class UtilMessages {
 		addMessage(FacesMessage.SEVERITY_INFO, title, message);
 	}
 	
+	public static void addMessage( String message) {
+		addMessage(FacesMessage.SEVERITY_INFO, null, message);
+	}
+	
+	public static void addMessage(Severity severity, String message) {
+		addMessage(severity, null, message);
+	}
+	
 	public static void addMessage(Exception exception) {
 		addMessage(FacesMessage.SEVERITY_WARN, "Erro!", exception.getMessage());
 	}
