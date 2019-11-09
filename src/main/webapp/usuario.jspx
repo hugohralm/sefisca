@@ -17,12 +17,12 @@
 					collapsible="false">
 					<b:container fluid="true">
 						<b:row>
-							<b:column smallScreen="6" medium-screen="3">
+							<b:column smallScreen="4" medium-screen="3">
 								<b:inputText label="CPF" render-label="true"
 									mask="999.999.999-99"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.cpf}" />
 							</b:column>
-							<b:column medium-screen="6" large-screen="9">
+							<b:column small-screen="8" medium-screen="9" >
 								<b:inputText label="Nome" render-label="true"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.nome}" />
 							</b:column>
@@ -45,14 +45,16 @@
 						</b:row>
 						<b:row>
 							<b:column small-screen="4">
-								<b:selectOneMenu label="Sexo" render-label="true"
+								<b:selectOneMenu label="Sexo" render-label="true" 
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.sexo}">
+									<f:selectItem itemLabel="Selecione"/>
 									<f:selectItems value="#{UsuarioNovoControl.sexos}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Estado civil" render-label="true"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.estadoCivil}">
+									<f:selectItem itemLabel="Selecione"/>
 									<f:selectItems value="#{UsuarioNovoControl.estadosCivis}" />
 								</b:selectOneMenu>
 							</b:column>
@@ -78,43 +80,45 @@
 						</b:row>
 						<b:row>
 							<b:column medium-screen="6">
-								<b:inputText label="Endereço" render-label="true"
+								<b:inputText id="endereco" label="Endereço" render-label="true"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.endereco}" />
 							</b:column>
-							<b:column medium-screen="3">
+							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Bairro" render-label="true"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.bairro}" />
 							</b:column>
-							<b:column medium-screen="3">
+							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Numero" render-label="true"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.numero}" />
 							</b:column>
 						</b:row>
 						<b:row>
-							<b:column medium-screen="6">
+							<b:column small-screen="6" >
 								<b:selectOneMenu id="estado" label="Estado *"
 									render-label="true" style="width:100%;"
 									value="#{UsuarioNovoControl.uf}" select2="true"
 									update="estado municipio">
+									<f:selectItem itemLabel="Selecione"/>
 									<f:selectItems value="#{UsuarioNovoControl.ufs }" />
 									<f:ajax listener="#{UsuarioNovoControl.listarMunicipiosPorUfs}"
 										process="@this" update="municRequerente" />
 								</b:selectOneMenu>
 							</b:column>
-							<b:column medium-screen="6">
+							<b:column small-screen="6" >
 								<b:selectOneMenu id="municipio" label="Município"
 									render-label="true" select2="true" style="width:100%;"
 									value="#{UsuarioNovoControl.usuario.pessoaFisica.endereco.municipio}">
+									<f:selectItem itemLabel="Selecione"/>
 									<f:selectItems value="#{UsuarioNovoControl.municipios}" />
 								</b:selectOneMenu>
 							</b:column>
 						</b:row>
 						<b:row>
-							<b:column medium-screen="6">
+							<b:column small-screen="6">
 								<b:inputSecret label="Senha" render-label="true"
 									value="#{UsuarioNovoControl.usuario.senha}" />
 							</b:column>
-							<b:column medium-screen="6">
+							<b:column small-screen="6">
 								<b:inputSecret label="Confirme sua senha *" render-label="true"
 									value="#{UsuarioNovoControl.confirmarSenha}" />
 							</b:column>
