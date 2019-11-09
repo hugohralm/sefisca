@@ -200,4 +200,8 @@ public class PessoaFisica extends Entidade implements Serializable {
 			return false;
 		return true;
 	}
+	
+	public String getPrimeiroNome() {
+    	return this.nome.split(" ")[0];
+    }
 }

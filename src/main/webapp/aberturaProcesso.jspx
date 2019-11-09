@@ -5,8 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="corpo">
 		<p:panel id="panelProcesso" header="Dados do processo">
@@ -53,15 +52,15 @@
 					value="#{AberturaProcessoControl.processo.etapaProcesso.descricao}"
 					style="width:200px;" readonly="true" />
 			</a:field>
-			
+
 			<a:newLine />
 
 			<a:field spaceLeft="10px">
-				<p:commandButton
-					title="Clique aqui para confirmar a abertura do processo"
-					icon="ui-icon-folder-open" value="Iniciar processo"
-					actionListener="#{AberturaProcessoControl.confirmar}"
-					update=":formCorpo:panelProcesso" />
+				<p:commandButton id="btnConfirmarInicioProcesso"
+					title="Clique aqui para iniciar o processo"
+					value="Iniciar processo"
+					onclick="PF('confirmacaoInicioProcesso').show();"
+					icon="ui-icon-folder-open" />
 			</a:field>
 
 			<a:field spaceLeft="10px">
@@ -113,5 +112,15 @@
 				<a:newLine />
 			</p:panel>
 		</p:panel>
+
+		<p:confirmDialog message="Confirma o início do processo?"
+			header="Confirmação de início de processo" severity="alert"
+			widgetVar="confirmacaoInicioProcesso">
+			<p:commandButton id="btnSim" value="Sim"
+				oncomplete="PF('confirmacaoInicioProcesso').hide();"
+				actionListener="#{AberturaProcessoControl.confirmar}" />
+			<p:commandButton id="btnNao" value="Não"
+				onclick="PF('confirmacaoInicioProcesso').hide();" type="button" />
+		</p:confirmDialog>
 	</ui:define>
 </ui:composition>

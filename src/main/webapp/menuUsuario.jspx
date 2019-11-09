@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
@@ -12,17 +10,15 @@
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
+				<b:navCommandLink value="Iniciar Processo"
+					actionListener="#{MenuControl.gerenciarSessao}"
+					action="/aberturaProcesso?faces-redirect=true" iconAwesome="file" />
 				<b:dropMenu value="Consulta" iconAwesome="search">
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						action="/aberturaProcesso?faces-redirect=true"
-						iconAwesome="folder-open" />
+						action="/processos?faces-redirect=true" iconAwesome="folder-open" />
 				</b:dropMenu>
 				<b:dropMenu value="Configurações" iconAwesome="wrench">
-					<b:navCommandLink value="Perfil"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						action="#{UsuarioControl.verificarUsuarioLogado}"
-						iconAwesome="user" />
 					<b:navCommandLink value="Usuários"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
@@ -44,6 +40,10 @@
 						href="/sefisca/documentos/modelagem_de_negocio.pdf"
 						target="_blank" />
 				</b:dropMenu>
+				<b:navCommandLink value="#{UsuarioLogadoControl.usuario.pessoaFisica.primeiroNome}"
+					actionListener="#{MenuControl.gerenciarSessao}"
+					action="#{UsuarioControl.verificarUsuarioLogado}"
+					iconAwesome="user" />
 				<b:navLink value="Sair" iconAwesome="power-off"
 					onclick="document.location.href='/sefisca/sair.jsp'"
 					immediate="true" />

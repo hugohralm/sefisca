@@ -18,8 +18,8 @@ import br.com.oversight.sefisca.entidade.EnumTipoProcesso;
 import br.com.oversight.sefisca.entidade.Instituicao;
 import br.com.oversight.sefisca.entidade.Processo;
 import br.com.oversight.sefisca.entidade.Usuario;
+import br.com.oversight.sefisca.persistencia.InstituicaoDao;
 import br.com.oversight.sefisca.persistencia.ProcessoDao;
-import br.com.oversight.sefisca.services.DataSusService;
 import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,10 +34,10 @@ public class AberturaProcessoControl implements Serializable {
 	private UsuarioLogadoControl usuarioLogadoControl;
 
 	@Autowired
-	private DataSusService dataSusService;
+	private ProcessoDao processoDao;
 
 	@Autowired
-	private ProcessoDao processoDao;
+	private InstituicaoDao instituicaoDao;
 
 	@Getter
 	@Setter
@@ -45,7 +45,7 @@ public class AberturaProcessoControl implements Serializable {
 
 	@Getter
 	@Setter
-	private EnumTipoCodigoInstituicao tipoCodigo = EnumTipoCodigoInstituicao.CNES;
+	private EnumTipoCodigoInstituicao tipoCodigo;
 
 	@Getter
 	private Usuario usuarioLogado;
@@ -62,36 +62,38 @@ public class AberturaProcessoControl implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		this.processo = new Processo(usuarioLogadoControl.getUsuario());
+		novoProcesso();
 	}
 
 	public void consultarEstabelecimento() {
+		if (this.cnesCnpj.isEmpty()) {
+			UtilFaces.addMensagemFaces("Codigo obrigatorio " + this.tipoCodigo, FacesMessage.SEVERITY_ERROR);
+			return;
+		}
+
 		try {
-			if (this.cnesCnpj.isEmpty()) {
-				UtilFaces.addMensagemFaces("Codigo obrigatorio CNES", FacesMessage.SEVERITY_ERROR);
-				return;
-			}
+			this.instituicao = instituicaoDao.instituicaoPorCnesCpnj(this.cnesCnpj, this.tipoCodigo);
 
-			if (this.tipoCodigo.equals(EnumTipoCodigoInstituicao.CNES)) {
-				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(this.cnesCnpj, null);
-			} else {
-				this.instituicaoDTO = dataSusService.consultarEstabelecimentoSaude(null,
-						UtilSefisca.limparMascara(this.cnesCnpj));
-			}
-
-			if (this.instituicaoDTO != null) {
-				this.processo.getInstituicao().setDto(this.instituicaoDTO);
+			if (!UtilSefisca.isNullOrEmpty(this.instituicao)) {
+				this.processo.setInstituicao(this.instituicao);
 			} else {
 				UtilFaces.addMensagemFaces(this.tipoCodigo + " não encontrado.", FacesMessage.SEVERITY_WARN);
 			}
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			e.printStackTrace();
 		}
 	}
 
 	public void confirmar() {
 		this.processo = processoDao.alterar(this.processo);
+		novoProcesso();
 		UtilFaces.addMensagemFaces("Processo salvo com sucesso");
+	}
+	
+	private void novoProcesso() {
+		this.cnesCnpj = "";
+		this.tipoCodigo = EnumTipoCodigoInstituicao.CNES;
+		this.processo = new Processo(usuarioLogadoControl.getUsuario());
 	}
 
 	public boolean isCnes() {

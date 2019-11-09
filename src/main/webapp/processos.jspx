@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="corpo">
+		<b:container fluid="true">
+			<b:row>
+				<b:column>
+					<b:panel title="Processos" collapsible="false" look="primary">
+						<b:dataTable value="#{InicioControl.processos}" var="processo">
+							<b:dataTableColumn label="Código autenticador"
+								value="#{processo.numero}" />
+							<b:dataTableColumn label="Tipo processo"
+								value="#{processo.tipoProcesso.descricao}" />
+							<b:dataTableColumn label="Data abertura"
+								value="#{processo.dataAberturaFormatada}" />
+							<b:dataTableColumn label="Instituição"
+								value="#{processo.instituicao}" />
+							<b:dataTableColumn label="Etapa"
+								value="#{processo.etapaProcesso.descricao}" />
+							<b:dataTableColumn label="Status"
+								value="#{processo.statusProcesso.descricao}" />
+						</b:dataTable>
+					</b:panel>
+				</b:column>
+			</b:row>
+		</b:container>
+	</ui:define>
+</ui:composition>
