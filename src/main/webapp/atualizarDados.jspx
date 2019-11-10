@@ -19,39 +19,39 @@
 						<b:column smallScreen="6" medium-screen="3">
 							<b:inputText label="CPF" render-label="true"
 								mask="999.999.999-99"
-								value="#{UsuarioControl.usuario.pessoaFisica.cpf}" />
+								value="#{UsuarioControl.usuario.pessoa.cpf}" />
 						</b:column>
 					</b:row>
 					<b:row>
 						<b:column smallScreen="6" medium-screen="3">
 							<b:datepicker id="nascDate" label="Data de nascimento"
 								mode="popup-icon"
-								value="#{UsuarioControl.usuario.pessoaFisica.dataNascimento}" />
+								value="#{UsuarioControl.usuario.pessoa.dataNascimento}" />
 							<b:message for="nascDate" />
 						</b:column>
 					</b:row>
 					<b:row>
 						<b:column smallScreen="8" medium-screen="6" large-screen="8">
 							<b:inputText label="Nome" render-label="true"
-								value="#{UsuarioControl.usuario.pessoaFisica.nome}" />
+								value="#{UsuarioControl.usuario.pessoa.nome}" />
 						</b:column>
 					</b:row>
 					<b:row>
 						<b:column smallScreen="12" medium-screen="6" large-screen="6">
 							<b:inputText label="Email" render-label="true" mask="email"
-								value="#{UsuarioControl.usuario.pessoaFisica.email}" />
+								value="#{UsuarioControl.usuario.pessoa.email}" />
 						</b:column>
 						<b:column smallScreen="6" medium-screen="3">
 							<b:inputText label="Telefone" render-label="true"
 								mask="(99) 9999-9999"
-								value="#{UsuarioControl.usuario.pessoaFisica.telefone}" />
+								value="#{UsuarioControl.usuario.pessoa.telefone}" />
 
 						</b:column>
 
 						<b:column smallScreen="6" medium-screen="3">
 							<b:inputText label="Celular" render-label="true"
 								mask="(99) 99999-9999"
-								value="#{UsuarioControl.usuario.pessoaFisica.celular}" />
+								value="#{UsuarioControl.usuario.pessoa.celular}" />
 						</b:column>
 					</b:row>
 
@@ -59,14 +59,14 @@
 					<b:row>
 						<b:column smallScreen="6" medium-screen="3">
 							<b:selectOneMenu label="Sexo" render-label="true"
-								value="#{UsuarioControl.usuario.pessoaFisica.sexo}">
+								value="#{UsuarioControl.usuario.pessoa.sexo}">
 								<f:selectItems value="#{UsuarioControl.sexos}" />
 							</b:selectOneMenu>
 						</b:column>
 
 						<b:column medium-screen="4">
 							<b:selectOneMenu label="Estado Civil" render-label="true"
-								value="#{UsuarioControl.usuario.pessoaFisica.estadoCivil}">
+								value="#{UsuarioControl.usuario.pessoa.estadoCivil}">
 								<f:selectItems value="#{UsuarioControl.estadosCivis}" />
 							</b:selectOneMenu>
 
@@ -75,7 +75,7 @@
 					<b:row>
 						<b:column smallScreen="12" medium-screen="6" large-screen="3">
 							<b:inputText label="CEP" render-label="true" mask="99.999-999"
-								value="#{UsuarioControl.usuario.pessoaFisica.endereco.cep}" />
+								value="#{UsuarioControl.usuario.pessoa.endereco.cep}" />
 						</b:column>
 						<b:column smallScreen="6" medium-screen="3" large-screen="2">
 							<b:commandButton ajax="false" look="primary" icon="search"
@@ -83,7 +83,7 @@
 						</b:column>
 						<b:column smallScreen="6" medium-screen="3">
 							<b:inputText label="Endreço" render-label="true"
-								value="#{UsuarioControl.usuario.pessoaFisica.endereco.endereco}" />
+								value="#{UsuarioControl.usuario.pessoa.endereco.endereco}" />
 						</b:column>
 					</b:row>
 
@@ -100,7 +100,7 @@
 						<b:column medium-screen="4">
 							<b:selectOneMenu id="municipio" label="Municipio"
 								render-label="true"
-								value="#{UsuarioControl.usuario.pessoaFisica.endereco.municipio}">
+								value="#{UsuarioControl.usuario.pessoa.endereco.municipio}">
 								<f:selectItems value="#{UsuarioControl.municipios}" />
 							</b:selectOneMenu>
 						</b:column>

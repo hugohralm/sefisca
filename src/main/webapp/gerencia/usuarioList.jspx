@@ -17,11 +17,11 @@
 					<b:column>
 						<b:dataTable id="tblUsuarios" responsive="true"
 							value="#{UsuarioListControl.usuarios }" var="usuario">
-							<b:dataTableColumn value="#{usuario.pessoaFisica.cpf}"
+							<b:dataTableColumn value="#{usuario.pessoa.cpf}"
 								label="CPF" style="width:100px;"/>
-							<b:dataTableColumn value="#{usuario.pessoaFisica.nome}"
+							<b:dataTableColumn value="#{usuario.pessoa.nome}"
 								label="Nome" />
-							<b:dataTableColumn value="#{usuario.pessoaFisica.email }"
+							<b:dataTableColumn value="#{usuario.pessoa.email }"
 								label="Email" />
 							<b:dataTableColumn label="Papel">
 								<ui:repeat var="papelUsuario" value="#{usuario.papeisUsuario}"
