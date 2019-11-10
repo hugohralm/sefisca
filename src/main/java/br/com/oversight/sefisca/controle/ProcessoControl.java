@@ -27,8 +27,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Scope("conversation")
-@Controller("AberturaProcessoControl")
-public class AberturaProcessoControl implements Serializable {
+@Controller("ProcessoControl")
+public class ProcessoControl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

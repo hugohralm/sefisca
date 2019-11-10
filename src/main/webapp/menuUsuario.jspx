@@ -12,11 +12,11 @@
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
 				<b:navCommandLink value="Iniciar Processo"
 					actionListener="#{MenuControl.gerenciarSessao}"
-					action="/aberturaProcesso?faces-redirect=true" iconAwesome="file" />
+					action="/processo?faces-redirect=true" iconAwesome="file" />
 				<b:dropMenu value="Consulta" iconAwesome="search">
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						action="/processos?faces-redirect=true" iconAwesome="folder-open" />
+						action="/processoList?faces-redirect=true" iconAwesome="folder-open" />
 				</b:dropMenu>
 				<b:dropMenu value="Configurações" iconAwesome="wrench">
 					<b:navCommandLink value="Usuários"

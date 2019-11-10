@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="corpo">
+		<b:panel id="panelUsuario" title="Dados da instituição" look="primary"
+			collapsible="false">
+			<b:container>
+				<b:row>
+					<b:column smallScreen="6" medium-screen="3">
+						<b:inputText label="CNES" render-label="true"
+							value="#{ProfissionalInstituicaoListControl.instituicao.cnes}" />
+					</b:column>
+					<b:column smallScreen="6" medium-screen="3">
+						<b:inputText label="CNPJ" render-label="true"
+							mask="99.999.999/9999-99"
+							value="#{ProfissionalInstituicaoListControl.instituicao.cnpj}" />
+					</b:column>
+					<b:column smallScreen="12" medium-screen="6" large-screen="6">
+						<b:inputText label="Nome Fantasia" render-label="true"
+							value="#{ProfissionalInstituicaoListControl.instituicao.nomeFantasia}" />
+					</b:column>
+				</b:row>
+				<b:panel title="Profissionais" look="primary" collapsible="false"
+					id="panelProfissionais">
+					<b:container fluid="true">
+						<b:row>
+							<b:column>
+								<b:dataTable id="tblProfissionais" responsive="true"
+									value="#{ProfissionalInstituicaoListControl.instituicao.profissionais}"
+									var="profissional" pageLength="5" pageLengthMenu="5,10,20">
+									<b:dataTableColumn value="#{profissional.cpf}" label="CPF"
+										style="text-align: center;" />
+									<b:dataTableColumn value="#{profissional.nome}" label="Nome"
+										style="text-align: center;" />
+									<b:dataTableColumn style="width: 20px;" label=""
+										searchable="false" orderable="false">
+										<b:commandButton id="btnEditar" icon="pencil"
+											tooltip="Clique para editar esse cadastro."
+											action="processo?faces-redirect=true"
+											style-class="btn-command"
+											actionListener="#{MenuControl.gerenciarSessao}">
+											<f:setPropertyActionListener value="#{processo}"
+												target="#{ProcessoControl.processo}" />
+										</b:commandButton>
+									</b:dataTableColumn>
+								</b:dataTable>
+							</b:column>
+						</b:row>
+					</b:container>
+				</b:panel>
+			</b:container>
+		</b:panel>
+	</ui:define>
+</ui:composition>
