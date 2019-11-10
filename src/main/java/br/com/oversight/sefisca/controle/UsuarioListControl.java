@@ -134,8 +134,8 @@ public class UsuarioListControl implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuarioDao.consultarPorId(usuario.getId());
 
-		if (this.usuario != null && this.usuario.getPessoaFisica().getEndereco().getMunicipio() != null) {
-			this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
+		if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null) {
+			this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 		} else {
 			try {
 				this.uf = EnumUf.GO;
@@ -147,17 +147,17 @@ public class UsuarioListControl implements Serializable {
 	}
 
 	public void consultarCep() {
-		if (this.usuario.getPessoaFisica().getEndereco().getCep() != null) {
+		if (this.usuario.getPessoa().getEndereco().getCep() != null) {
 			try {
-				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoaFisica().getEndereco().getCep());
+				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoa().getEndereco().getCep());
 
 				if (viaCEPDTO != null) {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getEnderecoCompleto());
-					this.usuario.getPessoaFisica().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
-					this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
+					this.usuario.getPessoa().getEndereco().setEndereco(viaCEPDTO.getEnderecoCompleto());
+					this.usuario.getPessoa().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 					listarMunicipiosPorUfs();
 				} else {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(null);
+					this.usuario.getPessoa().getEndereco().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
 					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);

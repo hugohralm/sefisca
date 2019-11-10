@@ -13,7 +13,7 @@ import br.com.oversight.sefisca.entidade.EnumEstadoCivil;
 import br.com.oversight.sefisca.entidade.EnumPapel;
 import br.com.oversight.sefisca.entidade.EnumSexo;
 import br.com.oversight.sefisca.entidade.PapelUsuario;
-import br.com.oversight.sefisca.entidade.PessoaFisica;
+import br.com.oversight.sefisca.entidade.Pessoa;
 import br.com.oversight.sefisca.entidade.Usuario;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
@@ -41,7 +41,7 @@ public class InicializadorSistema {
 				usuario.addPapel(new PapelUsuario(EnumPapel.ADMIN));
 				usuario.setConfirmado(true);
 				usuario.setAlterarSenha(false);
-				usuario.setPessoaFisica(new PessoaFisica("Administrador", "111.111.111-11", "121212", EnumSexo.M, "admin@admin",
+				usuario.setPessoa(new Pessoa("Administrador", "111.111.111-11", "121212", EnumSexo.M, "admin@admin",
 						new Date(), EnumEstadoCivil.SOLTEIRO, "(62)99999-9999", "(62)99999-9999",
 						new Endereco("Rua", municipioDao.municipioPorCodigoIBGE(5208707), "74000000", "Bairro", "0")));
 
