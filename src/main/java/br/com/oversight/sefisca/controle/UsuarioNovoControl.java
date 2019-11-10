@@ -72,7 +72,6 @@ public class UsuarioNovoControl implements Serializable {
 	@PostConstruct
 	public void init() {
 		novoUsuario();
-		this.uf = EnumUf.GO;
 		listarMunicipiosPorUfs();
 	}
 
@@ -87,7 +86,9 @@ public class UsuarioNovoControl implements Serializable {
 
 	public void listarMunicipiosPorUfs() {
 		try {
-			this.municipios = municipioDao.listarPorUfNome(uf, null);
+			if (uf == null) {
+				this.municipios = null;
+			}else this.municipios = municipioDao.listarPorUfNome(uf, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			UtilMessages.addMessage(e);
@@ -102,7 +103,7 @@ public class UsuarioNovoControl implements Serializable {
 						"Você deve ler e aceitar o termo de responsabilidade antes de concluir o cadastro.");
 				return;
 			}
-			this.usuario.getPessoaFisica().setTelefone(null);
+			this.usuario.getPessoa().setTelefone(null);
 			Usuario usuarioCadastrado = usuarioDao.criarNovoUsuario(this.usuario, this.confirmarSenha);
 			this.termoResponsabilidade.setUsuario(usuarioCadastrado);
 			termoResponsabilidadeDao.incluir(this.termoResponsabilidade);
@@ -118,22 +119,24 @@ public class UsuarioNovoControl implements Serializable {
 	public void novoUsuario() {
 		this.usuario = new Usuario();
 		this.confirmarSenha = "";
+		this.uf = null;
+		this.municipios = null;
 		consultarTemplateECriarTermoResponsabilidade();
 	}
 
 	public void consultarCep() {
-		if (this.usuario.getPessoaFisica().getEndereco().getCep() != null) {
+		if (this.usuario.getPessoa().getEndereco().getCep() != null) {
 			try {
-				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoaFisica().getEndereco().getCep());
+				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoa().getEndereco().getCep());
 
 				if (viaCEPDTO != null) {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getLogradouro());
-					this.usuario.getPessoaFisica().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
-					this.usuario.getPessoaFisica().getEndereco().setBairro(viaCEPDTO.getBairro());
-					this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
+					this.usuario.getPessoa().getEndereco().setEndereco(viaCEPDTO.getLogradouro());
+					this.usuario.getPessoa().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+					this.usuario.getPessoa().getEndereco().setBairro(viaCEPDTO.getBairro());
+					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 					listarMunicipiosPorUfs();
 				} else {
-					this.usuario.getPessoaFisica().setEndereco(null);
+					this.usuario.getPessoa().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
 					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "CEP não encontrado.");

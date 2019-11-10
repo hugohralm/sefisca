@@ -13,13 +13,13 @@
 
 			<a:field label="CPF">
 				<p:inputMask styleClass="obrigatorio" mask="999.999.999-99"
-					value="#{UsuarioListControl.usuario.pessoaFisica.cpf}"
+					value="#{UsuarioListControl.usuario.pessoa.cpf}"
 					style="width:200px;" disabled="true" />
 			</a:field>
 
 			<a:field label="Data de nascimento" spaceLeft="10px">
 				<p:inputMask styleClass="obrigatorio"
-					value="#{UsuarioListControl.usuario.pessoaFisica.dataNascimento }"
+					value="#{UsuarioListControl.usuario.pessoa.dataNascimento }"
 					style="width:200px;" mask="99/99/9999">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</p:inputMask>
@@ -29,7 +29,7 @@
 
 			<a:field label="Nome">
 				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioListControl.usuario.pessoaFisica.nome}"
+					value="#{UsuarioListControl.usuario.pessoa.nome}"
 					style="width:620px;" />
 			</a:field>
 
@@ -37,21 +37,21 @@
 
 			<a:field label="E-mail">
 				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioListControl.usuario.pessoaFisica.email}"
+					value="#{UsuarioListControl.usuario.pessoa.email}"
 					style="width:360px;" />
 			</a:field>
 
 			<a:field label="Telefone" spaceLeft="10px">
 				<p:inputText styleClass="obrigatorio"
 					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioListControl.usuario.pessoaFisica.telefone}"
+					value="#{UsuarioListControl.usuario.pessoa.telefone}"
 					style="width:120px;" />
 			</a:field>
 
 			<a:field label="Celular" spaceLeft="10px">
 				<p:inputText styleClass="obrigatorio"
 					onkeydown="mascaraTelefone(this);"
-					value="#{UsuarioListControl.usuario.pessoaFisica.celular}"
+					value="#{UsuarioListControl.usuario.pessoa.celular}"
 					style="width:120px;" />
 			</a:field>
 
@@ -59,7 +59,7 @@
 
 			<a:field label="Sexo">
 				<p:selectOneMenu style="width:150px;" styleClass="obrigatorio"
-					value="#{UsuarioListControl.usuario.pessoaFisica.sexo}">
+					value="#{UsuarioListControl.usuario.pessoa.sexo}">
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{UsuarioListControl.sexos}" />
 				</p:selectOneMenu>
@@ -68,7 +68,7 @@
 			<a:field label="Estado civil" spaceLeft="10px;">
 				<p:selectOneMenu style="width:200px;" styleClass="obrigatorio"
 					autoWidth="false"
-					value="#{UsuarioListControl.usuario.pessoaFisica.estadoCivil}">
+					value="#{UsuarioListControl.usuario.pessoa.estadoCivil}">
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{UsuarioListControl.estadosCivis}" />
 				</p:selectOneMenu>
@@ -77,7 +77,7 @@
 			<a:newLine />
 			<a:field label="CEP">
 				<p:inputMask styleClass="obrigatorio" mask="99.999-999"
-					value="#{UsuarioListControl.usuario.pessoaFisica.endereco.cep }"
+					value="#{UsuarioListControl.usuario.pessoa.endereco.cep }"
 					style="width:115px;" />
 			</a:field>
 			<a:field>
@@ -89,7 +89,7 @@
 
 			<a:field label="Endereço" spaceLeft="10px;">
 				<p:inputText styleClass="obrigatorio"
-					value="#{UsuarioListControl.usuario.pessoaFisica.endereco.endereco}"
+					value="#{UsuarioListControl.usuario.pessoa.endereco.endereco}"
 					style="width:465px;" />
 			</a:field>
 			<a:newLine />
@@ -107,7 +107,7 @@
 			<a:field label="Município" spaceLeft="10px">
 				<p:selectOneMenu id="municipio" styleClass="obrigatorio"
 					converter="objectConverter"
-					value="#{UsuarioListControl.usuario.pessoaFisica.endereco.municipio}"
+					value="#{UsuarioListControl.usuario.pessoa.endereco.municipio}"
 					style="width:410px" filter="true" filterFunction="filtrarSemAcento"
 					filterMatchMode="custom">
 					<f:selectItem itemLabel="Selecione o município"

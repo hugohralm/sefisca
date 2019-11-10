@@ -29,8 +29,8 @@ public class UsuarioService implements UserDetailsService {
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE Usuario ");
         sql.append("SET dataultimoacesso = ? ");
-        sql.append("FROM PessoaFisica p ");
-        sql.append("WHERE (p.id = pessoaFisica_id) ");
+        sql.append("FROM Pessoa p ");
+        sql.append("WHERE (p.id = pessoa_id) ");
         sql.append("AND p.cpf = ? ");
 
         PreparedStatement pstmtUsuario = con.prepareStatement(sql.toString());
@@ -44,8 +44,8 @@ public class UsuarioService implements UserDetailsService {
         sql.append("values ((SELECT nextval('historicologin_seq')), ?, ");
         sql.append("(SELECT u.id ");
         sql.append("FROM Usuario u ");
-        sql.append("INNER JOIN PessoaFisica p ");
-        sql.append("ON p.id = u.pessoaFisica_id ");
+        sql.append("INNER JOIN Pessoa p ");
+        sql.append("ON p.id = u.pessoa_id ");
         sql.append("WHERE p.cpf = ?)) ");
 
         PreparedStatement pstmtHistorico = con.prepareStatement(sql.toString());
@@ -67,8 +67,8 @@ public class UsuarioService implements UserDetailsService {
                 sql.append("u.senha as password, ");
                 sql.append("u.confirmado AS enabled ");
                 sql.append("FROM usuario u ");
-                sql.append("INNER JOIN PessoaFisica p ");
-                sql.append("ON p.id = u.pessoaFisica_id ");
+                sql.append("INNER JOIN Pessoa p ");
+                sql.append("ON p.id = u.pessoa_id ");
                 sql.append("WHERE p.cpf = ? ");
                 PreparedStatement pstmt = con.prepareStatement(sql.toString());
                 
@@ -86,8 +86,8 @@ public class UsuarioService implements UserDetailsService {
                             sql.append("WHERE p.usuario_id = ");
                             sql.append("(SELECT u.id ");
                             sql.append("FROM Usuario u ");
-                            sql.append("INNER JOIN PessoaFisica p ");
-                            sql.append("ON p.id = u.pessoaFisica_id ");
+                            sql.append("INNER JOIN Pessoa p ");
+                            sql.append("ON p.id = u.pessoa_id ");
                             sql.append("where p.cpf = ?) ");
                             PreparedStatement pstmtPapeis = con.prepareStatement(sql.toString());
                             try {

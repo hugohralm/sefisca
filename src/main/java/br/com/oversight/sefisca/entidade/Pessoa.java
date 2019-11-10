@@ -31,14 +31,14 @@ import lombok.Setter;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
-public class PessoaFisica extends Entidade implements Serializable {
+public class Pessoa extends Entidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Getter
-	@GeneratedValue(generator = "pessoaFisica_seq", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "pessoaFisica_seq", sequenceName = "pessoaFisica_seq", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(generator = "pessoa_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "pessoa_seq", sequenceName = "pessoa_seq", allocationSize = 1, initialValue = 1)
 	private Integer id;
 
 	@Getter
@@ -133,11 +133,11 @@ public class PessoaFisica extends Entidade implements Serializable {
 		setDataCriacao(new Date());
 	}
 
-	public PessoaFisica() {
+	public Pessoa() {
 		super();
 	}
 
-	public PessoaFisica(String nome, String cpf, String rg, EnumSexo sexo, String email, Date dataNascimento, EnumEstadoCivil estadoCivil,
+	public Pessoa(String nome, String cpf, String rg, EnumSexo sexo, String email, Date dataNascimento, EnumEstadoCivil estadoCivil,
 			String telefone, String celular, Endereco endereco) {
 		super();
 		this.nome = nome;
@@ -172,7 +172,7 @@ public class PessoaFisica extends Entidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PessoaFisica other = (PessoaFisica) obj;
+		Pessoa other = (Pessoa) obj;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;

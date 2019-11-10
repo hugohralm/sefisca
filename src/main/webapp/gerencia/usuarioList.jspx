@@ -9,136 +9,50 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
-		<p:panel id="panelConsultaUsuarios"
-			header="Pesquisar usuários cadastradas">
 
-			<p:panelGrid style="margin-top:0px;">
-				<f:facet name="header">
-					<p:row>
-						<p:column>
-							<a:field label="CPF">
-								<p:inputMask mask="999.999.999-99"
-									value="#{UsuarioListControl.cpf}" style="width:130px;" />
-							</a:field>
-
-							<a:field spaceLeft="10px;">
-								<p:outputLabel value="OU" />
-							</a:field>
-							<a:field label="E-mail" spaceLeft="10px;">
-								<p:inputText value="#{UsuarioListControl.email}"
-									style="width:260px;"
-									placeholder="Digite o E-mail completo ou parte dele" />
-							</a:field>
-
-							<a:field spaceLeft="10px;">
-								<p:outputLabel value="OU" />
-							</a:field>
-
-							<a:field label="Nome" spaceLeft="10px;">
-								<p:inputText value="#{UsuarioListControl.nome}"
-									style="width:260px;"
-									placeholder="Digite o nome completo ou parte dele" />
-							</a:field>
-
-							<a:field label="Papel" spaceLeft="10px;">
-								<p:selectOneMenu value="#{UsuarioListControl.papelFiltro}"
-									style="width:350px;">
-									<f:selectItem itemLabel="Todos" />
-									<f:selectItems value="#{UsuarioListControl.papeis }" />
-								</p:selectOneMenu>
-							</a:field>
-
-						</p:column>
-
-					</p:row>
-
-				</f:facet>
-
-			</p:panelGrid>
-
-			<p:row>
-				<p:column>
-					<a:field spaceLeft="10px">
-						<p:commandButton actionListener="#{UsuarioListControl.listar}"
-							value="Pesquisar" ajax="false" icon="ui-icon ui-icon-search"
-							update="tblUsuarios" />
-					</a:field>
-
-					<a:field spaceLeft="10px">
-						<p:commandButton value="Limpar"
-							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-							action="usuarioList?faces-redirect=true"
-							icon="ui-icon ui-icon-trash" immediate="true" />
-					</a:field>
-				</p:column>
-			</p:row>
-
-			<a:newLine />
-			<a:newLine />
-
-			<p:dataTable id="tblUsuarios" value="#{UsuarioListControl.usuarios }"
-				var="usuario" style="margin-bottom:20px"
-				emptyMessage="Sem registros" paginator="true"
-				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rows="50" rowsPerPageTemplate="25,50,100,150,200">
-				<f:facet name="header">
-					<h:outputText value="Usuários cadastrados" />
-				</f:facet>
-
-
-				<p:column headerText="CPF" style="width:150px">
-					<p:outputLabel value="#{usuario.pessoaFisica.cpf }" />
-				</p:column>
-				<p:column headerText="Nome" priority="1">
-					<p:outputLabel value="#{usuario.pessoaFisica.nome }" />
-				</p:column>
-				<p:column headerText="E-mail" priority="3">
-					<p:outputLabel value="#{usuario.pessoaFisica.email }" />
-				</p:column>
-				<p:column headerText="Telefone" style="text-align:center"
-					priority="4">
-					<p:outputLabel value="#{usuario.pessoaFisica.telefone }" />
-				</p:column>
-				<p:column headerText="Celular" style="text-align:center"
-					priority="5">
-					<p:outputLabel value="#{usuario.pessoaFisica.celular }" />
-				</p:column>
-
-				<p:column headerText="Papeis" style="text-align:center" priority="2">
-					<ui:repeat var="papelUsuario" value="#{usuario.papeisUsuario}">
-						<p:outputLabel value="#{papelUsuario.papel.descricao},"
-							style="font-style:italic" />
-						<p:spacer width="2px;" />
-					</ui:repeat>
-				</p:column>
-				<p:column style="text-align:center" headerText="Confirmado"
-					priority="6" sortBy="#{usuario.confirmado}">
-					<p:outputLabel
-						value="#{usuario.confirmado == true ? 'SIM' : 'NÃO' }" />
-				</p:column>
-				<p:column style="text-align:center" headerText="Alterar Senha"
-					priority="6" sortBy="#{usuario.alterarSenha}">
-					<p:outputLabel
-						value="#{usuario.alterarSenha == true ? 'SIM' : 'NÃO' }" />
-				</p:column>
-
-				<p:column style="width:80px;text-align:center" headerText="Editar">
-					<p:commandButton id="btnEditar" icon="ui-icon-pencil"
-						action="manutencaoUsuario?faces-redirect=true"
-						actionListener="#{MenuControl.gerenciarSessao}">
-						<f:setPropertyActionListener value="#{usuario}"
-							target="#{UsuarioListControl.usuario}" />
-					</p:commandButton>
-				</p:column>
-
-				<f:facet name="footer">
-		        	Total de Usuários #{fn:length(UsuarioListControl.usuarios)}
-		    	</f:facet>
-
-			</p:dataTable>
-
-			<a:newLine />
-			<a:newLine />
-		</p:panel>
+		<b:panel title="Pesquisar usuários cadastrados" look="primary"
+			collapsible="false" id="panelConsultaUsuarios">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<b:dataTable id="tblUsuarios" responsive="true"
+							value="#{UsuarioListControl.usuarios }" var="usuario">
+							<b:dataTableColumn value="#{usuario.pessoa.cpf}"
+								label="CPF" style="width:100px;"/>
+							<b:dataTableColumn value="#{usuario.pessoa.nome}"
+								label="Nome" />
+							<b:dataTableColumn value="#{usuario.pessoa.email }"
+								label="Email" />
+							<b:dataTableColumn label="Papel">
+								<ui:repeat var="papelUsuario" value="#{usuario.papeisUsuario}"
+									varStatus="status">
+									<h:outputText value=", " rendered="#{ !status.first }" />
+									<h:outputText value="#{papelUsuario.papel.descricao}"
+										style="font-style:italic" />
+								</ui:repeat>
+							</b:dataTableColumn>
+							<b:dataTableColumn label="Confirmado"
+								style="width: 60px;text-align: center;" dataOrder="#{usuario.confirmado}" >
+								<b:icon value="remove" styleClass="icon-color-red"
+									rendered="#{usuario.confirmado == false}" />
+								<b:icon value="ok" styleClass="icon-color-green"
+									rendered="#{usuario.confirmado == true}" />
+							</b:dataTableColumn>
+							<b:dataTableColumn style="width: 20px;" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnEditar" icon="pencil"
+									tooltip="Clique para editar esse cadastro."
+									action="manutencaoUsuario?faces-redirect=true"
+									style-class="btn-command"
+									actionListener="#{MenuControl.gerenciarSessao}">
+									<f:setPropertyActionListener value="#{usuario}"
+										target="#{UsuarioListControl.usuario}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>

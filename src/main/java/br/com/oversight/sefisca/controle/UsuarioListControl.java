@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 
@@ -43,7 +44,7 @@ public class UsuarioListControl implements Serializable {
 
 	@Autowired
 	private CepService cepService;
-	
+
 	@Getter
 	private Usuario usuario;
 
@@ -76,6 +77,11 @@ public class UsuarioListControl implements Serializable {
 
 	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
+
+	@PostConstruct
+	public void init() {
+			listar();
+	}
 
 	public void confirmar() {
 		try {
@@ -125,6 +131,45 @@ public class UsuarioListControl implements Serializable {
 		}
 	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuarioDao.consultarPorId(usuario.getId());
+
+		if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null) {
+			this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
+		} else {
+			try {
+				this.uf = EnumUf.GO;
+			} catch (Exception e) {
+				UtilFaces.addMensagemFaces("Erro ao consultar UF");
+			}
+		}
+		listarMunicipiosPorUfs();
+	}
+
+	public void consultarCep() {
+		if (this.usuario.getPessoa().getEndereco().getCep() != null) {
+			try {
+				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoa().getEndereco().getCep());
+
+				if (viaCEPDTO != null) {
+					this.usuario.getPessoa().getEndereco().setEndereco(viaCEPDTO.getEnderecoCompleto());
+					this.usuario.getPessoa().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
+					listarMunicipiosPorUfs();
+				} else {
+					this.usuario.getPessoa().getEndereco().setEndereco(null);
+					this.uf = EnumUf.GO;
+					listarMunicipiosPorUfs();
+					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);
+					UtilFaces.addMensagemFaces("Caso seja um endereço novo preencha todos os campos.",
+							FacesMessage.SEVERITY_WARN);
+				}
+			} catch (Exception e) {
+				UtilFaces.addMensagemFaces(e);
+			}
+		}
+	}
+
 	public List<SelectItem> getPapeis() {
 		List<SelectItem> listaPapeis = new ArrayList<>();
 		listaPapeis = UtilFaces.getListEnum(EnumPapel.values());
@@ -144,42 +189,4 @@ public class UsuarioListControl implements Serializable {
 		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuarioDao.consultarPorId(usuario.getId());
-
-		if (this.usuario != null && this.usuario.getPessoaFisica().getEndereco().getMunicipio() != null) {
-			this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
-		} else {
-			try {
-				this.uf = EnumUf.GO;
-			} catch (Exception e) {
-				UtilFaces.addMensagemFaces("Erro ao consultar UF");
-			}
-		}
-		listarMunicipiosPorUfs();
-	}
-
-	public void consultarCep() {
-		if (this.usuario.getPessoaFisica().getEndereco().getCep() != null) {
-			try {
-				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoaFisica().getEndereco().getCep());
-
-				if (viaCEPDTO != null) {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getEnderecoCompleto());
-					this.usuario.getPessoaFisica().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
-					this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
-					listarMunicipiosPorUfs();
-				} else {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(null);
-					this.uf = EnumUf.GO;
-					listarMunicipiosPorUfs();
-					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);
-					UtilFaces.addMensagemFaces("Caso seja um endereço novo preencha todos os campos.",
-							FacesMessage.SEVERITY_WARN);
-				}
-			} catch (Exception e) {
-				UtilFaces.addMensagemFaces(e);
-			}
-		}
-	}
 }

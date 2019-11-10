@@ -47,7 +47,7 @@
 				rendered="#{AlterarSenhaExternoControl.alterou}">
 				<h:outputText value="Prezado(a), " />
 				<b><h:outputText
-						value="#{AlterarSenhaExternoControl.usuario.pessoaFisica.nome }" /></b>
+						value="#{AlterarSenhaExternoControl.usuario.pessoa.nome }" /></b>
 				<a:newLine />
 				<h:outputLink value="/sefisca/login.jsp" style="color: blue">
 					<h:outputText value="Clique aqui para efetuar o login" />
