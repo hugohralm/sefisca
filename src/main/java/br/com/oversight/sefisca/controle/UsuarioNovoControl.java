@@ -72,7 +72,6 @@ public class UsuarioNovoControl implements Serializable {
 	@PostConstruct
 	public void init() {
 		novoUsuario();
-		this.uf = EnumUf.GO;
 		listarMunicipiosPorUfs();
 	}
 
@@ -87,7 +86,9 @@ public class UsuarioNovoControl implements Serializable {
 
 	public void listarMunicipiosPorUfs() {
 		try {
-			this.municipios = municipioDao.listarPorUfNome(uf, null);
+			if (uf == null) {
+				this.municipios = null;
+			}else this.municipios = municipioDao.listarPorUfNome(uf, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			UtilMessages.addMessage(e);
@@ -118,6 +119,8 @@ public class UsuarioNovoControl implements Serializable {
 	public void novoUsuario() {
 		this.usuario = new Usuario();
 		this.confirmarSenha = "";
+		this.uf = null;
+		this.municipios = null;
 		consultarTemplateECriarTermoResponsabilidade();
 	}
 

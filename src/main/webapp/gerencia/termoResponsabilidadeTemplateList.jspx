@@ -16,7 +16,8 @@
 					<b:column offset-md="8" medium-screen="4">
 						<b:commandButton value="Adicionar Termo de Responsabilidade"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-							look="success" styleClass="btn-command" style="margin-bottom:5px;"
+							look="success" styleClass="btn-command"
+							style="margin-bottom:5px;"
 							action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
 							icon="ui-icon-plusthick" />
 					</b:column>
@@ -27,7 +28,7 @@
 							widgetVar="tblTermosResponsabilidade"
 							caption="Templates de termos de responsabilidade adicionados."
 							value="#{TermoResponsabilidadeTemplateListControl.termosResponsabilidade}"
-							excel="true" csv="true" pdf="true" copy="true" var="termo">
+							var="termo">
 							<b:dataTableColumn value="#{termo.id}" label="#" order="asc"
 								contentStyle="text-align: center; vertical-align: middle;" />
 
@@ -48,7 +49,7 @@
 							<b:dataTableColumn label="" searchable="false" orderable="false">
 								<b:commandButton
 									action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
-									ajax="false" value="Editar" icon-awesome="edit" style-class="btn-command"
+									ajax="false" icon="pencil" style-class="btn-command"
 									title="Clique aqui para editar esse cadastro">
 									<f:setPropertyActionListener
 										target="#{TermoResponsabilidadeTemplateControl.termoResponsabilidade}"
