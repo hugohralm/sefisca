@@ -23,10 +23,6 @@
 						<b:inputText label="Nome Fantasia" render-label="true"
 							value="#{ProfissionalInstituicaoListControl.instituicao.nomeFantasia}" />
 					</b:column>
-					<b:column smallScreen="4" medium-screen="2">
-						<b:commandButton ajax="false" look="primary" icon="search"
-							actionListener="#{ProfissionalInstituicaoListControl.buscarProfissionais}" update="panelProfissionais" />
-					</b:column>
 				</b:row>
 				<b:panel title="Profissionais" look="primary" collapsible="false"
 					id="panelProfissionais">
@@ -34,23 +30,14 @@
 						<b:row>
 							<b:column>
 								<b:dataTable id="tblProfissionais" responsive="true"
-									value="#{ProfissionalInstituicaoListControl.profissionais}"
+									value="#{ProfissionalInstituicaoListControl.instituicao.profissionais}"
 									var="profissional" pageLength="5" pageLengthMenu="5,10,20">
 									<b:dataTableColumn value="#{profissional.cpf}" label="CPF"
 										style="text-align: center;" />
 									<b:dataTableColumn value="#{profissional.nome}" label="Nome"
 										style="text-align: center;" />
-									<b:dataTableColumn style="width: 20px;" label=""
-										searchable="false" orderable="false">
-										<b:commandButton id="btnEditar" icon="pencil"
-											tooltip="Clique para editar esse cadastro."
-											action="processo?faces-redirect=true"
-											style-class="btn-command"
-											actionListener="#{MenuControl.gerenciarSessao}">
-											<f:setPropertyActionListener value="#{processo}"
-												target="#{ProcessoControl.processo}" />
-										</b:commandButton>
-									</b:dataTableColumn>
+									<b:dataTableColumn value="#{profissional.cbo}" label="CBO"
+										style="text-align: center;" />
 								</b:dataTable>
 							</b:column>
 						</b:row>

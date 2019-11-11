@@ -87,6 +87,7 @@ public class ProcessoControl implements Serializable {
 
 	public void confirmar() {
 		this.processo = processoDao.alterar(this.processo);
+		buscarProfissionaisThread(this.processo.getInstituicao().getId());
 		novoProcesso();
 		UtilFaces.addMensagemFaces("Processo salvo com sucesso");
 	}
@@ -113,4 +114,21 @@ public class ProcessoControl implements Serializable {
 	public List<SelectItem> getTiposCodigoInstituicao() {
 		return UtilFaces.getListEnum(EnumTipoCodigoInstituicao.values());
 	}
+	
+	public void buscarProfissionaisThread(Integer id) {
+    	new Thread(new Runnable() {
+            @Override
+            public void run() {
+            	try {
+            		Instituicao instituicao = instituicaoDao.consultar(id);
+					Set<Profissional> profissionais = instituicaoDao.profissionaisServicePorCnes(instituicao.getCnes());
+					
+					instituicao.setProfissionais(profissionais);
+					instituicaoDao.alterar(instituicao);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        }).start();
+    }
 }

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -92,7 +93,7 @@ public class Instituicao extends Entidade implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCriacao = new Date();
 	
-	@Getter @Setter
+	@Getter @Setter @OrderBy("nome")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Profissional> profissionais = new HashSet<>();
 	

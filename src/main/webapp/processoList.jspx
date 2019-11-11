@@ -37,8 +37,10 @@
 							</b:dataTableColumn>
 							<b:dataTableColumn style="width: 20px;" label=""
 								searchable="false" orderable="false">
-								<b:commandButton id="btnTestar" icon="search"
-									action="profissionalInstituicaoList?faces-redirect=true" style-class="btn-command"
+								<b:commandButton id="btnBuscarProfissionais" icon="search"
+									title="Clique aqui para buscar os profissionais da instituição"
+									action="profissionalInstituicaoList?faces-redirect=true"
+									style-class="btn-command"
 									actionListener="#{MenuControl.gerenciarSessao}">
 									<f:setPropertyActionListener value="#{processo.instituicao}"
 										target="#{ProfissionalInstituicaoListControl.instituicao}" />

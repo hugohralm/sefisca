@@ -105,18 +105,21 @@ public class DataSusService {
 	}
 	
 	private static ArrayList<ProfissionalDTO> montarProfissionalDTO(SOAPMessage soapResponse) throws Exception {
-		ArrayList<ProfissionalDTO> profissionalDTOList = new ArrayList<>();
+		ArrayList<ProfissionalDTO> profissionalDTOList = new ArrayList<>();  
 		SOAPBody soapBody = soapResponse.getSOAPBody();
 		NodeList nodeListProfissional = soapBody.getElementsByTagName("ns39:profissional");
-		for (int i = 0; i < nodeListProfissional.getLength(); i++) {
+		for (int i = 0; i < nodeListProfissional.getLength(); i++) { 
 			NodeList nodeListProfissonalCampos = nodeListProfissional.item(i).getChildNodes();
-			ProfissionalDTO profissionalDTO = new ProfissionalDTO();
-			profissionalDTO.setNome(nodeListProfissonalCampos.item(1).getTextContent());
-			profissionalDTO.setCpf(nodeListProfissonalCampos.item(3).getTextContent());
-			profissionalDTO.setCns(nodeListProfissonalCampos.item(2).getTextContent());
-			profissionalDTO.setCbo(nodeListProfissonalCampos.item(4).getChildNodes().item(0).getTextContent());
-			profissionalDTO.setDataAtualizacao(nodeListProfissonalCampos.item(0).getTextContent());
-			profissionalDTOList.add(profissionalDTO);
+			String cbo = nodeListProfissonalCampos.item(4).getChildNodes().item(0).getTextContent();
+			if(cbo.startsWith("2235")) {
+				ProfissionalDTO profissionalDTO = new ProfissionalDTO();
+				profissionalDTO.setNome(nodeListProfissonalCampos.item(1).getTextContent());
+				profissionalDTO.setCpf(nodeListProfissonalCampos.item(3).getTextContent());
+				profissionalDTO.setCns(nodeListProfissonalCampos.item(2).getTextContent());
+				profissionalDTO.setCbo(cbo);
+				profissionalDTO.setDataAtualizacao(nodeListProfissonalCampos.item(0).getTextContent());
+				profissionalDTOList.add(profissionalDTO);
+			}
 		}
 		return profissionalDTOList;
 	}
