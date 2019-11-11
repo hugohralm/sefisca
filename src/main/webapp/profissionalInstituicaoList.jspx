@@ -19,9 +19,13 @@
 							mask="99.999.999/9999-99"
 							value="#{ProfissionalInstituicaoListControl.instituicao.cnpj}" />
 					</b:column>
-					<b:column smallScreen="12" medium-screen="6" large-screen="6">
+					<b:column smallScreen="8" medium-screen="4">
 						<b:inputText label="Nome Fantasia" render-label="true"
 							value="#{ProfissionalInstituicaoListControl.instituicao.nomeFantasia}" />
+					</b:column>
+					<b:column smallScreen="4" medium-screen="2">
+						<b:commandButton ajax="false" look="primary" icon="search"
+							actionListener="#{ProfissionalInstituicaoListControl.buscarProfissionais}" update="panelProfissionais" />
 					</b:column>
 				</b:row>
 				<b:panel title="Profissionais" look="primary" collapsible="false"
@@ -30,7 +34,7 @@
 						<b:row>
 							<b:column>
 								<b:dataTable id="tblProfissionais" responsive="true"
-									value="#{ProfissionalInstituicaoListControl.instituicao.profissionais}"
+									value="#{ProfissionalInstituicaoListControl.profissionais}"
 									var="profissional" pageLength="5" pageLengthMenu="5,10,20">
 									<b:dataTableColumn value="#{profissional.cpf}" label="CPF"
 										style="text-align: center;" />
