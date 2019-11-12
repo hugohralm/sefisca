@@ -97,13 +97,16 @@ public class UsuarioNovoControl implements Serializable {
 
 	public void concluir() {
 		try {
+			if (usuario.getPessoaFisica().getCelular().equals("")) 
+				usuario.getPessoaFisica().setCelular(null);
+			if (usuario.getPessoaFisica().getTelefone().equals(""))
+				usuario.getPessoaFisica().setTelefone(null);
 			usuarioDao.validarUsuario(this.usuario, this.confirmarSenha);
 			if (this.termoResponsabilidade == null || !this.termoResponsabilidade.isAceitou()) {
 				UtilMessages.addMessage(FacesMessage.SEVERITY_ERROR,
 						"Você deve ler e aceitar o termo de responsabilidade antes de concluir o cadastro.");
 				return;
 			}
-			this.usuario.getPessoaFisica().setTelefone(null);
 			Usuario usuarioCadastrado = usuarioDao.criarNovoUsuario(this.usuario, this.confirmarSenha);
 			this.termoResponsabilidade.setUsuario(usuarioCadastrado);
 			termoResponsabilidadeDao.incluir(this.termoResponsabilidade);

@@ -42,11 +42,11 @@
 								searchable="false" orderable="false">
 								<b:commandButton id="btnEditar" icon="pencil"
 									tooltip="Clique para editar esse cadastro."
-									action="manutencaoUsuario?faces-redirect=true"
+									action="/gerencia/editarUsuario?faces-redirect=true"
 									style-class="btn-command"
 									actionListener="#{MenuControl.gerenciarSessao}">
 									<f:setPropertyActionListener value="#{usuario}"
-										target="#{UsuarioListControl.usuario}" />
+										target="#{EditarUsuarioControl.usuario}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>
