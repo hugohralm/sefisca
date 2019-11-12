@@ -10,18 +10,18 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
 
-		<b:panel title="Pesquisar usuários cadastrados" look="primary"
+		<b:panel title="Pesquisar usuÃ¡rios cadastrados" look="primary"
 			collapsible="false" id="panelConsultaUsuarios">
 			<b:container fluid="true">
 				<b:row>
 					<b:column>
 						<b:dataTable id="tblUsuarios" responsive="true"
 							value="#{UsuarioListControl.usuarios }" var="usuario">
-							<b:dataTableColumn value="#{usuario.pessoaFisica.cpf}"
-								label="CPF" style="width:100px;"/>
-							<b:dataTableColumn value="#{usuario.pessoaFisica.nome}"
+							<b:dataTableColumn value="#{usuario.pessoa.cpf}"
+								label="CPF" style="width:100px;" />
+							<b:dataTableColumn value="#{usuario.pessoa.nome}"
 								label="Nome" />
-							<b:dataTableColumn value="#{usuario.pessoaFisica.email }"
+							<b:dataTableColumn value="#{usuario.pessoa.email }"
 								label="Email" />
 							<b:dataTableColumn label="Papel">
 								<ui:repeat var="papelUsuario" value="#{usuario.papeisUsuario}"
@@ -32,7 +32,8 @@
 								</ui:repeat>
 							</b:dataTableColumn>
 							<b:dataTableColumn label="Confirmado"
-								style="width: 60px;text-align: center;" dataOrder="#{usuario.confirmado}" >
+								style="width: 60px;text-align: center;"
+								dataOrder="#{usuario.confirmado}">
 								<b:icon value="remove" styleClass="icon-color-red"
 									rendered="#{usuario.confirmado == false}" />
 								<b:icon value="ok" styleClass="icon-color-green"

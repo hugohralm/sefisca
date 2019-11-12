@@ -31,11 +31,11 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	public Usuario criarNovoUsuario(Usuario usuario, String confirmarSenha) throws PersistenciaException {
 		validarUsuario(usuario, confirmarSenha);
 		try {
-			Usuario usuarioBanco = consultarPorCpf(usuario.getPessoaFisica().getCpf());
+			Usuario usuarioBanco = consultarPorCpf(usuario.getPessoa().getCpf());
 			if (usuarioBanco != null) {
 				if (!usuarioBanco.isConfirmado()) {
 					usuarioBanco.setSenhaNaoCriptografada(usuario.getSenha());
-					usuarioBanco.setPessoaFisica(usuario.getPessoaFisica());
+					usuarioBanco.setPessoa(usuario.getPessoa());
 					validarUsuario(usuario);
 					usuario = alterar(usuarioBanco);
 				}
@@ -69,8 +69,8 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		}
 
 		if (usuarioEmail != null) {
-			if (!usuarioEmail.getPessoaFisica().getEmail().equals(email)) {
-				String[] aEmail = usuarioEmail.getPessoaFisica().getEmail().split("@");
+			if (!usuarioEmail.getPessoa().getEmail().equals(email)) {
+				String[] aEmail = usuarioEmail.getPessoa().getEmail().split("@");
 				String emailT = aEmail[0].substring(0, aEmail[0].length() - aEmail[0].length() / 2) + "*****@"
 						+ aEmail[1];
 				throw new ValidacaoException(String
@@ -95,7 +95,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	private void enviarEmailRecuperacaoSenha(Usuario usuario) throws PersistenciaException {
 		try {
 			Mensagem mensagem = new Mensagem();
-			mensagem.setPara(usuario.getPessoaFisica().getEmail());
+			mensagem.setPara(usuario.getPessoa().getEmail());
 			mensagem.setConteudo(TemplateUsuario.gerarHtmlRecuperacaoSenha(usuario));
 			mensagem.setAssunto(Constantes.Sistema.NOME + " - Recuperação de senha");
 			ThreadEnviarEmail.enviarEmail(mensagem);
@@ -110,19 +110,19 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		this.validar(usuario);
 		validarSenha(usuario, confirmarSenha);
 
-		if (UtilSefisca.validarMenorIdade16(usuario.getPessoaFisica().getDataNascimento())) {
+		if (UtilSefisca.validarMenorIdade16(usuario.getPessoa().getDataNascimento())) {
 			throw new ValidacaoException("Data de nascimento inválida!");
 		}
 
-		Usuario pesEmail = consultarPorEmail(usuario.getPessoaFisica().getEmail());
-		if (pesEmail != null && !pesEmail.getPessoaFisica().getCpf().equals(usuario.getPessoaFisica().getCpf())
-				&& pesEmail.getPessoaFisica().getEmail().equals(usuario.getPessoaFisica().getEmail())) {
+		Usuario pesEmail = consultarPorEmail(usuario.getPessoa().getEmail());
+		if (pesEmail != null && !pesEmail.getPessoa().getCpf().equals(usuario.getPessoa().getCpf())
+				&& pesEmail.getPessoa().getEmail().equals(usuario.getPessoa().getEmail())) {
 			throw new ValidacaoException("Já existe um usuário cadastrado com este E-mail! Utilize outro e-mail.");
 		}
 
-		Usuario pes = consultarPorCpf(usuario.getPessoaFisica().getCpf());
-		if (pes != null && pes.getPessoaFisica().getCpf() != null
-				&& pes.getPessoaFisica().getCpf().equals(usuario.getPessoaFisica().getCpf()) && pes.isConfirmado()) {
+		Usuario pes = consultarPorCpf(usuario.getPessoa().getCpf());
+		if (pes != null && pes.getPessoa().getCpf() != null
+				&& pes.getPessoa().getCpf().equals(usuario.getPessoa().getCpf()) && pes.isConfirmado()) {
 			throw new ValidacaoException(
 					"Já existe um usuário cadastrado com este CPF. Tente a opção de Recuperar Senha da página inicial.");
 		}
@@ -143,7 +143,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
-			sql.append("left join fetch u.pessoaFisica ps ");
+			sql.append("left join fetch u.pessoa ps ");
 			sql.append("left join fetch ps.endereco e ");
 			sql.append("where ps.cpf = :cpf ");
 
@@ -161,7 +161,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 	private void enviarEmailConfirmacaoCadastro(Usuario usuarioEmail) throws PersistenciaException {
 		try {
 			Mensagem mensagem = new Mensagem();
-			mensagem.setPara(usuarioEmail.getPessoaFisica().getEmail());
+			mensagem.setPara(usuarioEmail.getPessoa().getEmail());
 			mensagem.setConteudo(TemplateUsuario.gerarHtmlConfirmacao(usuarioEmail));
 			mensagem.setAssunto(Constantes.Sistema.NOME + " - Cadastro de usuário");
 			ThreadEnviarEmail.enviarEmail(mensagem);
@@ -176,7 +176,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
-			sql.append("left join fetch u.pessoaFisica ps ");
+			sql.append("left join fetch u.pessoa ps ");
 			sql.append("where ps.email = :email ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
@@ -201,7 +201,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
-			sql.append("left join fetch u.pessoaFisica ps ");
+			sql.append("left join fetch u.pessoa ps ");
 			sql.append("where ps.cpf = :cpf ");
 
 			TypedQuery<Usuario> query = em.createQuery(sql.toString(), Usuario.class);
@@ -230,7 +230,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
 			sql.append("left join fetch u.papeisUsuario p ");
-			sql.append("left join fetch u.pessoaFisica ps ");
+			sql.append("left join fetch u.pessoa ps ");
 			sql.append("where 1=1 ");
 
 			if (!admin) {
@@ -300,7 +300,7 @@ public class UsuarioDaoJpa extends PersistenciaJpa<Usuario> implements UsuarioDa
 			StringBuilder sql = new StringBuilder();
 			sql.append("select distinct u from Usuario u ");
 			sql.append("left join fetch u.papeisUsuario p ");
-			sql.append("left join fetch u.pessoaFisica ps ");
+			sql.append("left join fetch u.pessoa ps ");
 			sql.append("left join fetch ps.endereco e ");
 			sql.append("where u.id =:id");
 

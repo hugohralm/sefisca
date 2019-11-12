@@ -40,7 +40,7 @@
 						href="/sefisca/documentos/modelagem_de_negocio.pdf"
 						target="_blank" />
 				</b:dropMenu>
-				<b:navCommandLink value="#{UsuarioLogadoControl.usuario.pessoaFisica.primeiroNome}"
+				<b:navCommandLink value="#{UsuarioLogadoControl.usuario.pessoa.primeiroNome}"
 					actionListener="#{MenuControl.gerenciarSessao}"
 					action="#{UsuarioControl.verificarUsuarioLogado}"
 					iconAwesome="user" />

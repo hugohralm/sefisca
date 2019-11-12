@@ -19,40 +19,40 @@
 							<b:column smallScreen="4" medium-screen="3">
 								<b:inputText label="CPF" render-label="true"
 									mask="999.999.999-99" disabled="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.cpf}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.cpf}" />
 							</b:column>
 							<b:column small-screen="8" medium-screen="9">
 								<b:inputText label="Nome" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.nome}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.nome}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column smallScreen="12" medium-screen="6" large-screen="6">
 								<b:inputText label="Email" render-label="true" mask="email"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.email}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.email}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Telefone" render-label="true"
 									mask="(99) 9999-9999"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.telefone}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.telefone}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Celular" render-label="true"
 									mask="(99) 99999-9999"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.celular}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.celular}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Sexo" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.sexo}">
+									value="#{EditarUsuarioControl.usuario.pessoa.sexo}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{EditarUsuarioControl.sexos}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Estado civil" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.estadoCivil}">
+									value="#{EditarUsuarioControl.usuario.pessoa.estadoCivil}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{EditarUsuarioControl.estadosCivis}" />
 								</b:selectOneMenu>
@@ -60,14 +60,14 @@
 							<b:column small-screen="4">
 								<b:dateTimePicker id="nascDate" label="Data de nascimento *"
 									mode="popup-icon" showTime="false" format="DD/MM/YYYY"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.dataNascimento }" />
+									value="#{EditarUsuarioControl.usuario.pessoa.dataNascimento }" />
 								<b:message for="nascDate" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column medium-screen="4">
 								<b:inputText
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.endereco.cep}"
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.cep}"
 									label="CEP" mask="99.999-999">
 									<f:facet name="append">
 										<b:commandButton look="primary" icon="search"
@@ -80,15 +80,15 @@
 						<b:row>
 							<b:column medium-screen="6">
 								<b:inputText id="endereco" label="Endereço" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.endereco.endereco}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.endereco}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Bairro" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.endereco.bairro}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.bairro}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Numero" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.endereco.numero}" />
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.numero}" />
 							</b:column>
 						</b:row>
 						<b:row>
@@ -107,7 +107,7 @@
 							<b:column small-screen="6">
 								<b:selectOneMenu id="municipio" label="Município"
 									render-label="true" select2="true" style="width:100%;"
-									value="#{EditarUsuarioControl.usuario.pessoaFisica.endereco.municipio}">
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.municipio}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{EditarUsuarioControl.municipios}" />
 								</b:selectOneMenu>

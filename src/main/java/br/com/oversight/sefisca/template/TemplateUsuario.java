@@ -11,12 +11,12 @@ import br.com.oversight.sefisca.util.StringXorCriptografia;
 public class TemplateUsuario {
 
     public static String gerarHtmlConfirmacao(Usuario usuario) throws Exception {
-        String nomeUsuario = usuario.getPessoaFisica().getNome();
+        String nomeUsuario = usuario.getPessoa().getNome();
         HashMap<String, Object> parametros = new HashMap<>();
         parametros.put("nome_sistema", Constantes.Sistema.NOME);
         parametros.put("url_sistema", Constantes.Sistema.URL_SISTEMA);
         parametros.put("logo_sistema", Constantes.Sistema.URL_SISTEMA + "/resources/imagens/logo_sefisca.png");
-        parametros.put("x", new StringXorCriptografia().encode(usuario.getPessoaFisica().getCpf(), StringXorCriptografia.getChave()));
+        parametros.put("x", new StringXorCriptografia().encode(usuario.getPessoa().getCpf(), StringXorCriptografia.getChave()));
 
         parametros.put("titulo", StringEscapeUtils.escapeHtml("Confirmação de Cadastro"));
         parametros.put("ola_usuario", StringEscapeUtils.escapeHtml("Olá, " + nomeUsuario + ","
@@ -34,7 +34,7 @@ public class TemplateUsuario {
     }
 
     public static String gerarHtmlRecuperacaoSenha(Usuario usuario) throws Exception {
-        String nomeUsuario = usuario.getPessoaFisica().getNome();
+        String nomeUsuario = usuario.getPessoa().getNome();
         HashMap<String, Object> parametros = new HashMap<>();
         parametros.put("nome_sistema", Constantes.Sistema.NOME);
         parametros.put("url_sistema", Constantes.Sistema.URL_SISTEMA);

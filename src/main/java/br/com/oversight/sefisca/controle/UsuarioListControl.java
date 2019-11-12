@@ -48,5 +48,4 @@ public class UsuarioListControl implements Serializable {
 			UtilFaces.addMensagemFaces(e);
 		}
 	}
-
 }

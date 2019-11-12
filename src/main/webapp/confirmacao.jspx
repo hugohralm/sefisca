@@ -12,7 +12,7 @@
 		<p:panel header="Confirmação de cadastro" id="panel">
 			<h:outputText value="Prezado(a), " />
 			<b><h:outputText
-					value="#{Confirmacao.usuario.pessoaFisica.nome }" /></b>
+					value="#{Confirmacao.usuario.pessoa.nome }" /></b>
 			<a:newLine />
 			<h:outputText value="Seu cadastro foi confirmado com sucesso." />
 			<a:newLine />

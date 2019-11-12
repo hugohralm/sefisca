@@ -97,10 +97,11 @@ public class UsuarioNovoControl implements Serializable {
 
 	public void concluir() {
 		try {
-			if (usuario.getPessoaFisica().getCelular().equals("")) 
-				usuario.getPessoaFisica().setCelular(null);
-			if (usuario.getPessoaFisica().getTelefone().equals(""))
-				usuario.getPessoaFisica().setTelefone(null);
+			if (usuario.getPessoa().getCelular().equals("")) 
+				usuario.getPessoa().setCelular(null);
+			if (usuario.getPessoa().getTelefone().equals(""))
+				usuario.getPessoa().setTelefone(null);
+			
 			usuarioDao.validarUsuario(this.usuario, this.confirmarSenha);
 			if (this.termoResponsabilidade == null || !this.termoResponsabilidade.isAceitou()) {
 				UtilMessages.addMessage(FacesMessage.SEVERITY_ERROR,
@@ -128,18 +129,18 @@ public class UsuarioNovoControl implements Serializable {
 	}
 
 	public void consultarCep() {
-		if (this.usuario.getPessoaFisica().getEndereco().getCep() != null) {
+		if (this.usuario.getPessoa().getEndereco().getCep() != null) {
 			try {
-				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoaFisica().getEndereco().getCep());
+				ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.usuario.getPessoa().getEndereco().getCep());
 
 				if (viaCEPDTO != null) {
-					this.usuario.getPessoaFisica().getEndereco().setEndereco(viaCEPDTO.getLogradouro());
-					this.usuario.getPessoaFisica().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
-					this.usuario.getPessoaFisica().getEndereco().setBairro(viaCEPDTO.getBairro());
-					this.uf = this.usuario.getPessoaFisica().getEndereco().getMunicipio().getUf();
+					this.usuario.getPessoa().getEndereco().setEndereco(viaCEPDTO.getLogradouro());
+					this.usuario.getPessoa().getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+					this.usuario.getPessoa().getEndereco().setBairro(viaCEPDTO.getBairro());
+					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 					listarMunicipiosPorUfs();
 				} else {
-					this.usuario.getPessoaFisica().setEndereco(null);
+					this.usuario.getPessoa().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
 					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "CEP não encontrado.");
