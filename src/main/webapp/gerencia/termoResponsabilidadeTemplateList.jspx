@@ -16,7 +16,7 @@
 					<b:column offset-md="8" medium-screen="4">
 						<b:commandButton value="Adicionar Termo de Responsabilidade"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-							look="success" styleClass="btn-command"
+							look="primary" styleClass="btn-command"
 							style="margin-bottom:5px;"
 							action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
 							icon="ui-icon-plusthick" />

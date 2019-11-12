@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
+import br.com.ambientinformatica.util.UtilHash;
+import br.com.ambientinformatica.util.UtilHash.Algoritimo;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
 import br.com.oversight.sefisca.entidade.EnumEstadoCivil;
 import br.com.oversight.sefisca.entidade.EnumPapel;
@@ -24,6 +26,7 @@ import br.com.oversight.sefisca.entidade.Usuario;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.CepService;
+import br.com.oversight.sefisca.util.UtilMessages;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +53,14 @@ public class EditarUsuarioControl implements Serializable {
 
 	@Getter
 	@Setter
+	private String novaSenha;
+
+	@Getter
+	@Setter
+	private String novaSenhaConfirm;
+
+	@Getter
+	@Setter
 	private EnumPapel papel;
 
 	@Getter
@@ -59,11 +70,6 @@ public class EditarUsuarioControl implements Serializable {
 	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
 
-	@PostConstruct
-	public void init() {
-
-	}
-
 	public void confirmar() {
 		try {
 			if (usuario.getPessoa().getCelular().equals(""))
@@ -71,31 +77,31 @@ public class EditarUsuarioControl implements Serializable {
 			if (usuario.getPessoa().getTelefone().equals(""))
 				usuario.getPessoa().setTelefone(null);
 			this.usuario = usuarioDao.alterar(this.usuario);
-			UtilFaces.addMensagemFaces("Usuário salvo com sucesso!");
+			UtilMessages.addMessage("Usuário salvo com sucesso!");
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
 	public void adicionarPapel() {
 		try {
 			if (papel.equals(EnumPapel.GERENTE) && !usuarioLogadoControl.getUsuario().isContemPapel(EnumPapel.ADMIN)) {
-				UtilFaces.addMensagemFaces("Somente usuários Administradores podem adicionar esse papel.",
-						FacesMessage.SEVERITY_ERROR);
+				UtilMessages.addMessage(FacesMessage.SEVERITY_ERROR,
+						"Somente usuários Administradores podem adicionar esse papel.");
 				return;
 			}
 			this.usuario.addPapel(new PapelUsuario(papel));
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
 	public void removerPapel(PapelUsuario papelUsuarioParam) {
 		try {
 			this.usuario.removerPapel(papelUsuarioParam);
-			UtilFaces.addMensagemFaces("Papel removido!");
+			UtilMessages.addMessage("Papel removido!");
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
@@ -103,22 +109,16 @@ public class EditarUsuarioControl implements Serializable {
 		try {
 			municipios = municipioDao.listarPorUfNome(uf, null);
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			e.printStackTrace();
+			UtilMessages.addMessage(e);
 		}
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuarioDao.consultarPorId(usuario.getId());
 
-		if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null) {
+		if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null)
 			this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
-		} else {
-			try {
-				this.uf = EnumUf.GO;
-			} catch (Exception e) {
-				UtilFaces.addMensagemFaces("Erro ao consultar UF");
-			}
-		}
 		listarMunicipiosPorUfs();
 	}
 
@@ -136,13 +136,32 @@ public class EditarUsuarioControl implements Serializable {
 					this.usuario.getPessoa().getEndereco().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
-					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);
-					UtilFaces.addMensagemFaces("Caso seja um endereço novo preencha todos os campos.",
-							FacesMessage.SEVERITY_WARN);
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "CEP não encontrado.");
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN,
+							"Caso seja um endereço novo preencha todos os campos.");
 				}
 			} catch (Exception e) {
-				UtilFaces.addMensagemFaces(e);
+				UtilMessages.addMessage(e);
 			}
+		}
+	}
+
+	public void alterarSenha() {
+		try {
+			if (novaSenha != null && novaSenha.equals(novaSenhaConfirm)) {
+				this.usuario.setSenhaNaoCriptografada(novaSenha);
+				this.usuario.setAlterarSenha(false);
+				this.usuario = usuarioDao.alterar(this.usuario);
+				UtilMessages.addMessage("Senha alterada com sucesso!");
+			} else {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "Senhas diferentes!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			UtilMessages.addMessage(e);
+		} finally {
+			this.setNovaSenha("");
+			this.setNovaSenhaConfirm("");
 		}
 	}
 

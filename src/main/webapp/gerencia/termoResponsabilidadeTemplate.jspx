@@ -59,7 +59,7 @@
 						<b:commandButton id="btnSalvar" iconAwesome="save"
 							styleClass="btn-command" style="margin-bottom:5px;"
 							actionListener="#{TermoResponsabilidadeTemplateControl.confirmar}"
-							value="Salvar" look="primary" iconAlign="left" />
+							value="Salvar" look="success" iconAlign="left" />
 					</b:column>
 				</b:row>
 			</b:container>

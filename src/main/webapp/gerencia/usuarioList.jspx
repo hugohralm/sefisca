@@ -10,7 +10,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
 
-		<b:panel title="Pesquisar usuÃ¡rios cadastrados" look="primary"
+		<b:panel title="Pesquisar usuários cadastrados" look="primary"
 			collapsible="false" id="panelConsultaUsuarios">
 			<b:container fluid="true">
 				<b:row>
