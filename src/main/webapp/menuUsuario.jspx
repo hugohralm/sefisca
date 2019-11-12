@@ -42,7 +42,7 @@
 				</b:dropMenu>
 				<b:navCommandLink value="#{UsuarioLogadoControl.usuario.pessoa.primeiroNome}"
 					actionListener="#{MenuControl.gerenciarSessao}"
-					action="#{UsuarioControl.verificarUsuarioLogado}"
+					action="#{AtualizarPerfilControl.verificarUsuarioLogado}"
 					iconAwesome="user" />
 				<b:navLink value="Sair" iconAwesome="power-off"
 					onclick="document.location.href='/sefisca/sair.jsp'"
@@ -57,7 +57,7 @@
 		</b:navBar>
 		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
 			show-detail="true" show-summary="true" allowDismiss="true"
-			delay="10000" escape="true" />
+			delay="5000" escape="true" />
 
 		<p:sticky id="stickyMenu" target=":formMenuUsuario:menubar" />
 	</h:form>

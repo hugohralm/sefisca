@@ -24,12 +24,13 @@ import br.com.oversight.sefisca.entidade.Usuario;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.CepService;
+import br.com.oversight.sefisca.util.UtilMessages;
 import lombok.Getter;
 import lombok.Setter;
 
 @Scope("conversation")
-@Controller("UsuarioControl")
-public class UsuarioControl implements Serializable {
+@Controller("AtualizarPerfilControl")
+public class AtualizarPerfilControl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,15 +52,15 @@ public class UsuarioControl implements Serializable {
 
 	@Getter
 	@Setter
-	private String senha1;
+	private String novaSenha;
 
 	@Getter
 	@Setter
-	private String senha2;
+	private String novaSenhaConfirm;
 
 	@Getter
 	@Setter
-	private String confirmarSenha;
+	private String senhaAtual;
 
 	@Getter
 	@Setter
@@ -85,61 +86,26 @@ public class UsuarioControl implements Serializable {
 			}
 			listarMunicipiosPorUfs();
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
-		return "/atualizarDados?faces-redirect=true";
+		return "/atualizarPerfil?faces-redirect=true";
 	}
 
 	public void listarMunicipiosPorUfs() {
 		try {
 			municipios = municipioDao.listarPorUfNome(this.uf, null);
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
 	}
 
 	public void confirmar() {
 		try {
 			this.usuario = usuarioDao.alterar(this.usuario);
-			UtilFaces.addMensagemFaces("Cadastro salvo com sucesso!");
+			UtilMessages.addMessage("Cadastro salvo com sucesso!");
 		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
+			UtilMessages.addMessage(e);
 		}
-	}
-
-	public void alterarSenha() {
-		try {
-			String senhaAtualCripto = UtilHash.gerarStringHash(confirmarSenha, Algoritimo.MD5);
-			if (senhaAtualCripto.equals(this.usuario.getSenha())) {
-				if (senha1 != null && senha1.equals(senha2)) {
-					this.usuario.setSenhaNaoCriptografada(senha1);
-					this.usuario.setAlterarSenha(false);
-					this.usuario = usuarioDao.alterar(this.usuario);
-					UtilFaces.addMensagemFaces("Senha alterada com sucesso!");
-				} else {
-					UtilFaces.addMensagemFaces("Senhas diferentes!", FacesMessage.SEVERITY_ERROR);
-				}
-			} else {
-				UtilFaces.addMensagemFaces("Senha atual incorreta!", FacesMessage.SEVERITY_ERROR);
-			}
-		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
-		}finally {
-			this.setSenha1("");
-			this.setSenha2("");
-		}
-	}
-
-	public List<SelectItem> getUfs() {
-		return UtilFaces.getListEnum(EnumUf.values());
-	}
-
-	public List<SelectItem> getEstadosCivis() {
-		return UtilFaces.getListEnum(EnumEstadoCivil.values());
-	}
-
-	public List<SelectItem> getSexos() {
-		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 
 	public void consultarCep() {
@@ -153,16 +119,53 @@ public class UsuarioControl implements Serializable {
 					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 					listarMunicipiosPorUfs();
 				} else {
-					this.usuario.getPessoa().setEndereco(null);
+					this.usuario.getPessoa().getEndereco().setEndereco(null);
 					this.uf = EnumUf.GO;
 					listarMunicipiosPorUfs();
-					UtilFaces.addMensagemFaces("CEP não encontrado.", FacesMessage.SEVERITY_WARN);
-					UtilFaces.addMensagemFaces("Caso seja um endereço novo preencha todos os campos.",
-							FacesMessage.SEVERITY_WARN);
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "CEP não encontrado.");
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN,
+							"Caso seja um endereço novo preencha todos os campos.");
 				}
 			} catch (Exception e) {
-				UtilFaces.addMensagemFaces(e);
+				UtilMessages.addMessage(e);
 			}
 		}
+	}
+
+	public void alterarSenha() {
+		try {
+			String senhaAtualCripto = UtilHash.gerarStringHash(senhaAtual, Algoritimo.MD5);
+			if (senhaAtualCripto.equals(this.usuario.getSenha())) {
+				if (novaSenha != null && novaSenha.equals(novaSenhaConfirm)) {
+					this.usuario.setSenhaNaoCriptografada(novaSenha);
+					this.usuario.setAlterarSenha(false);
+					this.usuario = usuarioDao.alterar(this.usuario);
+					UtilMessages.addMessage("Senha alterada com sucesso!");
+				} else {
+					UtilMessages.addMessage(FacesMessage.SEVERITY_WARN, "Senhas diferentes!");
+				}
+			} else {
+				UtilFaces.addMensagemFaces("Senha atual incorreta!", FacesMessage.SEVERITY_ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			UtilMessages.addMessage(e);
+		} finally {
+			this.setSenhaAtual("");
+			this.setNovaSenha("");
+			this.setNovaSenhaConfirm("");
+		}
+	}
+
+	public List<SelectItem> getUfs() {
+		return UtilFaces.getListEnum(EnumUf.values());
+	}
+
+	public List<SelectItem> getEstadosCivis() {
+		return UtilFaces.getListEnum(EnumEstadoCivil.values());
+	}
+
+	public List<SelectItem> getSexos() {
+		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 }

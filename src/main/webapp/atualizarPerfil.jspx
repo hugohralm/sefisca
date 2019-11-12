@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ui:composition template="../template.xhtml"
+<ui:composition template="template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
 	<ui:define name="corpo">
 
 		<b:form>
@@ -19,60 +20,60 @@
 							<b:column smallScreen="4" medium-screen="3">
 								<b:inputText label="CPF" render-label="true"
 									mask="999.999.999-99" disabled="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.cpf}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.cpf}" />
 							</b:column>
 							<b:column small-screen="8" medium-screen="9">
 								<b:inputText label="Nome" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.nome}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.nome}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column smallScreen="12" medium-screen="6" large-screen="6">
 								<b:inputText label="Email" render-label="true" mask="email"
-									value="#{EditarUsuarioControl.usuario.pessoa.email}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.email}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Telefone" render-label="true"
 									mask="(99) 9999-9999"
-									value="#{EditarUsuarioControl.usuario.pessoa.telefone}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.telefone}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Celular" render-label="true"
 									mask="(99) 99999-9999"
-									value="#{EditarUsuarioControl.usuario.pessoa.celular}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.celular}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Sexo" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.sexo}">
+									value="#{AtualizarPerfilControl.usuario.pessoa.sexo}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{EditarUsuarioControl.sexos}" />
+									<f:selectItems value="#{AtualizarPerfilControl.sexos}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Estado civil" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.estadoCivil}">
+									value="#{AtualizarPerfilControl.usuario.pessoa.estadoCivil}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{EditarUsuarioControl.estadosCivis}" />
+									<f:selectItems value="#{AtualizarPerfilControl.estadosCivis}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:dateTimePicker id="nascDate" label="Data de nascimento *"
 									mode="popup-icon" showTime="false" format="DD/MM/YYYY"
-									value="#{EditarUsuarioControl.usuario.pessoa.dataNascimento }" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.dataNascimento }" />
 								<b:message for="nascDate" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column medium-screen="4">
 								<b:inputText
-									value="#{EditarUsuarioControl.usuario.pessoa.endereco.cep}"
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.cep}"
 									label="CEP" mask="99.999-999">
 									<f:facet name="append">
 										<b:commandButton look="primary" icon="search"
 											icon-align="right"
-											actionListener="#{EditarUsuarioControl.consultarCep}" />
+											actionListener="#{AtualizarPerfilControl.consultarCep}" />
 									</f:facet>
 								</b:inputText>
 							</b:column>
@@ -80,93 +81,37 @@
 						<b:row>
 							<b:column medium-screen="6">
 								<b:inputText id="endereco" label="Endereço" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.endereco.endereco}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.endereco}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Bairro" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.endereco.bairro}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.bairro}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Numero" render-label="true"
-									value="#{EditarUsuarioControl.usuario.pessoa.endereco.numero}" />
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.numero}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="6">
 								<b:selectOneMenu id="estado" label="Estado *"
 									render-label="true" style="width:100%;"
-									value="#{EditarUsuarioControl.uf}" select2="true"
+									value="#{AtualizarPerfilControl.uf}" select2="true"
 									update="estado municipio">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{EditarUsuarioControl.ufs }" />
+									<f:selectItems value="#{AtualizarPerfilControl.ufs }" />
 									<f:ajax
-										listener="#{EditarUsuarioControl.listarMunicipiosPorUfs}"
+										listener="#{AtualizarPerfilControl.listarMunicipiosPorUfs}"
 										process="@this" update="municRequerente" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="6">
 								<b:selectOneMenu id="municipio" label="Município"
 									render-label="true" select2="true" style="width:100%;"
-									value="#{EditarUsuarioControl.usuario.pessoa.endereco.municipio}">
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.municipio}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{EditarUsuarioControl.municipios}" />
+									<f:selectItems value="#{AtualizarPerfilControl.municipios}" />
 								</b:selectOneMenu>
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column small-screen="6">
-								<b:selectOneMenu label="Cadastro confirmado?"
-									value="#{EditarUsuarioControl.usuario.confirmado}">
-									<f:selectItem itemLabel="SIM" itemValue="true" />
-									<f:selectItem itemLabel="NÃO" itemValue="false" />
-								</b:selectOneMenu>
-							</b:column>
-							<b:column small-screen="6">
-								<b:selectOneMenu label="Solicitou Alteração de Senha?"
-									value="#{EditarUsuarioControl.usuario.alterarSenha}">
-									<f:selectItem itemLabel="SIM" itemValue="true" />
-									<f:selectItem itemLabel="NÃO" itemValue="false" />
-								</b:selectOneMenu>
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column>
-								<p:separator />
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column tiny-screen="10" mediumScreen="4">
-								<b:selectOneMenu label="Adicionar papel:"
-									labelStyle="height:20px;" value="#{EditarUsuarioControl.papel}">
-									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{EditarUsuarioControl.papeis}" />
-								</b:selectOneMenu>
-							</b:column>
-							<b:column tiny-screen="2">
-								<b:commandButton style="margin-top:25px; width:100%;" 
-									disabled="#{!securityScope.userInRole['GERENTE,ADMIN']}"
-									actionListener="#{EditarUsuarioControl.adicionarPapel}"
-									value="" icon="plus" icon-align="right"
-									update="formCorpo:tblPapeis" />
-							</b:column>
-							<b:column>
-								<b:dataTable id="tblPapeis" searching="false" paginated="false" info="false" caption="Papeis atribuidos ao usuario:"
-									value="#{EditarUsuarioControl.usuario.papeisUsuario}"
-									style="width:100%;" var="papelUsuario">
-									<b:dataTableColumn label="Papel" width="50%"
-										value="#{papelUsuario.papel.descricao}" />
-									<b:dataTableColumn label="Data de cadastro" width="50%">
-										<h:outputText value="#{papelUsuario.dataCadastro}">
-											<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-										</h:outputText>
-									</b:dataTableColumn>
-									<b:dataTableColumn label="" searchable="false" width="20px"
-										orderable="false">
-										<b:commandButton icon="trash"
-											actionListener="#{EditarUsuarioControl.removerPapel(papelUsuario)}"
-											update=":formCorpo:tblPapeis" />
-									</b:dataTableColumn>
-								</b:dataTable>
 							</b:column>
 						</b:row>
 						<b:row>
@@ -186,38 +131,45 @@
 							<b:column small-screen="4" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"
 									styleClass="btn-command" ajax="false"
-									actionListener="#{EditarUsuarioControl.confirmar}"
+									actionListener="#{AtualizarPerfilControl.confirmar}"
 									value="Salvar" look="success" iconAlign="right"
 									oncomplete="PF('usuario').close();" />
 							</b:column>
 						</b:row>
 
 						<b:modal id="trocarSenhaModal" styleClass="trocarSenhaModal"
-							title="Alteração de Senha" closable="false" 
+							title="Alteração de Senha" closable="false"
 							close-on-escape="false" backdrop="false">
 							<b:form>
 								<b:row>
 									<b:column>
+										<b:inputSecret label="Informe a senha atual"
+											value="#{AtualizarPerfilControl.senhaAtual}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
 										<b:inputSecret label="Informe uma nova senha"
-											value="#{EditarUsuarioControl.novaSenha}" />
+											value="#{AtualizarPerfilControl.novaSenha}" />
 									</b:column>
 								</b:row>
 								<b:row>
 									<b:column>
 										<b:inputSecret label="Confirme a nova senha"
-											value="#{EditarUsuarioControl.novaSenhaConfirm}" />
+											value="#{AtualizarPerfilControl.novaSenhaConfirm}" />
 									</b:column>
 								</b:row>
 								<b:row>
-									<b:column  small-screen="6" >
+									<b:column small-screen="6">
 										<b:button value="Cancelar" dismiss="modal"
 											onclick="return false;" styleClass="btn-command"
 											iconAlign="right" icon="remove" look="danger" />
 									</b:column>
-									<b:column small-screen="6" >
+									<b:column small-screen="6">
 										<b:commandButton
-											action="#{EditarUsuarioControl.alterarSenha}" dismiss="modal"
-											value="Salvar" look="success" styleClass="btn-command"
+											action="#{AtualizarPerfilControl.alterarSenha}"
+											dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command"
 											oncomplete="$('.trocarSenhaModal').modal('hide')"
 											iconAlign="right" icon="ok" />
 									</b:column>
@@ -229,5 +181,6 @@
 				</b:panel>
 			</b:column>
 		</b:form>
+
 	</ui:define>
 </ui:composition>
