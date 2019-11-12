@@ -10,7 +10,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
 
-		<b:panel title="Pesquisar usuários cadastrados" look="primary"
+		<b:panel title="Pesquisar usuÃ¡rios cadastrados" look="primary"
 			collapsible="false" id="panelConsultaUsuarios">
 			<b:container fluid="true">
 				<b:row>
@@ -18,7 +18,7 @@
 						<b:dataTable id="tblUsuarios" responsive="true"
 							value="#{UsuarioListControl.usuarios }" var="usuario">
 							<b:dataTableColumn value="#{usuario.pessoa.cpf}"
-								label="CPF" style="width:100px;"/>
+								label="CPF" style="width:100px;" />
 							<b:dataTableColumn value="#{usuario.pessoa.nome}"
 								label="Nome" />
 							<b:dataTableColumn value="#{usuario.pessoa.email }"
@@ -32,7 +32,8 @@
 								</ui:repeat>
 							</b:dataTableColumn>
 							<b:dataTableColumn label="Confirmado"
-								style="width: 60px;text-align: center;" dataOrder="#{usuario.confirmado}" >
+								style="width: 60px;text-align: center;"
+								dataOrder="#{usuario.confirmado}">
 								<b:icon value="remove" styleClass="icon-color-red"
 									rendered="#{usuario.confirmado == false}" />
 								<b:icon value="ok" styleClass="icon-color-green"
@@ -42,11 +43,11 @@
 								searchable="false" orderable="false">
 								<b:commandButton id="btnEditar" icon="pencil"
 									tooltip="Clique para editar esse cadastro."
-									action="manutencaoUsuario?faces-redirect=true"
+									action="/gerencia/editarUsuario?faces-redirect=true"
 									style-class="btn-command"
 									actionListener="#{MenuControl.gerenciarSessao}">
 									<f:setPropertyActionListener value="#{usuario}"
-										target="#{UsuarioListControl.usuario}" />
+										target="#{EditarUsuarioControl.usuario}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>

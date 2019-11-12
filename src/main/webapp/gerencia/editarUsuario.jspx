@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:define name="corpo">
+
+		<b:form>
+			<b:column>
+				<b:panel title="Informações do usuário" look="primary"
+					collapsible="false">
+					<b:container fluid="true">
+						<b:row>
+							<b:column smallScreen="4" medium-screen="3">
+								<b:inputText label="CPF" render-label="true"
+									mask="999.999.999-99" disabled="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.cpf}" />
+							</b:column>
+							<b:column small-screen="8" medium-screen="9">
+								<b:inputText label="Nome" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.nome}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column smallScreen="12" medium-screen="6" large-screen="6">
+								<b:inputText label="Email" render-label="true" mask="email"
+									value="#{EditarUsuarioControl.usuario.pessoa.email}" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:inputText label="Telefone" render-label="true"
+									mask="(99) 9999-9999"
+									value="#{EditarUsuarioControl.usuario.pessoa.telefone}" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:inputText label="Celular" render-label="true"
+									mask="(99) 99999-9999"
+									value="#{EditarUsuarioControl.usuario.pessoa.celular}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="4">
+								<b:selectOneMenu label="Sexo" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.sexo}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{EditarUsuarioControl.sexos}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="4">
+								<b:selectOneMenu label="Estado civil" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.estadoCivil}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{EditarUsuarioControl.estadosCivis}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="4">
+								<b:dateTimePicker id="nascDate" label="Data de nascimento *"
+									mode="popup-icon" showTime="false" format="DD/MM/YYYY"
+									value="#{EditarUsuarioControl.usuario.pessoa.dataNascimento }" />
+								<b:message for="nascDate" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="4">
+								<b:inputText
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.cep}"
+									label="CEP" mask="99.999-999">
+									<f:facet name="append">
+										<b:commandButton look="primary" icon="search"
+											icon-align="right"
+											actionListener="#{EditarUsuarioControl.consultarCep}" />
+									</f:facet>
+								</b:inputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="6">
+								<b:inputText id="endereco" label="Endereço" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.endereco}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Bairro" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.bairro}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Numero" render-label="true"
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.numero}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="estado" label="Estado *"
+									render-label="true" style="width:100%;"
+									value="#{EditarUsuarioControl.uf}" select2="true"
+									update="estado municipio">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{EditarUsuarioControl.ufs }" />
+									<f:ajax
+										listener="#{EditarUsuarioControl.listarMunicipiosPorUfs}"
+										process="@this" update="municRequerente" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="municipio" label="Município"
+									render-label="true" select2="true" style="width:100%;"
+									value="#{EditarUsuarioControl.usuario.pessoa.endereco.municipio}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{EditarUsuarioControl.municipios}" />
+								</b:selectOneMenu>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:selectOneMenu label="Cadastro confirmado?"
+									value="#{EditarUsuarioControl.usuario.confirmado}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6">
+								<b:selectOneMenu label="Solicitou Alteração de Senha?"
+									value="#{EditarUsuarioControl.usuario.alterarSenha}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</b:selectOneMenu>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column>
+								<p:separator/>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column tiny-screen="8" mediumScreen="4">
+								<b:selectOneMenu label="Adicionar papel:"
+									labelStyle="height:20px;" value="#{EditarUsuarioControl.papel}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{EditarUsuarioControl.papeis}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column tiny-screen="4" mediumScreen="2">
+								<b:commandButton style="margin-top:25px; width:100%;"
+									disabled="#{!securityScope.userInRole['GERENTE,ADMIN']}"
+									actionListener="#{EditarUsuarioControl.adicionarPapel}"
+									value="Adicionar" icon="plus" icon-align="right"
+									update="formCorpo:tblPapeis" />
+							</b:column>
+							<b:column>
+								<b:dataTable id="tblPapeis" searching="false" paginated="false"
+									value="#{EditarUsuarioControl.usuario.papeisUsuario}" style="width:100%;"
+									var="papelUsuario">
+									<b:dataTableColumn label="Papel" width="50%"
+										value="#{papelUsuario.papel.descricao}" />
+									<b:dataTableColumn label="Data de cadastro" width="50%">
+										<h:outputText value="#{papelUsuario.dataCadastro}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+										</h:outputText>
+									</b:dataTableColumn>
+									<b:dataTableColumn label="" searchable="false" width="20px"
+										orderable="false">
+										<b:commandButton icon="trash"
+											actionListener="#{EditarUsuarioControl.removerPapel(papelUsuario)}"
+											update=":formCorpo:tblPapeis" />
+									</b:dataTableColumn>
+								</b:dataTable>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6" offset-md="8" medium-screen="2">
+								<b:commandButton id="btnLimpar" icon="remove" ajax="false"
+									styleClass="btn-command" value="Cancelar  " look="danger"
+									action="usuarioList?faces-redirect=true" iconAlign="right"
+									immediate="true"
+									actionListener="#{MenuControl.gerenciarSessao}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="2">
+								<b:commandButton id="btnConcluir" icon="ok"
+									styleClass="btn-command" ajax="false"
+									actionListener="#{EditarUsuarioControl.confirmar}"
+									value="Salvar" look="primary" iconAlign="right"
+									oncomplete="PF('usuario').close();" />
+							</b:column>
+						</b:row>
+					</b:container>
+				</b:panel>
+			</b:column>
+		</b:form>
+	</ui:define>
+</ui:composition>
