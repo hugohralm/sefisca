@@ -153,7 +153,7 @@
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
-			<version>1.6</version>
+			<version>3.4.0</version>
 		</dependency>
 
 		<!-- preenchimento de templates -->
