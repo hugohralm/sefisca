@@ -2,6 +2,8 @@ package br.com.oversight.sefisca.entidade;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -43,7 +47,7 @@ public class Instituicao extends Entidade implements Serializable {
 
 	@Getter
 	@Setter
-	@Length(min = 0, max = 50, message = "O limite do campo codigo CNES é de 50 caracteres.", groups = AmbientValidator.class)
+	@Length(min = 0, max = 50, message = "O limite do campo cnes é de 50 caracteres.", groups = AmbientValidator.class)
 	@Column(unique = true, nullable = false)
 	private String cnes;
 
@@ -56,21 +60,21 @@ public class Instituicao extends Entidade implements Serializable {
 	@Setter
 	@NotBlank(message = "Informe o nome fantasia.", groups = AmbientValidator.class)
 	@Column(length = 255, nullable = false)
-	@Length(max = 255, message = "O limite do campo RG é de 255 caracteres.", groups = AmbientValidator.class)
+	@Length(max = 255, message = "O limite do campo nome fantasia é de 255 caracteres.", groups = AmbientValidator.class)
 	private String nomeFantasia;
 
 	@Getter
 	@Setter
 	@NotBlank(message = "Informe a razao social.", groups = AmbientValidator.class)
 	@Column(length = 255, nullable = false)
-	@Length(max = 255, message = "O limite do campo RG é de 255 caracteres.", groups = AmbientValidator.class)
+	@Length(max = 255, message = "O limite do campo razão social é de 255 caracteres.", groups = AmbientValidator.class)
 	private String razaoSocial;
 
 	@Getter
 	@Setter
 	@NotBlank(message = "Informe o tipo unidade.", groups = AmbientValidator.class)
 	@Column(length = 255, nullable = false)
-	@Length(max = 255, message = "O limite do campo RG é de 255 caracteres.", groups = AmbientValidator.class)
+	@Length(max = 255, message = "O limite do campo tipo unidade é de 255 caracteres.", groups = AmbientValidator.class)
 	private String tipoUnidade;
 
 	@Getter
@@ -88,10 +92,18 @@ public class Instituicao extends Entidade implements Serializable {
 	@Setter
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCriacao = new Date();
-
+	
+	@Getter @Setter @OrderBy("nome")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Profissional> profissionais = new HashSet<>();
+	
 	@PrePersist
 	private void atualizarData() {
 		setDataCriacao(new Date());
+	}
+	
+	public void addProfissional(Profissional profissional) {
+		profissionais.add(profissional);
 	}
 
 	public void setDto(InstituicaoDTO instituicaoDTO) {

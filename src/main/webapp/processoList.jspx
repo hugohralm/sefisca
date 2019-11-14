@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="corpo">
+		<b:panel title="Pesquisar processos cadastrados" look="primary"
+			collapsible="false" id="panelConsultaProcessos">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<b:dataTable id="tblProcessos" responsive="true"
+							value="#{ProcessoListControl.processos}" var="processo">
+							<b:dataTableColumn value="#{processo.id}" label="ID"
+								style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.instituicao}"
+								label="Instituição" />
+							<b:dataTableColumn value="#{processo.tipoProcesso.descricao}"
+								label="Tipo processo" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.dataAberturaFormatada}"
+								label="Data abertura" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.etapaProcesso.descricao}"
+								label="Etapa" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.statusProcesso.descricao}"
+								label="Status" style="text-align: center;" />
+							<b:dataTableColumn style="width: 20px;" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnEditar" icon="pencil"
+									tooltip="Clique para editar esse cadastro."
+									action="processo?faces-redirect=true" style-class="btn-command"
+									actionListener="#{MenuControl.gerenciarSessao}">
+									<f:setPropertyActionListener value="#{processo}"
+										target="#{ProcessoControl.processo}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+							<b:dataTableColumn style="width: 20px;" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnBuscarProfissionais" icon="search"
+									title="Clique aqui para buscar os profissionais da instituição"
+									action="profissionalInstituicaoList?faces-redirect=true"
+									style-class="btn-command"
+									actionListener="#{MenuControl.gerenciarSessao}">
+									<f:setPropertyActionListener value="#{processo.instituicao}"
+										target="#{ProfissionalInstituicaoListControl.instituicao}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+	</ui:define>
+</ui:composition>

@@ -6,6 +6,7 @@ import java.util.Scanner;
 @SuppressWarnings("resource")
 public class FileRequestUtils {
 	private static final String ESTABELECIMENTO_XML_PATH_FILE = "./datasusXML/estabelecimento_saude_request.xml";
+	private static final String CNES_XML_PATH_FILE = "./datasusXML/cnes_service_request.xml";
 
 	private static final String ESTABELECIMENTO_MATCH = "[[FIELD_REQUEST]]";
 	private static final String CNES_MATCH = "[[FIELD_CNES]]";
@@ -21,13 +22,22 @@ public class FileRequestUtils {
 		return getEstabelecimentoXmlRequest(cnpj, CNPJ_MATCH, request);
 	}
 	
+	public static String getCnesXmlRequest(String cnes) {
+		String cpfXmlRequest = getXmlRequest(CNES_XML_PATH_FILE);
+		return replaceMatchParam(cpfXmlRequest, CNES_MATCH, cnes);
+	}
+	
 	private static String getEstabelecimentoXmlRequest(String field, String match, String request) {
-		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		InputStream file = classloader.getResourceAsStream(ESTABELECIMENTO_XML_PATH_FILE);
-		Scanner s = new Scanner(file).useDelimiter("\\A");
-		String cpfXmlRequest = s.hasNext() ? s.next() : "";
+		String cpfXmlRequest = getXmlRequest(ESTABELECIMENTO_XML_PATH_FILE);
 		cpfXmlRequest= replaceMatchParam(cpfXmlRequest, ESTABELECIMENTO_MATCH, request);
 		return replaceMatchParam(cpfXmlRequest, match, field);
+	}
+	
+	private static String getXmlRequest(String pathFile) {
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream file = classloader.getResourceAsStream(pathFile);
+		Scanner s = new Scanner(file).useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
 	}
 	
 	private static String replaceMatchParam(String text, String math, String replace) {

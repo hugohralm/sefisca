@@ -10,25 +10,29 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<ui:define name="corpo">
-		<b:container fluid="true">
-			<b:row>
-				<b:column tiny-screen="8">
-					<b:panel title="Processos" collapsible="false" look="primary">
-						<b:dataTable value="#{InicioControl.processos}" var="processo">
-							<b:dataTableColumn label="Nr. do processo"
-								value="#{processo.numero}" />
-							<b:dataTableColumn label="Data Abertura"
-								value="#{processo.dataAberturaFormatada}" />
-							<b:dataTableColumn label="Instituição"
-								value="#{processo.instituicao}" />
-							<b:dataTableColumn label="Etapa"
-								value="#{processo.etapaProcesso.descricao}" />
-							<b:dataTableColumn label="Status"
-								value="#{processo.statusProcesso.descricao}" />
+		<b:panel title="Processos" look="primary" collapsible="false"
+			id="panelConsultaProcessos">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<b:dataTable id="tblProcessos" responsive="true"
+							value="#{InicioControl.processos}" var="processo">
+							<b:dataTableColumn value="#{processo.id}" label="ID"
+								style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.instituicao}"
+								label="Instituição" />
+							<b:dataTableColumn value="#{processo.tipoProcesso.descricao}"
+								label="Tipo processo" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.dataAberturaFormatada}"
+								label="Data abertura" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.etapaProcesso.descricao}"
+								label="Etapa" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.statusProcesso.descricao}"
+								label="Status" style="text-align: center;" />
 						</b:dataTable>
-					</b:panel>
-				</b:column>
-			</b:row>
-		</b:container>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>

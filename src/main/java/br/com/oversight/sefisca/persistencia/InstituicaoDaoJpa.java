@@ -1,20 +1,20 @@
 package br.com.oversight.sefisca.persistencia;
 
-import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.TypedQuery;
-import javax.xml.soap.SOAPException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.ambientinformatica.jpa.exception.PersistenciaException;
 import br.com.ambientinformatica.jpa.persistencia.PersistenciaJpa;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
+import br.com.oversight.sefisca.controle.dto.ProfissionalDTO;
 import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
 import br.com.oversight.sefisca.entidade.Instituicao;
+import br.com.oversight.sefisca.entidade.Profissional;
 import br.com.oversight.sefisca.services.DataSusService;
 import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
 	private InstituicaoDTO instituicaoDTO;
 
 	@Override
-	public Instituicao instituicaoPorCnesCpnj(String cnesCnpj, EnumTipoCodigoInstituicao tipoCodigo) throws PersistenciaException, SOAPException, IOException, TransformerFactoryConfigurationError, TransformerException {
+	public Instituicao instituicaoPorCnesCpnj(String cnesCnpj, EnumTipoCodigoInstituicao tipoCodigo) throws Exception {
 		Instituicao response = new Instituicao();
 		StringBuilder sql = new StringBuilder();
 		sql.append("select distinct i from Instituicao i where 1 = 1");
@@ -69,5 +69,16 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
 		}
 		
 		return response;
+	}
+	
+	@Override
+	public Set<Profissional> profissionaisServicePorCnes(String cnes) throws Exception {
+		List<ProfissionalDTO> profissionaisDTO = dataSusService.consultarProfissionaisCnes(cnes);
+		Set<Profissional> profissionais = new HashSet<Profissional>();
+		for(ProfissionalDTO profissialDTO : profissionaisDTO) {
+			Profissional profissional = new Profissional(profissialDTO);
+			profissionais.add(profissional);
+		}
+		return profissionais;
 	}
 }
