@@ -95,12 +95,6 @@ public class Pessoa extends Entidade implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(length = 255, nullable = true)
-	@Length(max = 255, message = "O limite do campo profissão é de 255 caracteres.", groups = AmbientValidator.class)
-	private String profissao;
-
-	@Getter
-	@Setter
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20, nullable = true)
 	private EnumEstadoCivil estadoCivil;
