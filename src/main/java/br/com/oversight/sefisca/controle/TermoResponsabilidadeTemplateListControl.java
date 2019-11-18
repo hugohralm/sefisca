@@ -13,16 +13,21 @@ import org.springframework.stereotype.Controller;
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.entidade.TermoResponsabilidadeTemplate;
 import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeTemplateDao;
+import lombok.Getter;
 
 @Scope("conversation")
 @Controller("TermoResponsabilidadeTemplateListControl")
 public class TermoResponsabilidadeTemplateListControl implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    
+	@Autowired
+	private UsuarioLogadoControl usuarioLogadoControl;
 
     @Autowired
     private TermoResponsabilidadeTemplateDao termoResponsabilidadeTemplateDao;
 
+    @Getter
     private List<TermoResponsabilidadeTemplate> termosResponsabilidade = new ArrayList<>();
 
     @PostConstruct
@@ -30,12 +35,9 @@ public class TermoResponsabilidadeTemplateListControl implements Serializable {
         try {
             this.termosResponsabilidade = termoResponsabilidadeTemplateDao.listar();
         } catch (Exception e) {
+        	e.printStackTrace();
             UtilFaces.addMensagemFaces(e);
         }
-    }
-
-    public List<TermoResponsabilidadeTemplate> getTermosResponsabilidade() {
-        return termosResponsabilidade;
     }
 
 }
