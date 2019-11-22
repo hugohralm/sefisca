@@ -120,7 +120,6 @@ public class Instituicao extends Entidade implements Serializable {
 		this.endereco.setMunicipio(instituicaoDTO.getMunicipio());
 		this.endereco.setLatitude(instituicaoDTO.getLatitude());
 		this.endereco.setLongitude(instituicaoDTO.getLongitude());
-		this.endereco.setGeoJson(instituicaoDTO.getGeoJson());
 	}
 	
 	public Instituicao(Usuario usuario) {
