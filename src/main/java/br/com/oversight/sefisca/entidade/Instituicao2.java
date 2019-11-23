@@ -66,15 +66,9 @@ public class Instituicao2 extends Entidade implements Serializable {
 
     @Getter
     @Setter
-    @Length(min = 0, max = 18, message = "O limite do campo cnpj é de 18 caracteres.", groups = AmbientValidator.class)
-    @Column(length = 18, nullable = true)
-    private String cnpj;
-
-    @Getter
-    @Setter
-    @Length(min = 0, max = 14, message = "O limite do campo cpf é de 14 caracteres.", groups = AmbientValidator.class)
-    @Column(length = 14, nullable = true)
-    private String cpf;
+    @Length(min = 0, max = 19, message = "O limite do campo cpf/cnpj é de 18 caracteres.", groups = AmbientValidator.class)
+    @Column(length = 19, nullable = true)
+    private String cpfCnpj;
     
     @Getter
     @Setter
@@ -185,11 +179,6 @@ public class Instituicao2 extends Entidade implements Serializable {
     @Getter
     @Setter
     @Temporal(TemporalType.DATE)
-    private Date dataAtualizacaoGeo = new Date();
-
-    @Getter
-    @Setter
-    @Temporal(TemporalType.DATE)
     private Date dataAtualizacao = new Date();
 
     @Getter
@@ -205,5 +194,9 @@ public class Instituicao2 extends Entidade implements Serializable {
     @PrePersist
     private void atualizarData() {
         setDataCriacao(new Date());
+    }
+    
+    public boolean isPessoaFisica() {
+        return this.tipoPessoa.equals(EnumTipoPessoa.PF);
     }
 }

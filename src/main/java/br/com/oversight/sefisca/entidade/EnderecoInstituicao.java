@@ -1,6 +1,7 @@
 package br.com.oversight.sefisca.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -69,6 +72,11 @@ public class EnderecoInstituicao extends Entidade implements Serializable {
     @Getter
     @Setter
     private String latitude;
+    
+    @Getter
+    @Setter
+    @Temporal(TemporalType.DATE)
+    private Date dataAtualizacaoGeo = new Date();
 
     public EnderecoInstituicao() {
         super();

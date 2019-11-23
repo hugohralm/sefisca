@@ -64,7 +64,8 @@ public class Instituicao2DaoJpa extends PersistenciaJpa<Instituicao2> implements
     @Transactional
     public void atualizarInstituicaoCsv() throws Exception {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        try (Reader reader = Files.newBufferedReader(Paths.get(classloader.getResource(ESTABELECIMENTO_CSV_FILE_PATH).toURI()));
+        try (Reader reader = Files
+                .newBufferedReader(Paths.get(classloader.getResource(ESTABELECIMENTO_CSV_FILE_PATH).toURI()));
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withDelimiter(';').withQuote('"')
                         .withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
             EntityManager em = emf.createEntityManager();
@@ -75,10 +76,11 @@ public class Instituicao2DaoJpa extends PersistenciaJpa<Instituicao2> implements
                 if (!UtilSefisca.isNullOrEmpty(instituicao2)) {
                     em.persist(criarObjeto(csvRecord));
                     i++;
-                    if (i == 100) {
+                    if (i == 1000) {
                         i = 0;
                         em.flush();
                         em.clear();
+                        break;
                     }
                 }
             }
@@ -139,23 +141,31 @@ public class Instituicao2DaoJpa extends PersistenciaJpa<Instituicao2> implements
             String conselhoClasseDiretor = csvRecord.get("REG_DIRETORCLN").trim();
 
             instituicao2.setCnes(UtilSefisca.isNullOrEmpty(cnes) ? null : cnes);
+            instituicao2.setTipoPessoa(tipoPessoa.equals("1") ? EnumTipoPessoa.PF : EnumTipoPessoa.PJ);
+            instituicao2.setSituacaoInstituicao(situacaoInstituicao.equals("1") ? EnumSituacaoInstituicao.INDIVIDUAL
+                    : EnumSituacaoInstituicao.MANTIDA);
+            if (instituicao2.getTipoPessoa().equals(EnumTipoPessoa.PF)) {
+                instituicao2.setCpfCnpj(
+                        UtilSefisca.isNullOrEmpty(cpf) ? null : UtilSefisca.formatStringMask(cpf, "###.###.###-##"));
+            }
+            if (instituicao2.getTipoPessoa().equals(EnumTipoPessoa.PJ)) {
+                instituicao2.setCpfCnpj(UtilSefisca.isNullOrEmpty(cnpj) ? null
+                        : UtilSefisca.formatStringMask(cnpj, "###.###.###/####-##"));
+            }
             instituicao2.setRazaoSocial(UtilSefisca.isNullOrEmpty(razaoSocial) ? null : razaoSocial);
             instituicao2.setNomeFantasia(UtilSefisca.isNullOrEmpty(nomeFantasia) ? null : nomeFantasia);
             instituicao2.setTelefone(UtilSefisca.isNullOrEmpty(telefone) ? null : telefone);
             instituicao2.setFax(UtilSefisca.isNullOrEmpty(fax) ? null : fax);
             instituicao2.setEmail(UtilSefisca.isNullOrEmpty(email) ? null : email);
-            instituicao2.setCpf(UtilSefisca.isNullOrEmpty(cpf) ? null : cpf);
-            instituicao2.setCnpj(UtilSefisca.isNullOrEmpty(cnpj) ? null : cnpj);
+
             instituicao2.setUrl(UtilSefisca.isNullOrEmpty(url) ? null : url);
-            instituicao2.setCnpjMantenedora(UtilSefisca.isNullOrEmpty(cnpjMantenedora) ? null : cnpjMantenedora);
+            instituicao2.setCnpjMantenedora(UtilSefisca.isNullOrEmpty(cnpjMantenedora) ? null
+                    : UtilSefisca.formatStringMask(cnpjMantenedora, "###.###.###/####-##"));
             instituicao2.setCpfDiretor(UtilSefisca.isNullOrEmpty(cpfDiretor) ? null : cpfDiretor);
             instituicao2.setConselhoClasseDiretor(
                     UtilSefisca.isNullOrEmpty(conselhoClasseDiretor) ? null : conselhoClasseDiretor);
             instituicao2.setCodigoUnidade(UtilSefisca.isNullOrEmpty(codigoUnidade) ? null : codigoUnidade);
 
-            instituicao2.setTipoPessoa(tipoPessoa.equals("1") ? EnumTipoPessoa.PF : EnumTipoPessoa.PJ);
-            instituicao2.setSituacaoInstituicao(situacaoInstituicao.equals("1") ? EnumSituacaoInstituicao.INDIVIDUAL
-                    : EnumSituacaoInstituicao.MANTIDA);
             instituicao2.setTipoGestao(EnumTipoGestao.valueOf(tipoGestao));
 
             if (!UtilSefisca.isNullOrEmpty(atividadeCsv)) {
@@ -202,7 +212,7 @@ public class Instituicao2DaoJpa extends PersistenciaJpa<Instituicao2> implements
             instituicao2.getEndereco().setLongitude(UtilSefisca.isNullOrEmpty(longitude) ? null : longitude);
 
             instituicao2.setDataAtualizacao(UtilSefisca.isNullOrEmpty(dataAtualizacao) ? null : dataAtualizacao);
-            instituicao2
+            instituicao2.getEndereco()
                     .setDataAtualizacaoGeo(UtilSefisca.isNullOrEmpty(dataAtualizacaoGeo) ? null : dataAtualizacaoGeo);
             return instituicao2;
         }
