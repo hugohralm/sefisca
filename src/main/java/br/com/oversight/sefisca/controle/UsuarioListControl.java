@@ -21,31 +21,28 @@ import lombok.Setter;
 @Controller("UsuarioListControl")
 public class UsuarioListControl implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private UsuarioDao usuarioDao;
+    @Autowired
+    private UsuarioDao usuarioDao;
 
-	@Autowired
-	private UsuarioLogadoControl usuarioLogadoControl;
+    @Getter
+    @Setter
+    private EnumPapel papel;
 
-	@Getter
-	@Setter
-	private EnumPapel papel;
+    @Getter
+    private List<Usuario> usuarios = new ArrayList<>();
 
-	@Getter
-	private List<Usuario> usuarios = new ArrayList<>();
+    @PostConstruct
+    public void init() {
+        listar();
+    }
 
-	@PostConstruct
-	public void init() {
-		listar();
-	}
-
-	public void listar() {
-		try {
-			this.usuarios = usuarioDao.listar();
-		} catch (Exception e) {
-			UtilFaces.addMensagemFaces(e);
-		}
-	}
+    public void listar() {
+        try {
+            this.usuarios = usuarioDao.listar();
+        } catch (Exception e) {
+            UtilFaces.addMensagemFaces(e);
+        }
+    }
 }

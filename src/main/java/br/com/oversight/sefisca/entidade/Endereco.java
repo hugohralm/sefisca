@@ -68,9 +68,6 @@ public class Endereco extends Entidade implements Serializable {
 	
 	@Getter	@Setter
 	private String latitude;
-	
-	@Getter	@Setter
-	private String geoJson;
 
 	public Endereco() {
 		super();

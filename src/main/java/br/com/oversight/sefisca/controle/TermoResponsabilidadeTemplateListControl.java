@@ -18,11 +18,8 @@ import lombok.Getter;
 @Scope("conversation")
 @Controller("TermoResponsabilidadeTemplateListControl")
 public class TermoResponsabilidadeTemplateListControl implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
-	@Autowired
-	private UsuarioLogadoControl usuarioLogadoControl;
 
     @Autowired
     private TermoResponsabilidadeTemplateDao termoResponsabilidadeTemplateDao;
@@ -35,7 +32,7 @@ public class TermoResponsabilidadeTemplateListControl implements Serializable {
         try {
             this.termosResponsabilidade = termoResponsabilidadeTemplateDao.listar();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
             UtilFaces.addMensagemFaces(e);
         }
     }
