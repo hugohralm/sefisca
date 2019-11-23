@@ -100,10 +100,10 @@
 							style="width:140px;" readonly="true" />
 					</a:field>
 
-					<a:field label="CNPJ" spaceLeft="10px">
-						<p:inputMask styleClass="obrigatorio" mask="99.999.999/9999-99"
-							value="#{ProcessoControl.processo.instituicao.cnpj}"
-							style="width:150px;" readonly="true" />
+					<a:field label="CPF/CNPJ" spaceLeft="10px">
+						<p:inputText styleClass="obrigatorio"
+							value="#{ProcessoControl.processo.instituicao.cpfCnpj}"
+							style="width:186px;" readonly="true" />
 					</a:field>
 
 					<a:newLine />
@@ -135,7 +135,7 @@
 
 					<a:field label="Logradouro" spaceLeft="10px;">
 						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.endereco}"
+							value="#{ProcessoControl.processo.instituicao.endereco.logradouro}"
 							style="width:620px;" readonly="true" />
 					</a:field>
 					<a:newLine />
