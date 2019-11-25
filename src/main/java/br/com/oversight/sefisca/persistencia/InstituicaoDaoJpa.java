@@ -1,9 +1,8 @@
 package br.com.oversight.sefisca.persistencia;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +16,7 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,16 +63,20 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
     @Autowired
     private MotivoDesativacaoDao motivoDesativacaoDao;
 
-    private static final String ESTABELECIMENTO_CSV_FILE_PATH = "/tbEstabelecimento.csv";
-
     @Override
+    public int atualizarInstituicaoCsv(UploadedFile file) throws Exception {
+        try (Reader reader = new InputStreamReader(file.getInputstream());) {
+            return atualizarInstituicao(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     @Transactional
-    public void atualizarInstituicaoCsv() throws Exception {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        try (Reader reader = Files
-                .newBufferedReader(Paths.get(classloader.getResource(ESTABELECIMENTO_CSV_FILE_PATH).toURI()));
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withDelimiter(';').withQuote('"')
-                        .withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
+    private int atualizarInstituicao(Reader reader) {
+        try (CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withDelimiter(';').withQuote('"')
+                .withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
             int i = 0;
@@ -91,10 +95,13 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
             }
             em.getTransaction().commit();
             em.close();
-            System.out.println(csvParser.getHeaderMap());
+            return csvParser.getRecords().size();
         } catch (IOException e) {
-            e.printStackTrace();
+            UtilLog.getLog().error(e.getMessage(), e);
+        } catch (ParseException e) {
+            UtilLog.getLog().error(e.getMessage(), e);
         }
+        return 0;
     }
 
     private Instituicao criarObjeto(CSVRecord csvRecord) throws ParseException {

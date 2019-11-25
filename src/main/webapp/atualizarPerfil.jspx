@@ -124,7 +124,7 @@
 							<b:column small-screen="4" medium-screen="2">
 								<b:commandButton id="btnLimpar" icon="remove" ajax="false"
 									styleClass="btn-command" value="Cancelar  " look="danger"
-									action="usuarioList?faces-redirect=true" iconAlign="right"
+									action="inicio?faces-redirect=true" iconAlign="right"
 									immediate="true"
 									actionListener="#{MenuControl.gerenciarSessao}" />
 							</b:column>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<p:panel id="panelInstituicao">
+			<p:panelGrid columns="2" id="arquivoAtualizacao" style="width:780px">
+				<p:outputLabel value="Selecionar csv para atualização:" />
+				<p:fileUpload mode="advanced" auto="true"
+					label="#{not empty AtualizarInstituicaoControl.arquivo ? 'Alterar arquivo' : 'Selecionar arquivo'}"
+					allowTypes="/(\.|\/)(csv)$/"
+					invalidFileMessage="Formato de arquivo inválido."
+					dragDropSupport="true"
+					fileUploadListener="#{AtualizarInstituicaoControl.anexarArquivo }"
+					update=":formCorpo:arquivoAtualizacao">
+				</p:fileUpload>
+			</p:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

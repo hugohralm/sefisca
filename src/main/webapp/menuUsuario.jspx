@@ -20,11 +20,11 @@
 						iconAwesome="folder-open" />
 				</b:dropMenu>
 				<b:dropMenu value="Configurações" iconAwesome="wrench">
-					<b:navCommandLink value="Atualizar sistema"
+					<b:navCommandLink value="Atualizar instituições"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"
-						action="/admin/atualizarBancoDeDados?faces-redirect=true"
-						iconAwesome="wrench" />
+						action="/admin/atualizarInstituicao?faces-redirect=true"
+						iconAwesome="search-plus" />
 					<b:navCommandLink value="Usuários"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
