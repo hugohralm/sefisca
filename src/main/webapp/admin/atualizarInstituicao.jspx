@@ -12,7 +12,6 @@
 			<p:panelGrid columns="2" id="arquivoAtualizacao" style="width:780px">
 				<p:outputLabel value="Selecionar csv para atualização:" />
 				<p:fileUpload mode="advanced" auto="true"
-					label="#{not empty AtualizarInstituicaoControl.arquivo ? 'Alterar arquivo' : 'Selecionar arquivo'}"
 					allowTypes="/(\.|\/)(csv)$/"
 					invalidFileMessage="Formato de arquivo inválido."
 					dragDropSupport="true"
