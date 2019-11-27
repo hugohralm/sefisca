@@ -13,23 +13,23 @@
 				<b:navCommandLink value="Iniciar Processo"
 					actionListener="#{MenuControl.gerenciarSessao}"
 					action="/processo?faces-redirect=true" iconAwesome="file" />
-				<b:dropMenu value="Consulta" iconAwesome="search">
+				<b:dropMenu value="Cadastros" iconAwesome="search">
+					<b:navCommandLink value="Modelos de Documentos"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
+						action="/modeloDocumentoList?faces-redirect=true"
+						iconAwesome="wrench" />
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						action="/processoList?faces-redirect=true"
 						iconAwesome="folder-open" />
-				</b:dropMenu>
-				<b:dropMenu value="Configurações" iconAwesome="wrench">
-					<b:navCommandLink value="Modelos de Documentos"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN']}"
-						action="/modeloDocumentoList?faces-redirect=true"
-						iconAwesome="wrench" />
 					<b:navCommandLink value="Usuários"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
 						action="/gerencia/usuarioList?faces-redirect=true"
 						iconAwesome="users" />
+				</b:dropMenu>
+				<b:dropMenu value="Configurações" iconAwesome="wrench">
 					<b:navCommandLink value="Parâmetros do sistema"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"

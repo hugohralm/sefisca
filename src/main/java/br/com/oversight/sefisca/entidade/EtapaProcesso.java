@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.ambientinformatica.util.AmbientValidator;
 import br.com.ambientinformatica.util.Entidade;
+import br.com.oversight.sefisca.controle.UsuarioLogadoControl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,7 +59,6 @@ public class EtapaProcesso extends Entidade implements Serializable {
     @Getter
     @Setter
     @Temporal(TemporalType.DATE)
-    @NotNull(message = "Informe a data de início da etapa", groups = AmbientValidator.class)
     private Date dataInicio = new Date();
 
     @Getter

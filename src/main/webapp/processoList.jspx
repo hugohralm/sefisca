@@ -29,10 +29,8 @@
 								searchable="false" orderable="false">
 								<b:commandButton id="btnEditar" icon="pencil"
 									tooltip="Clique para editar esse cadastro."
-									action="processo?faces-redirect=true" style-class="btn-command"
-									actionListener="#{MenuControl.gerenciarSessao}">
-									<f:setPropertyActionListener value="#{processo}"
-										target="#{ProcessoControl.processo}" />
+									action="#{MenuAndamentoProcessoControl.iniciar(processo)}"
+									style-class="btn-command">
 								</b:commandButton>
 							</b:dataTableColumn>
 							<b:dataTableColumn style="width: 20px;" label=""
