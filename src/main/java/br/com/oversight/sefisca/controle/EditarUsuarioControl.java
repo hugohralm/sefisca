@@ -1,11 +1,12 @@
 package br.com.oversight.sefisca.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
-import br.com.ambientinformatica.util.UtilHash;
-import br.com.ambientinformatica.util.UtilHash.Algoritimo;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
+import br.com.oversight.sefisca.entidade.Cargo;
+import br.com.oversight.sefisca.entidade.DadosProfissionais;
 import br.com.oversight.sefisca.entidade.EnumEstadoCivil;
 import br.com.oversight.sefisca.entidade.EnumPapel;
 import br.com.oversight.sefisca.entidade.EnumSexo;
@@ -23,6 +24,8 @@ import br.com.oversight.sefisca.entidade.EnumUf;
 import br.com.oversight.sefisca.entidade.Municipio;
 import br.com.oversight.sefisca.entidade.PapelUsuario;
 import br.com.oversight.sefisca.entidade.Usuario;
+import br.com.oversight.sefisca.persistencia.CargoDao;
+import br.com.oversight.sefisca.persistencia.DadosProfissionaisDao;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.CepService;
@@ -48,7 +51,14 @@ public class EditarUsuarioControl implements Serializable {
 	@Autowired
 	private CepService cepService;
 
+	@Autowired
+	private CargoDao cargoDao;
+
+	@Autowired
+	private DadosProfissionaisDao dadosProfissionaisDao;
+
 	@Getter
+	@Setter
 	private Usuario usuario;
 
 	@Getter
@@ -68,7 +78,15 @@ public class EditarUsuarioControl implements Serializable {
 	private EnumUf uf;
 
 	@Getter
+	@Setter
+	private DadosProfissionais dadosProfissionais;
+
+	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
+
+	public void iniciarDadosProfissionais() {
+		dadosProfissionais = dadosProfissionaisDao.consultarDadosPorPessoa(usuario.getPessoa());
+	}
 
 	public void confirmar() {
 		try {
@@ -77,7 +95,23 @@ public class EditarUsuarioControl implements Serializable {
 			if (usuario.getPessoa().getTelefone().equals(""))
 				usuario.getPessoa().setTelefone(null);
 			this.usuario = usuarioDao.alterar(this.usuario);
+			this.dadosProfissionais.setPessoa(usuario.getPessoa());
+			if (this.dadosProfissionais != null && this.dadosProfissionais.getCargo() != null)
+				this.dadosProfissionaisDao.alterar(this.dadosProfissionais);
 			UtilMessages.addMessage("Usuário salvo com sucesso!");
+		} catch (Exception e) {
+			UtilMessages.addMessage(e);
+		}
+	}
+
+	public void editarUsuario(Usuario usuario) {
+		try {
+			this.usuario = usuarioDao.consultarPorId(usuario.getId());
+			if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null)
+				this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
+			listarMunicipiosPorUfs();
+			iniciarDadosProfissionais();
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/sefisca/gerencia/editarUsuario.ovs");
 		} catch (Exception e) {
 			UtilMessages.addMessage(e);
 		}
@@ -112,14 +146,6 @@ public class EditarUsuarioControl implements Serializable {
 			e.printStackTrace();
 			UtilMessages.addMessage(e);
 		}
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuarioDao.consultarPorId(usuario.getId());
-
-		if (this.usuario != null && this.usuario.getPessoa().getEndereco().getMunicipio() != null)
-			this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
-		listarMunicipiosPorUfs();
 	}
 
 	public void consultarCep() {
@@ -184,4 +210,7 @@ public class EditarUsuarioControl implements Serializable {
 		return UtilFaces.getListEnum(EnumSexo.valuesVisivel());
 	}
 
+	public List<Cargo> getCargos() {
+		return cargoDao.listar();
+	}
 }

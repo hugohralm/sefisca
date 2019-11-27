@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<b:panel look="primary" collapsible="false" title="Cadastro de cargo"
+			style="width:100%;" id="panelGeral">
+			<b:container>
+				<b:row>
+					<b:column medium-screen="6">
+						<b:dateTimePicker label="Data de criação"
+							value="#{CargoControl.cargo.dataCadastro}" readonly="true" />
+					</b:column>
+					<b:column medium-screen="6">
+						<b:inputText readonly="true" label="Usuário responsável"
+							value="#{CargoControl.cargo.usuario}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<b:inputText label="Nome" value="#{CargoControl.cargo.nome }" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column small-screen="6" offset-md="8" medium-screen="2">
+						<b:commandButton iconAwesome="close"
+							onclick="document.location.href='sair.jsp" value="Fechar"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
+							action="cargoList?faces-redirect=true" iconAlign="left" />
+					</b:column>
+					<b:column small-screen="6" medium-screen="2">
+						<b:commandButton id="btnSalvar" iconAwesome="save"
+							styleClass="btn-command" style="margin-bottom:5px;"
+							actionListener="#{CargoControl.confirmar}" value="Salvar"
+							look="success" iconAlign="left" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+	</ui:define>
+
+</ui:composition>

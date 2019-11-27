@@ -17,12 +17,10 @@
 					<b:column>
 						<b:dataTable id="tblUsuarios" responsive="true"
 							value="#{UsuarioListControl.usuarios }" var="usuario">
-							<b:dataTableColumn value="#{usuario.pessoa.cpf}"
-								label="CPF" style="width:100px;" />
-							<b:dataTableColumn value="#{usuario.pessoa.nome}"
-								label="Nome" />
-							<b:dataTableColumn value="#{usuario.pessoa.email }"
-								label="Email" />
+							<b:dataTableColumn value="#{usuario.pessoa.cpf}" label="CPF"
+								style="width:100px;" />
+							<b:dataTableColumn value="#{usuario.pessoa.nome}" label="Nome" />
+							<b:dataTableColumn value="#{usuario.pessoa.email }" label="Email" />
 							<b:dataTableColumn label="Papel">
 								<ui:repeat var="papelUsuario" value="#{usuario.papeisUsuario}"
 									varStatus="status">
@@ -43,11 +41,9 @@
 								searchable="false" orderable="false">
 								<b:commandButton id="btnEditar" icon="pencil"
 									tooltip="Clique para editar esse cadastro."
-									action="/gerencia/editarUsuario?faces-redirect=true"
+									action="#{EditarUsuarioControl.editarUsuario(usuario)}"
 									style-class="btn-command"
 									actionListener="#{MenuControl.gerenciarSessao}">
-									<f:setPropertyActionListener value="#{usuario}"
-										target="#{EditarUsuarioControl.usuario}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>

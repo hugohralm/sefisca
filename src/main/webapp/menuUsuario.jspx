@@ -34,6 +34,11 @@
 						rendered="#{securityScope.userInRole['ADMIN']}"
 						action="/gerencia/termoResponsabilidadeTemplateList?faces-redirect=true"
 						iconAwesome="wrench" />
+					<b:navCommandLink value="Cargos"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/gerencia/cargoList?faces-redirect=true"
+						iconAwesome="wrench" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
 					<b:navLink value="Modelagem de Negócio" iconAwesome="file"
@@ -55,7 +60,7 @@
 					disabled="true" />
 			</b:navbarLinks>
 		</b:navBar>
-		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="top"
 			show-detail="true" show-summary="true" allowDismiss="true"
 			delay="5000" escape="true" />
 

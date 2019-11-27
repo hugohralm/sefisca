@@ -12,9 +12,7 @@ public class UtilMessages {
 	}
 
 	private static FacesContext getContext() {
-		if (context == null)
-			context = FacesContext.getCurrentInstance();
-		return context;
+		return FacesContext.getCurrentInstance();
 	}
 
 	/**
