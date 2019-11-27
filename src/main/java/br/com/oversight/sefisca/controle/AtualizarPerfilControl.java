@@ -16,11 +16,14 @@ import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.ambientinformatica.util.UtilHash;
 import br.com.ambientinformatica.util.UtilHash.Algoritimo;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
+import br.com.oversight.sefisca.entidade.DadosProfissionais;
 import br.com.oversight.sefisca.entidade.EnumEstadoCivil;
 import br.com.oversight.sefisca.entidade.EnumSexo;
 import br.com.oversight.sefisca.entidade.EnumUf;
 import br.com.oversight.sefisca.entidade.Municipio;
 import br.com.oversight.sefisca.entidade.Usuario;
+import br.com.oversight.sefisca.persistencia.CargoDao;
+import br.com.oversight.sefisca.persistencia.DadosProfissionaisDao;
 import br.com.oversight.sefisca.persistencia.MunicipioDao;
 import br.com.oversight.sefisca.persistencia.UsuarioDao;
 import br.com.oversight.sefisca.services.CepService;
@@ -46,6 +49,12 @@ public class AtualizarPerfilControl implements Serializable {
 	@Autowired
 	private CepService cepService;
 
+	@Autowired
+	private CargoDao cargoDao;
+
+	@Autowired
+	private DadosProfissionaisDao dadosProfissionaisDao;
+
 	@Getter
 	@Setter
 	private Usuario usuario;
@@ -67,11 +76,19 @@ public class AtualizarPerfilControl implements Serializable {
 	private EnumUf uf;
 
 	@Getter
+	@Setter
+	private DadosProfissionais dadosProfissionais;
+
+	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
 
 	@PostConstruct
 	public void init() {
 		verificarUsuarioLogado();
+	}
+
+	public void iniciarDadosProfissionais() {
+		dadosProfissionais = dadosProfissionaisDao.consultarDadosPorPessoa(usuario.getPessoa());
 	}
 
 	public String verificarUsuarioLogado() {
@@ -80,11 +97,10 @@ public class AtualizarPerfilControl implements Serializable {
 			if (this.usuario != null) {
 				if (this.usuario.getPessoa().getEndereco().getMunicipio() != null) {
 					this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
-				} else {
-					this.uf = EnumUf.GO;
 				}
 			}
 			listarMunicipiosPorUfs();
+			iniciarDadosProfissionais();
 		} catch (Exception e) {
 			UtilMessages.addMessage(e);
 		}
@@ -102,6 +118,9 @@ public class AtualizarPerfilControl implements Serializable {
 	public void confirmar() {
 		try {
 			this.usuario = usuarioDao.alterar(this.usuario);
+			this.dadosProfissionais.setPessoa(usuario.getPessoa());
+			if (this.dadosProfissionais != null && this.dadosProfissionais.getCargo() != null)
+				this.dadosProfissionaisDao.alterar(this.dadosProfissionais);
 			UtilMessages.addMessage("Cadastro salvo com sucesso!");
 		} catch (Exception e) {
 			UtilMessages.addMessage(e);

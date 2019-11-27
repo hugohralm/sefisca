@@ -115,20 +115,29 @@
 							</b:column>
 						</b:row>
 						<b:row>
-							<b:column smallScreen="4" offset-md="6" medium-screen="2">
+							<b:column smallScreen="3" offset-md="4" medium-screen="2">
+								<b:button styleClass="btn-command" icon="pencil"
+									rendered="#{AtualizarPerfilControl.dadosProfissionais.cargo != null }"
+									iconAlign="right"
+									onclick="$('.dadosProfissionaisModal').modal('show')"
+									value="Dados profissionais" />
+							</b:column>
+							<b:column smallScreen="3"
+								offset-md="#{AtualizarPerfilControl.dadosProfissionais.cargo != null? 0 : 6}"
+								medium-screen="2">
 								<b:button styleClass="btn-command" icon="pencil"
 									iconAlign="right"
 									onclick="$('.trocarSenhaModal').modal('show')"
 									value="Alterar Senha" />
 							</b:column>
-							<b:column small-screen="4" medium-screen="2">
+							<b:column small-screen="3" medium-screen="2">
 								<b:commandButton id="btnLimpar" icon="remove" ajax="false"
 									styleClass="btn-command" value="Cancelar  " look="danger"
 									action="inicio?faces-redirect=true" iconAlign="right"
 									immediate="true"
 									actionListener="#{MenuControl.gerenciarSessao}" />
 							</b:column>
-							<b:column small-screen="4" medium-screen="2">
+							<b:column small-screen="3" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"
 									styleClass="btn-command" ajax="false"
 									actionListener="#{AtualizarPerfilControl.confirmar}"
@@ -136,7 +145,37 @@
 									oncomplete="PF('usuario').close();" />
 							</b:column>
 						</b:row>
-
+						<b:modal id="dadosProfissionaisModal" title="Dados profissionais"
+							styleClass="dadosProfissionaisModal" closable="false"
+							close-on-escape="false" backdrop="false">
+							<b:form>
+								<b:row>
+									<b:column>
+										<b:inputText label="Profissão" maxlength="200"
+											value="#{AtualizarPerfilControl.dadosProfissionais.profissao}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:inputText id="teste" label="Registro profissional"
+											mask="{regex:'[0-9]*'}" maxlength="30"
+											value="#{AtualizarPerfilControl.dadosProfissionais.registroProfissional}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="6">
+										<b:button value="Cancelar" dismiss="modal"
+											onclick="return false;" styleClass="btn-command"
+											iconAlign="right" icon="remove" look="danger" />
+									</b:column>
+									<b:column small-screen="6">
+										<b:button dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command" iconAlign="right" icon="ok" />
+									</b:column>
+								</b:row>
+								<b:fetchBeanInfos />
+							</b:form>
+						</b:modal>
 						<b:modal id="trocarSenhaModal" styleClass="trocarSenhaModal"
 							title="Alteração de Senha" closable="false"
 							close-on-escape="false" backdrop="false">

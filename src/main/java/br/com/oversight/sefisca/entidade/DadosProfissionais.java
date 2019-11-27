@@ -16,11 +16,15 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.ambientinformatica.util.AmbientValidator;
 import br.com.ambientinformatica.util.Entidade;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class DadosProfissionais extends Entidade implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +54,11 @@ public class DadosProfissionais extends Entidade implements Serializable{
 	
 	@Getter
 	@Setter
+	@NotNull
 	@OneToOne
 	private Pessoa pessoa;
+	
+	public DadosProfissionais (Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 }

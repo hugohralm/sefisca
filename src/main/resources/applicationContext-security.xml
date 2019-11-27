@@ -18,7 +18,7 @@
 	<http pattern="/alterarSenhaExterno.ovs" security="none" />
 	<http pattern="/auth.ovs" security="none" />
 	<http pattern="/erroToken.ovs" security="none" />
-	<http pattern="/usuario.ovs" security="none" />
+	<http pattern="/cadastrarUsuario.ovs" security="none" />
 
 	<http auto-config="true" access-denied-page="/acessoNegado.ovs" access-decision-manager-ref="accessDecisionManager">
 

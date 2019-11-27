@@ -20,60 +20,60 @@
 							<b:column smallScreen="4" medium-screen="3">
 								<b:inputText label="CPF" render-label="true"
 									mask="999.999.999-99"
-									value="#{UsuarioNovoControl.usuario.pessoa.cpf}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.cpf}" />
 							</b:column>
 							<b:column small-screen="8" medium-screen="9">
 								<b:inputText label="Nome" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.nome}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.nome}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column smallScreen="12" medium-screen="6" large-screen="6">
 								<b:inputText label="Email" render-label="true" mask="email"
-									value="#{UsuarioNovoControl.usuario.pessoa.email}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.email}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Telefone" render-label="true"
 									mask="(99) 9999-9999"
-									value="#{UsuarioNovoControl.usuario.pessoa.telefone}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.telefone}" />
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:inputText label="Celular" render-label="true"
 									mask="(99) 99999-9999"
-									value="#{UsuarioNovoControl.usuario.pessoa.celular}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.celular}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Sexo" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.sexo}">
+									value="#{CadastrarUsuarioControl.usuario.pessoa.sexo}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{UsuarioNovoControl.sexos}" />
+									<f:selectItems value="#{CadastrarUsuarioControl.sexos}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:selectOneMenu label="Estado civil" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.estadoCivil}">
+									value="#{CadastrarUsuarioControl.usuario.pessoa.estadoCivil}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{UsuarioNovoControl.estadosCivis}" />
+									<f:selectItems value="#{CadastrarUsuarioControl.estadosCivis}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="4">
 								<b:dateTimePicker id="nascDate" label="Data de nascimento *"
 									mode="popup-icon" showTime="false" format="DD/MM/YYYY"
-									value="#{UsuarioNovoControl.usuario.pessoa.dataNascimento }" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.dataNascimento }" />
 								<b:message for="nascDate" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column medium-screen="4">
 								<b:inputText
-									value="#{UsuarioNovoControl.usuario.pessoa.endereco.cep}"
+									value="#{CadastrarUsuarioControl.usuario.pessoa.endereco.cep}"
 									label="CEP" mask="99.999-999">
 									<f:facet name="append">
 										<b:commandButton look="primary" icon="search"
 											icon-align="right"
-											actionListener="#{UsuarioNovoControl.consultarCep}" />
+											actionListener="#{CadastrarUsuarioControl.consultarCep}" />
 									</f:facet>
 								</b:inputText>
 							</b:column>
@@ -81,46 +81,46 @@
 						<b:row>
 							<b:column medium-screen="6">
 								<b:inputText id="endereco" label="Endereço" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.endereco.endereco}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.endereco.endereco}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Bairro" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.endereco.bairro}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.endereco.bairro}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Numero" render-label="true"
-									value="#{UsuarioNovoControl.usuario.pessoa.endereco.numero}" />
+									value="#{CadastrarUsuarioControl.usuario.pessoa.endereco.numero}" />
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="6">
 								<b:selectOneMenu id="estado" label="Estado *"
 									render-label="true" style="width:100%;"
-									value="#{UsuarioNovoControl.uf}" select2="true"
+									value="#{CadastrarUsuarioControl.uf}" select2="true"
 									update="estado municipio">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{UsuarioNovoControl.ufs }" />
-									<f:ajax listener="#{UsuarioNovoControl.listarMunicipiosPorUfs}"
+									<f:selectItems value="#{CadastrarUsuarioControl.ufs }" />
+									<f:ajax listener="#{CadastrarUsuarioControl.listarMunicipiosPorUfs}"
 										process="@this" update="municRequerente" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="6">
 								<b:selectOneMenu id="municipio" label="Município"
 									render-label="true" select2="true" style="width:100%;"
-									value="#{UsuarioNovoControl.usuario.pessoa.endereco.municipio}">
+									value="#{CadastrarUsuarioControl.usuario.pessoa.endereco.municipio}">
 									<f:selectItem itemLabel="Selecione" />
-									<f:selectItems value="#{UsuarioNovoControl.municipios}" />
+									<f:selectItems value="#{CadastrarUsuarioControl.municipios}" />
 								</b:selectOneMenu>
 							</b:column>
 						</b:row>
 						<b:row>
 							<b:column small-screen="6">
 								<b:inputSecret label="Senha" render-label="true"
-									value="#{UsuarioNovoControl.usuario.senha}" />
+									value="#{CadastrarUsuarioControl.usuario.senha}" />
 							</b:column>
 							<b:column small-screen="6">
 								<b:inputSecret label="Confirme sua senha *" render-label="true"
-									value="#{UsuarioNovoControl.confirmarSenha}" />
+									value="#{CadastrarUsuarioControl.confirmarSenha}" />
 							</b:column>
 						</b:row>
 						<b:row>
@@ -128,7 +128,7 @@
 								<b:panel title="Termo de responsabilidade" look="info">
 									<p:scrollPanel style="height:200px;">
 										<h:outputText escape="false" style="text-align: justify;"
-											value="#{UsuarioNovoControl.termoResponsabilidade.template.texto}" />
+											value="#{CadastrarUsuarioControl.termoResponsabilidade.template.texto}" />
 									</p:scrollPanel>
 								</b:panel>
 							</b:column>
@@ -137,26 +137,20 @@
 							<b:column>
 								<b:selectBooleanCheckbox id="aceitou"
 									caption="Declaro, para os devidos fins e efeitos legais, serem pessoais e verdadeiras as informações inseridas no sistema Sefisca sobre as quais assumo todas as responsabilidades, sob pena de incorrer nas sanções previstas nos artigos 299 e 307 do Código Penal (falsidade ideológica e falsa identidade).*"
-									value="#{UsuarioNovoControl.termoResponsabilidade.aceitou}" />
+									value="#{CadastrarUsuarioControl.termoResponsabilidade.aceitou}" />
 							</b:column>
 						</b:row>
 						<b:row>
-							<b:column small-screen="4" offset-md="6" medium-screen="2">
-								<b:commandButton iconAwesome="home" styleClass="btn-command"
-									onclick="document.location.href='sair.jsp"
+							<b:column small-screen="6" offset-md="8" medium-screen="2">
+								<b:commandButton iconAwesome="home" styleClass="btn-command" disabled="true"
+								action="login?faces-redirect=true" process="@this"
 									value="Página inicial" iconAlign="right" />
 							</b:column>
-							<b:column small-screen="4" medium-screen="2">
-								<b:commandButton id="btnLimpar" icon="trash"
-									styleClass="btn-command"
-									actionListener="#{UsuarioNovoControl.novoUsuario}"
-									value="Limpar " look="danger" iconAlign="right" />
-							</b:column>
-							<b:column small-screen="4" medium-screen="2">
+							<b:column small-screen="6" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"
 									styleClass="btn-command"
-									actionListener="#{UsuarioNovoControl.concluir}"
-									value="Concluir" look="primary" iconAlign="right" />
+									actionListener="#{CadastrarUsuarioControl.concluir}"
+									value="Cadastrar" look="primary" iconAlign="right" />
 							</b:column>
 						</b:row>
 					</b:container>
