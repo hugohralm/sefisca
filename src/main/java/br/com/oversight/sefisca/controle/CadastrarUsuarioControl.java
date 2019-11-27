@@ -31,8 +31,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Scope("conversation")
-@Controller("UsuarioNovoControl")
-public class UsuarioNovoControl implements Serializable {
+@Controller("CadastrarUsuarioControl")
+public class CadastrarUsuarioControl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

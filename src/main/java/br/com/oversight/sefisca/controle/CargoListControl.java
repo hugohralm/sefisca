@@ -11,38 +11,33 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
-import br.com.oversight.sefisca.entidade.EnumPapel;
-import br.com.oversight.sefisca.entidade.Usuario;
-import br.com.oversight.sefisca.persistencia.UsuarioDao;
+import br.com.oversight.sefisca.entidade.Cargo;
+import br.com.oversight.sefisca.entidade.TermoResponsabilidadeTemplate;
+import br.com.oversight.sefisca.persistencia.CargoDao;
+import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeTemplateDao;
+import br.com.oversight.sefisca.util.UtilMessages;
 import lombok.Getter;
-import lombok.Setter;
 
 @Scope("conversation")
-@Controller("UsuarioListControl")
-public class UsuarioListControl implements Serializable {
-
+@Controller("CargoListControl")
+public class CargoListControl implements Serializable {
+    
     private static final long serialVersionUID = 1L;
 
     @Autowired
-    private UsuarioDao usuarioDao;
+    private CargoDao cargoDao;
 
     @Getter
-    @Setter
-    private EnumPapel papel;
-
-    @Getter
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<Cargo> cargos = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        listar();
-    }
-
-    public void listar() {
         try {
-            this.usuarios = usuarioDao.listar();
+            this.cargos = cargoDao.listar();
         } catch (Exception e) {
-            UtilFaces.addMensagemFaces(e);
+        	e.printStackTrace();
+            UtilMessages.addMessage(e);
         }
     }
+
 }

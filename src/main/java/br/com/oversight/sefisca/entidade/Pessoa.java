@@ -114,6 +114,11 @@ public class Pessoa extends Entidade implements Serializable {
 	
 	@Getter
 	@Setter
+	@Column(nullable = false)
+	private boolean isProfessional = false;
+	
+	@Getter
+	@Setter
 	@ManyToOne(optional = true)
 	private Usuario usuario;
 

@@ -10,9 +10,9 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
 
-		<b:form>
+		<b:form id="formCorpo">
 			<b:column>
-				<b:panel title="Informações do usuário" look="primary"
+				<b:panel id="panel" title="Informações do usuário" look="primary"
 					collapsible="false">
 					<b:container fluid="true">
 						<b:row>
@@ -117,15 +117,15 @@
 							<b:column small-screen="6">
 								<b:selectOneMenu label="Cadastro confirmado?"
 									value="#{EditarUsuarioControl.usuario.confirmado}">
-									<f:selectItem itemLabel="SIM" itemValue="true" />
-									<f:selectItem itemLabel="NÃO" itemValue="false" />
+									<f:selectItem itemLabel="Sim" itemValue="true" />
+									<f:selectItem itemLabel="Não" itemValue="false" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column small-screen="6">
 								<b:selectOneMenu label="Solicitou Alteração de Senha?"
 									value="#{EditarUsuarioControl.usuario.alterarSenha}">
-									<f:selectItem itemLabel="SIM" itemValue="true" />
-									<f:selectItem itemLabel="NÃO" itemValue="false" />
+									<f:selectItem itemLabel="Sim" itemValue="true" />
+									<f:selectItem itemLabel="Não" itemValue="false" />
 								</b:selectOneMenu>
 							</b:column>
 						</b:row>
@@ -136,21 +136,25 @@
 						</b:row>
 						<b:row>
 							<b:column tiny-screen="10" mediumScreen="4">
-								<b:selectOneMenu label="Adicionar papel:"
+								<b:selectOneMenu id="comboPapeis" label="Adicionar papel:"
 									labelStyle="height:20px;" value="#{EditarUsuarioControl.papel}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{EditarUsuarioControl.papeis}" />
 								</b:selectOneMenu>
 							</b:column>
 							<b:column tiny-screen="2">
-								<b:commandButton style="margin-top:25px; width:100%;" 
+								<b:commandButton style="margin-top:25px; width:100%;"
 									disabled="#{!securityScope.userInRole['GERENTE,ADMIN']}"
 									actionListener="#{EditarUsuarioControl.adicionarPapel}"
 									value="" icon="plus" icon-align="right"
+									process="@this formCorpo:formCorpo:comboPapeis"
 									update="formCorpo:tblPapeis" />
 							</b:column>
+						</b:row>
+						<b:row>
 							<b:column>
-								<b:dataTable id="tblPapeis" searching="false" paginated="false" info="false" caption="Papeis atribuidos ao usuario:"
+								<b:dataTable id="tblPapeis" searching="false" paginated="false"
+									info="false" caption="Papeis atribuidos ao usuario:"
 									value="#{EditarUsuarioControl.usuario.papeisUsuario}"
 									style="width:100%;" var="papelUsuario">
 									<b:dataTableColumn label="Papel" width="50%"
@@ -164,26 +168,32 @@
 										orderable="false">
 										<b:commandButton icon="trash"
 											actionListener="#{EditarUsuarioControl.removerPapel(papelUsuario)}"
-											update=":formCorpo:tblPapeis" />
+											process="@this" update="formCorpo:formCorpo:tblPapeis" />
 									</b:dataTableColumn>
 								</b:dataTable>
 							</b:column>
 						</b:row>
 						<b:row>
-							<b:column smallScreen="4" offset-md="6" medium-screen="2">
+							<b:column smallScreen="3" offset-md="4" medium-screen="2">
+								<b:button styleClass="btn-command" icon="pencil"
+									iconAlign="right"
+									onclick="$('.dadosProfissionaisModal').modal('show')"
+									value="Dados profissionais" />
+							</b:column>
+							<b:column smallScreen="3" medium-screen="2">
 								<b:button styleClass="btn-command" icon="pencil"
 									iconAlign="right"
 									onclick="$('.trocarSenhaModal').modal('show')"
 									value="Alterar Senha" />
 							</b:column>
-							<b:column small-screen="4" medium-screen="2">
+							<b:column small-screen="3" medium-screen="2">
 								<b:commandButton id="btnLimpar" icon="remove" ajax="false"
 									styleClass="btn-command" value="Cancelar  " look="danger"
 									action="usuarioList?faces-redirect=true" iconAlign="right"
 									immediate="true"
 									actionListener="#{MenuControl.gerenciarSessao}" />
 							</b:column>
-							<b:column small-screen="4" medium-screen="2">
+							<b:column small-screen="3" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"
 									styleClass="btn-command" ajax="false"
 									actionListener="#{EditarUsuarioControl.confirmar}"
@@ -191,9 +201,48 @@
 									oncomplete="PF('usuario').close();" />
 							</b:column>
 						</b:row>
-
+						<b:modal id="dadosProfissionaisModal" title="Dados profissionais"
+							styleClass="dadosProfissionaisModal" closable="false"
+							close-on-escape="false" backdrop="false">
+							<b:form>
+								<b:row>
+									<b:column>
+										<b:inputText label="Profissão" maxlength="200"
+											value="#{EditarUsuarioControl.dadosProfissionais.profissao}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:inputText id="teste" label="Registro profissional"
+											mask="{regex:'[0-9]*'}" maxlength="30"
+											value="#{EditarUsuarioControl.dadosProfissionais.registroProfissional}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:selectOneMenu label="Cargo:"
+											value="#{EditarUsuarioControl.dadosProfissionais.cargo }">
+											<f:selectItem itemLabel="Selecione" />
+											<f:selectItems value="#{EditarUsuarioControl.cargos }" />
+										</b:selectOneMenu>
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="6">
+										<b:button value="Cancelar" dismiss="modal"
+											onclick="return false;" styleClass="btn-command"
+											iconAlign="right" icon="remove" look="danger" />
+									</b:column>
+									<b:column small-screen="6">
+										<b:button dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command" iconAlign="right" icon="ok" />
+									</b:column>
+								</b:row>
+								<b:fetchBeanInfos />
+							</b:form>
+						</b:modal>
 						<b:modal id="trocarSenhaModal" styleClass="trocarSenhaModal"
-							title="Alteração de Senha" closable="false" 
+							title="Alteração de Senha" closable="false"
 							close-on-escape="false" backdrop="false">
 							<b:form>
 								<b:row>
@@ -209,15 +258,15 @@
 									</b:column>
 								</b:row>
 								<b:row>
-									<b:column  small-screen="6" >
+									<b:column small-screen="6">
 										<b:button value="Cancelar" dismiss="modal"
 											onclick="return false;" styleClass="btn-command"
 											iconAlign="right" icon="remove" look="danger" />
 									</b:column>
-									<b:column small-screen="6" >
-										<b:commandButton
-											action="#{EditarUsuarioControl.alterarSenha}" dismiss="modal"
-											value="Salvar" look="success" styleClass="btn-command"
+									<b:column small-screen="6">
+										<b:commandButton action="#{EditarUsuarioControl.alterarSenha}"
+											dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command"
 											oncomplete="$('.trocarSenhaModal').modal('hide')"
 											iconAlign="right" icon="ok" />
 									</b:column>
@@ -225,6 +274,7 @@
 								<b:fetchBeanInfos />
 							</b:form>
 						</b:modal>
+
 					</b:container>
 				</b:panel>
 			</b:column>

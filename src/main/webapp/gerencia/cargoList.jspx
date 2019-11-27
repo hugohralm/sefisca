@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<b:panel title="Cargos cadastrados" look="primary" collapsible="false"
+			id="panelTermoResponsabilidade">
+			<b:container fluid="true">
+				<b:row>
+					<b:column offset-md="8" medium-screen="4">
+						<b:commandButton value="Adicionar Cargo"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							look="primary" styleClass="btn-command"
+							style="margin-bottom:5px;"
+							action="/gerencia/cargo?faces-redirect=true"
+							icon="ui-icon-plusthick" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<b:dataTable id="tblcargos" widgetVar="tblCargos"
+							value="#{CargoListControl.cargos}" var="cargo">
+							<b:dataTableColumn value="#{cargo.id}" label="#" order="asc"
+								contentStyle="text-align: center; vertical-align: middle;" />
+							<b:dataTableColumn value="#{cargo.nome}" label="Nome" />
+							<b:dataTableColumn label="Data cadastro"
+								contentStyle="text-align: center; vertical-align: middle;">
+								<h:outputText value="#{cargo.dataCadastro}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+								</h:outputText>
+							</b:dataTableColumn>
+							<b:dataTableColumn value="#{cargo.usuario}"
+								contentStyle="text-align: center; vertical-align: middle;"
+								label="Usuário responsável" />
+							<b:dataTableColumn label="" searchable="false" orderable="false">
+								<b:commandButton action="/gerencia/cargo?faces-redirect=true"
+									ajax="false" icon="pencil" style-class="btn-command"
+									title="Clique aqui para editar esse cadastro">
+									<f:setPropertyActionListener target="#{CargoControl.cargo}"
+										value="#{cargo}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+	</ui:define>
+</ui:composition>

@@ -12,24 +12,29 @@
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
 				<b:navCommandLink value="Iniciar Processo"
 					actionListener="#{MenuControl.gerenciarSessao}"
-					action="/processo?faces-redirect=true" iconAwesome="file" />
+					action="/aberturaProcesso?faces-redirect=true" iconAwesome="file" />
 				<b:dropMenu value="Cadastros" iconAwesome="search">
-					<b:navCommandLink value="Modelos de Documentos"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
-						action="/modeloDocumentoList?faces-redirect=true"
-						iconAwesome="wrench" />
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						action="/processoList?faces-redirect=true"
 						iconAwesome="folder-open" />
+					<b:navCommandLink value="Modelo Documento"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						action="/modeloDocumentoList?faces-redirect=true"
+						iconAwesome="folder-open" />
+				</b:dropMenu>
+
+				<b:dropMenu value="Configurações" iconAwesome="wrench">
+					<b:navCommandLink value="Atualizar instituições"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/admin/atualizarInstituicao?faces-redirect=true"
+						iconAwesome="search-plus" />
 					<b:navCommandLink value="Usuários"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
 						action="/gerencia/usuarioList?faces-redirect=true"
 						iconAwesome="users" />
-				</b:dropMenu>
-				<b:dropMenu value="Configurações" iconAwesome="wrench">
 					<b:navCommandLink value="Parâmetros do sistema"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"
@@ -39,6 +44,11 @@
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"
 						action="/gerencia/termoResponsabilidadeTemplateList?faces-redirect=true"
+						iconAwesome="wrench" />
+					<b:navCommandLink value="Cargos"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/gerencia/cargoList?faces-redirect=true"
 						iconAwesome="wrench" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
@@ -62,7 +72,7 @@
 					disabled="true" />
 			</b:navbarLinks>
 		</b:navBar>
-		<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="top"
 			show-detail="true" show-summary="true" allowDismiss="true"
 			delay="5000" escape="true" />
 
