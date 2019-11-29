@@ -50,4 +50,9 @@ public class Atividade extends Entidade implements Serializable{
     @Length(min = 0, max = 2048, message = "O limite do campo conceito é de 2048 caracteres.", groups = AmbientValidator.class)
     @Column(nullable = false, length = 2048)
     private String conceito;
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 }

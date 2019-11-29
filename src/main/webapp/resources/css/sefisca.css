@@ -17,6 +17,13 @@
 .ui-scrollpanel {
 	width: 100%;
 }
+/* Tab */
+.tab-pane {
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 10px
+}
 
 /*Color icons*/
 .icon-color-red {

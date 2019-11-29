@@ -29,17 +29,17 @@
 				</b:row>
 				<b:row>
 					<b:column small-screen="6" offset-md="8" medium-screen="2">
-						<b:commandButton iconAwesome="close"
+						<b:commandButton icon="remove"
 							onclick="document.location.href='sair.jsp" value="Fechar"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
 							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
-							action="cargoList?faces-redirect=true" iconAlign="left" />
+							action="cargoList?faces-redirect=true"  />
 					</b:column>
 					<b:column small-screen="6" medium-screen="2">
 						<b:commandButton id="btnSalvar" iconAwesome="save"
 							styleClass="btn-command" style="margin-bottom:5px;"
 							actionListener="#{CargoControl.confirmar}" value="Salvar"
-							look="success" iconAlign="left" />
+							look="success" />
 					</b:column>
 				</b:row>
 			</b:container>

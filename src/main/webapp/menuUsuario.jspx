@@ -30,6 +30,11 @@
 						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
 						action="/gerencia/usuarioList?faces-redirect=true"
 						iconAwesome="users" />
+					<b:navCommandLink value="Instituições"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/gerencia/instituicaoList?faces-redirect=true"
+						iconAwesome="wrench" />
 					<b:navCommandLink value="Parâmetros do sistema"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"

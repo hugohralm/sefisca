@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<b:panel look="primary" collapsible="false"
+			title="Manutenção de instituição" id="panelGeral" style="width:100%">
+			<b:tabView>
+				<!-- TAB GERAL -->
+				<b:tab title="Geral">
+					<b:container>
+						<b:row>
+							<b:column medium-screen="3">
+								<b:inputText label="CNES" mask="9999999"
+									value="#{ InstituicaoControl.instituicao.cnes }" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="3">
+								<b:selectOneMenu label="Tipo" render-label="true"
+									value="#{InstituicaoControl.instituicao.tipoPessoa}">
+									<f:selectItems value="#{InstituicaoControl.tipoPessoa}" />
+									<p:ajax event="change" update="inputCpfCnpj" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="9" medium-screen="3">
+								<b:inputText id="inputCpfCnpj"
+									label="#{ InstituicaoControl.pessoaFisica ? 'CPF' : 'CNPJ'  }"
+									mask="#{ InstituicaoControl.pessoaFisica ? '999.999.999-99' : '99.999.999/9999-99'  }"
+									value="#{ InstituicaoControl.instituicao.cpfCnpj }" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:dateTimePicker label="Data de criação"
+									value="#{InstituicaoControl.instituicao.dataCriacao}"
+									readonly="true" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:dateTimePicker label="Data de atualização"
+									value="#{InstituicaoControl.instituicao.dataAtualizacao}"
+									readonly="true" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="6">
+								<b:inputText label="Nome Fantasia" maxlength="255"
+									value="#{ InstituicaoControl.instituicao.nomeFantasia }" />
+							</b:column>
+							<b:column medium-screen="6">
+								<b:inputText label="Razão Social" maxlength="255"
+									value="#{ InstituicaoControl.instituicao.razaoSocial }" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column smallScreen="6">
+								<b:inputText label="Cpf do diretor" render-label="true"
+									mask="999.999.999-99"
+									value="#{InstituicaoControl.instituicao.cpfDiretor}" />
+							</b:column>
+							<b:column smallScreen="6">
+								<b:inputText label="Registro de conselho do diretor"
+									tooltip="Registro do conselho de classe do diretor"
+									render-label="true" mask="{regex:'[0-9]*'}"
+									value="#{InstituicaoControl.instituicao.conselhoClasseDiretor}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Tipo unidade" render-label="true"
+									select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.tipoUnidade}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.tiposUnidade}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Turno de atendimento"
+									render-label="true" select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.turnoAtendimento}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.turnosAtendimento}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Natureza juridica" render-label="true"
+									select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.naturezaJuridica}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.naturezasJuridica}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Tipo instituição" render-label="true"
+									select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.tipoInstituicao}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.tiposInstituicao}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Atividade principal" render-label="true"
+									select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.atividadePrincipal}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.atividades}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6" medium-screen="4">
+								<b:selectOneMenu label="Motivo desativação" render-label="true"
+									select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.motivoDesativacao}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.motivosDesativacao}" />
+								</b:selectOneMenu>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:selectBooleanCheckbox caption="Instituição sempre aberta"
+									value="#{ InstituicaoControl.instituicao.instituicaoSempreAberta }" />
+							</b:column>
+							<b:column small-screen="6">
+								<b:selectBooleanCheckbox caption="Contrato formalizado SUS"
+									value="#{ InstituicaoControl.instituicao.contratoFormalizadoSus }" />
+							</b:column>
+						</b:row>
+					</b:container>
+				</b:tab>
+				<!-- TAB ENDERECO / CONTATO-->
+				<b:tab title="Endereço / Contato">
+					<b:container>
+						<b:row>
+							<b:column medium-screen="4">
+								<b:inputText
+									value="#{InstituicaoControl.instituicao.endereco.cep}"
+									label="CEP" mask="99.999-999">
+									<f:facet name="append">
+										<b:commandButton look="primary" icon="search"
+											icon-align="right"
+											actionListener="#{InstituicaoControl.consultarCep}" />
+									</f:facet>
+								</b:inputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="6">
+								<b:inputText id="endereco" label="Endereço" render-label="true"
+									value="#{InstituicaoControl.instituicao.endereco.logradouro}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Bairro" render-label="true"
+									value="#{InstituicaoControl.instituicao.endereco.bairro}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Numero" render-label="true"
+									value="#{InstituicaoControl.instituicao.endereco.numero}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="estado" label="Estado *"
+									render-label="true" style="width:100%;"
+									value="#{InstituicaoControl.uf}" select2="true"
+									update="estado municipio">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.ufs }" />
+									<f:ajax listener="#{InstituicaoControl.listarMunicipiosPorUfs}"
+										process="@this" update="municRequerente" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="municipio" label="Município"
+									render-label="true" select2="true" style="width:100%;"
+									value="#{InstituicaoControl.instituicao.endereco.municipio}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{InstituicaoControl.municipios}" />
+								</b:selectOneMenu>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:inputText label="Telefone" render-label="true"
+									mask="(99) 9999-9999"
+									value="#{InstituicaoControl.instituicao.telefone}" />
+							</b:column>
+							<b:column small-screen="6">
+								<b:inputText label="Fax" render-label="true"
+									mask="(99) 9999-9999"
+									value="#{InstituicaoControl.instituicao.fax}" />
+							</b:column>
+							<b:column small-screen="6">
+								<b:inputText label="Email" render-label="true" mask="email"
+									value="#{InstituicaoControl.instituicao.email}" />
+							</b:column>
+							<b:column small-screen="6">
+								<b:inputText label="Site" render-label="true"
+									value="#{InstituicaoControl.instituicao.url}" />
+							</b:column>
+						</b:row>
+					</b:container>
+				</b:tab>
+			</b:tabView>
+			<b:container>
+				<b:row>
+					<b:column small-screen="4" offset-md="8" medium-screen="2">
+						<b:commandButton icon="close"
+							onclick="document.location.href='sair.jsp" value="Fechar"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
+							action="instituicaoList?faces-redirect=true" />
+					</b:column>
+					<b:column small-screen="4" medium-screen="2">
+						<b:commandButton id="btnSalvar" icon="ok" styleClass="btn-command"
+							style="margin-bottom:5px;"
+							actionListener="#{InstituicaoControl.confirmar}" value="Salvar"
+							look="success" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+
+	</ui:define>
+
+</ui:composition>

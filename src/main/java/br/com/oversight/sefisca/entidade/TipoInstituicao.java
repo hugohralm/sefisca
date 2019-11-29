@@ -35,4 +35,9 @@ public class TipoInstituicao extends Entidade implements Serializable{
 	@Length(min = 0, max = 255, message = "O limite do campo nome é de 255 caracteres.", groups = AmbientValidator.class)
 	@Column(nullable = false, length = 255)
 	private String nome;
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 }
