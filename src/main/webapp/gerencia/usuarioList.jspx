@@ -32,10 +32,9 @@
 							<b:dataTableColumn label="Confirmado"
 								style="width: 60px;text-align: center;"
 								dataOrder="#{usuario.confirmado}">
-								<b:icon value="remove" styleClass="icon-color-red"
-									rendered="#{usuario.confirmado == false}" />
-								<b:icon value="ok" styleClass="icon-color-green"
-									rendered="#{usuario.confirmado == true}" />
+								<b:icon
+									value="#{usuario.confirmado ? 'ok' : 'remove'  }"
+									styleClass="#{usuario.confirmado ? 'icon-color-green' : 'icon-color-red'} " />
 							</b:dataTableColumn>
 							<b:dataTableColumn style="width: 20px;" label=""
 								searchable="false" orderable="false">

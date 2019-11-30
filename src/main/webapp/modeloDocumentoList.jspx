@@ -4,85 +4,95 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
+		<b:panel title="Pesquisar Documentos" look="primary"
+			collapsible="false" id="documentoList">
+			<b:container fluid="true">
+				<b:row>
+					<b:column small-screen="6">
+						<b:inputText id="inpNome" label="Descrição"
+							value="#{ModeloDocumentoListControl.descricao}" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton style-class="btn-align-bottom" look="primary"
+							actionListener="#{ModeloDocumentoListControl.listar}"
+							value="Pesquisar" icon="search" update="idDocumento" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton value="Cadastrar" style-class="btn-align-bottom"
+							look="success" actionListener="#{MenuControl.gerenciarSessao}"
+							ajax="false" action="modeloDocumento?faces-redirect=true"
+							icon="plus" immediate="true" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton value="Limpar" style-class="btn-align-bottom"
+							actionListener="#{MenuControl.gerenciarSessao}" look="danger"
+							action="modeloDocumentoList?faces-redirect=true" icon="trash"
+							immediate="true" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<b:dataTable id="idDocumento" var="modeloDocumento" responsive="true"
+							caption="Documentos cadastrados" style="margin-top 5px;"
+							value="#{ModeloDocumentoListControl.modelosDeDocumentos }">
+							
+							<b:dataTableColumn label="Descrição" order="asc"
+								value="#{modeloDocumento.descricao}" />
 
-		<p:panel widgetVar="panel" id="documentoList"
-			header="Pesquisar Documentos" toggleable="true"
-			toggleOrientation="horizontal">
-			<a:field label="Descrição">
-				<p:inputText id="inpNome"
-					value="#{ModeloDocumentoListControl.descricao}" style="width:350px" />
-			</a:field>
-			<a:field spaceLeft="10px">
-				<p:commandButton
-					actionListener="#{ModeloDocumentoListControl.listar}"
-					value="Pesquisar" icon="ui-icon ui-icon-search"
-					update="idDocumento" />
-			</a:field>
-			<a:field spaceLeft="10px">
-				<p:commandButton value="Cadastrar"
-					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-					action="modeloDocumento?faces-redirect=true" icon="ui-icon-plus"
-					immediate="true" />
-			</a:field>
+							<b:dataTableColumn label="Tamanho documento" width="200px"
+								style-class="table-center-cell"
+								value="#{modeloDocumento.tamanhoDocumento.descricao}" />
 
-			<a:field spaceLeft="10px">
-				<p:commandButton value="Limpar"
-					actionListener="#{MenuControl.gerenciarSessao}"
-					action="modeloDocumentoList?faces-redirect=true"
-					icon="ui-icon-trash" immediate="true" />
-			</a:field>
-			<a:newLine />
-		</p:panel>
+							<b:dataTableColumn label="Procuração?"
+								style-class="list-boolean-cell"
+								data-order="#{modeloDocumento.procuracao}">
+								<b:icon
+									value="#{modeloDocumento.procuracao ? 'ok' : 'remove'  }"
+									styleClass="#{modeloDocumento.procuracao ? 'icon-color-green' : 'icon-color-red'} " />
+							</b:dataTableColumn>
 
-		<p:dataTable emptyMessage="Sem registros"
-			value="#{ModeloDocumentoListControl.modelosDeDocumentos }"
-			var="modeloDocumento" id="idDocumento" paginator="true"
-			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rows="50" rowsPerPageTemplate="25,50,100,150,200">
+							<b:dataTableColumn label="Opcional?"
+								style-class="list-boolean-cell"
+								data-order="#{modeloDocumento.procuracao}">
+								<b:icon value="#{modeloDocumento.opcional ? 'ok' : 'remove'  }"
+									styleClass="#{modeloDocumento.opcional ? 'icon-color-green' : 'icon-color-red'}" />
+							</b:dataTableColumn>
 
-			<f:facet name="header">
-					Documentos cadastrados
-				</f:facet>
-			<p:column headerText="Descrição" style="width: 60%;"
-				sortBy="#{modeloDocumento.descricao}">
-				<h:outputLabel value="#{modeloDocumento.descricao}" />
-			</p:column>
-			<p:column headerText="Tamanho documento" style="text-align: center;">
-				<h:outputLabel value="#{modeloDocumento.tamanhoDocumento.descricao}" />
-			</p:column>
-			<p:column headerText="É Procuração?" style="text-align: center;">
-				<h:outputLabel
-					value="#{modeloDocumento.procuracao eq true ? 'SIM' : 'NÃO'}" />
-			</p:column>
-			<p:column headerText="É Opcional?" style="text-align: center;">
-				<h:outputLabel
-					value="#{modeloDocumento.opcional eq true ? 'SIM' : 'NÃO'}" />
-			</p:column>
+							<b:dataTableColumn style-class="btn-list-action" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnEditar" icon="pencil" look="primary"
+									action="modeloDocumento?faces-redirect=true"
+									tooltipDelayShow="300"
+									tooltip="Clique aqui para editar esse registro"
+									style-class="btn-list-action"
+									actionListener="#{MenuControl.gerenciarSessao}">
+									<f:setPropertyActionListener value="#{modeloDocumento}"
+										target="#{ModeloDocumentoControl.modeloDocumento}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+							<b:dataTableColumn style-class="btn-list-action" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnConfirmarExclusao" look="danger"
+									style-class="btn-list-action"
+									tooltip="Clique aqui para remover esse registro"
+									tooltipDelayShow="300"
+									onclick="PF('confirmacaoExclusao').show();" icon="trash"
+									update="idDocumento">
+									<f:setPropertyActionListener value="#{modeloDocumento}"
+										target="#{ModeloDocumentoListControl.modeloDocumentoExcluir}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+						</b:dataTable>
 
-			<p:column headerText="Editar"
-				style="width: 100px;text-align: center;">
-				<p:commandButton id="btnEditar" icon="ui-icon-pencil"
-					action="modeloDocumento?faces-redirect=true"
-					actionListener="#{MenuControl.gerenciarSessao}">
-					<f:setPropertyActionListener value="#{modeloDocumento}"
-						target="#{ModeloDocumentoControl.modeloDocumento}" />
-				</p:commandButton>
-			</p:column>
-
-			<p:column style="width:80px;text-align:center" headerText="Excluir">
-				<p:commandButton id="btnConfirmarExclusao"
-					onclick="PF('confirmacaoExclusao').show();" icon="ui-icon-trash"
-					update="idDocumento">
-					<f:setPropertyActionListener value="#{modeloDocumento}"
-						target="#{ModeloDocumentoListControl.modeloDocumentoExcluir}" />
-				</p:commandButton>
-			</p:column>
-		</p:dataTable>
-		<a:newLine />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 
 		<p:confirmDialog message="Confirma a exclusão deste registro?"
 			showEffect="slide" hideEffect="explode"
