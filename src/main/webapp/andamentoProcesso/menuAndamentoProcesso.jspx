@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:panel id="panelMenu" header="INFORMAÇOES DO PROCESSO"
+		style="width:100%;" toggleable="true" toggleSpeed="500"
+		closeSpeed="500" widgetVar="panel">
+		<p:panelGrid style="width:100%;">
+			<p:row>
+				<p:column style="width:220px">
+					<b>Número da solicitação:</b>
+				</p:column>
+				<p:column style="width:150px">
+					<p:outputLabel value="#{MenuAndamentoProcessoControl.processo.id}" />
+				</p:column>
+				<p:column style="width:190px">
+					<b> Código de validação:</b>
+				</p:column>
+				<p:column>
+					<p:outputLabel
+						value="#{MenuAndamentoProcessoControl.processo.numero}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="width:220px">
+					<b> Data de início:</b>
+				</p:column>
+				<p:column style="width:150px">
+					<p:outputLabel
+						value="#{MenuAndamentoProcessoControl.processo.dataCriacao}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+				</p:column>
+				<p:column style="width:190px">
+					<b> Tipo Processo:</b>
+				</p:column>
+				<p:column>
+					<p:outputLabel
+						value="#{MenuAndamentoProcessoControl.processo.etapaProcesso.descricao}" />
+				</p:column>
+				<p:column style="width:190px">
+					<b> Status:</b>
+				</p:column>
+				<p:column>
+					<p:outputLabel
+						value="#{MenuAndamentoProcessoControl.processo.statusProcesso.descricao}" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+
+	<p:tabMenu id="tmEtapas"
+		activeIndex="#{MenuAndamentoProcessoControl.menu}"
+		style="margin-bottom: 5px;margin-top: 5px;">
+
+		<c:forEach var="controlador"
+			items="#{MenuAndamentoProcessoControl.controladores}"
+			varStatus="varControlador">
+			<p:menuitem value="#{controlador.titulo}" update="tmEtapas"
+				action="#{MenuAndamentoProcessoControl.abrirAba(varControlador.index)}" />
+		</c:forEach>
+
+	</p:tabMenu>
+</ui:composition>

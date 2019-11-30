@@ -14,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
+import br.com.oversight.sefisca.entidade.EnumEtapaProcesso;
 import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
 import br.com.oversight.sefisca.entidade.EnumTipoProcesso;
+import br.com.oversight.sefisca.entidade.EtapaProcesso;
 import br.com.oversight.sefisca.entidade.Instituicao;
 import br.com.oversight.sefisca.entidade.Processo;
 import br.com.oversight.sefisca.entidade.Usuario;
+import br.com.oversight.sefisca.persistencia.EtapaProcessoDao;
 import br.com.oversight.sefisca.persistencia.InstituicaoDao;
 import br.com.oversight.sefisca.persistencia.ProcessoDao;
 import br.com.oversight.sefisca.services.CepService;
@@ -37,6 +40,9 @@ public class ProcessoControl implements Serializable {
 
     @Autowired
     private ProcessoDao processoDao;
+
+    @Autowired
+    private EtapaProcessoDao etapaProcessoDao;
 
     @Autowired
     private InstituicaoDao instituicaoDao;
@@ -58,6 +64,10 @@ public class ProcessoControl implements Serializable {
     @Getter
     @Setter
     private Processo processo;
+
+    @Getter
+    @Setter
+    private EtapaProcesso etapaProcesso;
 
     @Getter
     private Instituicao instituicao;
@@ -92,8 +102,17 @@ public class ProcessoControl implements Serializable {
 
     public void confirmar() {
         this.processo = processoDao.alterar(this.processo);
+        primeiraEtapa(this.processo);
         novoProcesso();
         UtilFaces.addMensagemFaces("Processo salvo com sucesso");
+    }
+
+    private void primeiraEtapa(Processo processo) {
+        this.etapaProcesso = new EtapaProcesso();
+        this.etapaProcesso.setUsuario(usuarioLogadoControl.getUsuario());
+        this.etapaProcesso.setEtapaProcesso(EnumEtapaProcesso.DESIGNACAO);
+        this.etapaProcesso.setProcesso(processo);
+        this.etapaProcessoDao.alterar(this.etapaProcesso);
     }
 
     private void novoProcesso() {

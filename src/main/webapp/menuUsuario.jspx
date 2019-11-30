@@ -13,12 +13,17 @@
 				<b:navCommandLink value="Iniciar Processo"
 					actionListener="#{MenuControl.gerenciarSessao}"
 					action="/aberturaProcesso?faces-redirect=true" iconAwesome="file" />
-				<b:dropMenu value="Consulta" iconAwesome="search">
+				<b:dropMenu value="Cadastros" iconAwesome="search">
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						action="/processoList?faces-redirect=true"
 						iconAwesome="folder-open" />
+					<b:navCommandLink value="Modelo Documento"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						action="/modeloDocumentoList?faces-redirect=true"
+						iconAwesome="folder-open" />
 				</b:dropMenu>
+
 				<b:dropMenu value="Configurações" iconAwesome="wrench">
 					<b:navCommandLink value="Atualizar instituições"
 						actionListener="#{MenuControl.gerenciarSessao}"
