@@ -42,39 +42,39 @@ import lombok.Setter;
 @Scope("conversation")
 @Controller("InstituicaoControl")
 public class InstituicaoControl implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
-    @Autowired
-    private CepService cepService;
 
-    @Autowired
-    private InstituicaoDao instituicaoDao;
+	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	private CepService cepService;
+
+	@Autowired
+	private InstituicaoDao instituicaoDao;
 
 	@Autowired
 	private MunicipioDao municipioDao;
-	    
+
 	@Autowired
 	private TipoUnidadeDao tipoUnidadeDao;
 
 	@Autowired
 	private TurnoAtendimentoDao turnoAtendimentoDao;
-	
+
 	@Autowired
 	private NaturezaJuridicaDao naturezaJuridicaDao;
-	
+
 	@Autowired
 	private TipoInstituicaoDao tipoInstituicaoDao;
-	
+
 	@Autowired
 	private AtividadeDao atividadeDao;
-	
+
 	@Autowired
 	private MotivoDesativacaoDao motivoDesativacaoDao;
-	
-    @Getter
-    @Setter
-    private Instituicao instituicao;
+
+	@Getter
+	@Setter
+	private Instituicao instituicao;
 
 	@Getter
 	@Setter
@@ -83,16 +83,16 @@ public class InstituicaoControl implements Serializable {
 	@Getter
 	private List<Municipio> municipios = new ArrayList<>();
 
-    @PostConstruct
-    private void init() {
-    	novaInstituicao();
-    }
+	@PostConstruct
+	private void init() {
+		novaInstituicao();
+	}
 
 	private void novaInstituicao() {
-    	this.instituicao = new Instituicao();
-    	this.instituicao.setTipoPessoa(EnumTipoPessoa.PJ);
+		this.instituicao = new Instituicao();
+		this.instituicao.setTipoPessoa(EnumTipoPessoa.PJ);
 	}
-	
+
 	public void confirmar() {
 		try {
 			this.instituicaoDao.alterar(instituicao);
@@ -126,7 +126,7 @@ public class InstituicaoControl implements Serializable {
 			}
 		}
 	}
-	
+
 	public void listarMunicipiosPorUfs() {
 		try {
 			municipios = municipioDao.listarPorUfNome(this.uf, null);
@@ -135,39 +135,56 @@ public class InstituicaoControl implements Serializable {
 		}
 	}
 
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicaoDao.consultar(instituicao.getId());
+		if (this.instituicao != null && this.instituicao.getEndereco().getMunicipio() != null) {
+			this.uf = this.instituicao.getEndereco().getMunicipio().getUf();
+		} else {
+			preencherMunicipio();
+		}
+		listarMunicipiosPorUfs();
+	}
+
+	public void preencherMunicipio() {
+		ViaCEPDTO viaCEPDTO = cepService.consultarCep(this.instituicao.getEndereco().getCep());
+		this.instituicao.getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
+		this.uf = viaCEPDTO.getMunicipio().getUf();
+		this.instituicao = instituicaoDao.alterar(this.instituicao);
+	}
+
 	public List<SelectItem> getUfs() {
 		return UtilFaces.getListEnum(EnumUf.values());
 	}
-	
+
 	public List<SelectItem> getTipoPessoa() {
 		return UtilFaces.getListEnum(EnumTipoPessoa.values());
 	}
-	
+
 	public boolean isPessoaFisica() {
 		return this.instituicao.getTipoPessoa() == EnumTipoPessoa.PF;
 	}
-	
-	public List<TipoUnidade> getTiposUnidade(){
+
+	public List<TipoUnidade> getTiposUnidade() {
 		return this.tipoUnidadeDao.listar();
 	}
-	
-	public List<TurnoAtendimento> getTurnosAtendimento(){
+
+	public List<TurnoAtendimento> getTurnosAtendimento() {
 		return this.turnoAtendimentoDao.listar();
 	}
-	
-	public List<NaturezaJuridica> getNaturezasJuridica(){
+
+	public List<NaturezaJuridica> getNaturezasJuridica() {
 		return this.naturezaJuridicaDao.listar();
 	}
-	
-	public List<TipoInstituicao> getTiposInstituicao(){
+
+	public List<TipoInstituicao> getTiposInstituicao() {
 		return this.tipoInstituicaoDao.listar();
 	}
-	
-	public List<Atividade> getAtividades(){
+
+	public List<Atividade> getAtividades() {
 		return this.atividadeDao.listar();
 	}
-	
-	public List<MotivoDesativacao> getMotivosDesativacao(){
+
+	public List<MotivoDesativacao> getMotivosDesativacao() {
 		return this.motivoDesativacaoDao.listar();
 	}
 }
