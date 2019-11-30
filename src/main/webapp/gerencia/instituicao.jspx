@@ -208,7 +208,7 @@
 			<b:container>
 				<b:row>
 					<b:column small-screen="4" offset-md="8" medium-screen="2">
-						<b:commandButton icon="close"
+						<b:commandButton icon="remove"
 							onclick="document.location.href='sair.jsp" value="Fechar"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
 							look="danger" styleClass="btn-command" style="margin-bottom:5px;"

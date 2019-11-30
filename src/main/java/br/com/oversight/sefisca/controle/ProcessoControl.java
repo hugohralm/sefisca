@@ -132,6 +132,10 @@ public class ProcessoControl implements Serializable {
     public List<SelectItem> getTiposCodigoInstituicao() {
         return UtilFaces.getListEnum(EnumTipoCodigoInstituicao.values());
     }
+    
+    public List<Instituicao> getInstituicoes() {
+        return instituicaoDao.listar();
+    }
 
     public Instituicao atualizarMunicipio(Instituicao instituicao) {
         try {

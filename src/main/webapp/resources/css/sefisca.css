@@ -22,7 +22,7 @@
 	border-right: 1px solid #ddd;
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
-	padding: 10px
+	padding: 10pxç
 }
 
 /*Color icons*/
@@ -32,6 +32,10 @@
 
 .icon-color-green {
 	color: #02b201;
+}
+
+.glyphicon {
+	margin-right: 5px;
 }
 
 .line {

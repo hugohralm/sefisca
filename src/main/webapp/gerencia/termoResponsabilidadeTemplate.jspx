@@ -51,13 +51,13 @@
 						<b:commandButton iconAwesome="close"
 							onclick="document.location.href='sair.jsp" value="Fechar"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
+							look="danger" styleClass="btn-command"
 							action="termoResponsabilidadeTemplateList?faces-redirect=true"
 							iconAlign="left" />
 					</b:column>
 					<b:column small-screen="4" medium-screen="2">
 						<b:commandButton id="btnSalvar" iconAwesome="save"
-							styleClass="btn-command" style="margin-bottom:5px;"
+							styleClass="btn-command"
 							actionListener="#{TermoResponsabilidadeTemplateControl.confirmar}"
 							value="Salvar" look="success" iconAlign="left" />
 					</b:column>
