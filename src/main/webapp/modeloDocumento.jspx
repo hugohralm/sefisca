@@ -5,65 +5,57 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="corpo">
 
-		<p:panel id="dadosDocumento" header="Dados do Documento">
-
-			<a:field label="Nome do documento">
-				<p:inputText
-					value="#{ModeloDocumentoControl.modeloDocumento.descricao }"
-					style="width:650px; text-transform: uppercase" />
-			</a:field>
-			<a:newLine />
-			<a:newLine />
-			<a:field label="Tamanho documento" spaceLeft="10px">
-				<p:selectOneMenu id="cbTipoDocumento"
-					value="#{ModeloDocumentoControl.modeloDocumento.tamanhoDocumento }"
-					style="width:190px;">
-					<f:selectItems value="#{ModeloDocumentoControl.tamanhosDocumento }" />
-				</p:selectOneMenu>
-			</a:field>
-			<a:field label="É Procuração?" spaceLeft="10px">
-				<p:selectOneRadio
-					value="#{ModeloDocumentoControl.modeloDocumento.procuracao}">
-					<f:selectItem itemLabel="NÃO" itemValue="#{false}" />
-					<f:selectItem itemLabel="SIM" itemValue="#{true}" />
-				</p:selectOneRadio>
-			</a:field>
-
-			<a:field label="Opcional?" spaceLeft="10px">
-				<p:selectOneRadio
-					value="#{ModeloDocumentoControl.modeloDocumento.opcional}">
-					<f:selectItem itemLabel="NÃO" itemValue="#{false}" />
-					<f:selectItem itemLabel="SIM" itemValue="#{true}" />
-				</p:selectOneRadio>
-			</a:field>
-
-			<a:newLine />
-
-			<a:field>
-				<p:commandButton icon="ui-icon-disk" value="Salvar"
-					actionListener="#{ModeloDocumentoControl.confirmar}" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton value="Limpar"
-					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-					action="modeloDocumento?faces-redirect=true" icon="ui-icon-trash"
-					immediate="true" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton value="Fechar"
-					actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
-					action="modeloDocumentoList?faces-redirect=true"
-					icon="ui-icon-close" immediate="true" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-		</p:panel>
+		<b:panel title="Dados do Documento" look="primary" collapsible="false"
+			id="dadosDocumento">
+			<b:container>
+				<b:row>
+					<b:column>
+						<b:inputText label="Descrição"
+							value="#{ModeloDocumentoControl.modeloDocumento.descricao }"
+							style="text-transform: uppercase" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column small-screen="4">
+						<b:selectOneMenu id="cbTipoDocumento" label="Tamanho documento"
+							value="#{ModeloDocumentoControl.modeloDocumento.tamanhoDocumento }">
+							<f:selectItems
+								value="#{ModeloDocumentoControl.tamanhosDocumento }" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column small-screen="4">
+						<b:selectOneMenu label="É Procuração?"
+							value="#{ ModeloDocumentoControl.modeloDocumento.procuracao }">
+							<f:selectItem itemValue="false" itemLabel="Não" />
+							<f:selectItem itemValue="true" itemLabel="Sim" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column small-screen="4">
+						<b:selectOneMenu label="Opcional?"
+							value="#{ ModeloDocumentoControl.modeloDocumento.opcional }">
+							<f:selectItem itemValue="false" itemLabel="Não" />
+							<f:selectItem itemValue="true" itemLabel="Sim" />
+						</b:selectOneMenu>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column offset-md="8" medium-screen="2">
+						<b:commandButton value="Fechar" look="danger" style-class="btn-command"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							action="modeloDocumentoList?faces-redirect=true" icon="remove"
+							immediate="true" />
+					</b:column>
+					<b:column medium-screen="2">
+						<b:commandButton icon="ok" value="Salvar" look="success" style-class="btn-command"
+							actionListener="#{ModeloDocumentoControl.confirmar}" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>
