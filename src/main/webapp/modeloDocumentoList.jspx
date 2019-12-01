@@ -37,10 +37,11 @@
 				</b:row>
 				<b:row>
 					<b:column>
-						<b:dataTable id="idDocumento" var="modeloDocumento" responsive="true"
-							caption="Documentos cadastrados" style="margin-top 5px;"
+						<b:dataTable id="idDocumento" var="modeloDocumento"
+							responsive="true" caption="Documentos cadastrados"
+							style="margin-top 5px;"
 							value="#{ModeloDocumentoListControl.modelosDeDocumentos }">
-							
+
 							<b:dataTableColumn label="Descrição" order="asc"
 								value="#{modeloDocumento.descricao}" />
 
@@ -65,7 +66,7 @@
 
 							<b:dataTableColumn style-class="btn-list-action" label=""
 								searchable="false" orderable="false">
-								<b:commandButton id="btnEditar" icon="pencil" look="primary"
+								<b:commandButton id="btnEditar" icon="pencil" 
 									action="modeloDocumento?faces-redirect=true"
 									tooltipDelayShow="300"
 									tooltip="Clique aqui para editar esse registro"
@@ -77,34 +78,44 @@
 							</b:dataTableColumn>
 							<b:dataTableColumn style-class="btn-list-action" label=""
 								searchable="false" orderable="false">
-								<b:commandButton id="btnConfirmarExclusao" look="danger"
+								<b:commandButton id="btnConfirmarExclusao" 
 									style-class="btn-list-action"
-									tooltip="Clique aqui para remover esse registro"
-									tooltipDelayShow="300"
-									onclick="PF('confirmacaoExclusao').show();" icon="trash"
-									update="idDocumento">
-									<f:setPropertyActionListener value="#{modeloDocumento}"
+									tooltip="Clique aqui para remover esse registro" update="@this"
+									tooltipDelayShow="300" 
+									oncomplete="$('.confirmacaoDialog').modal('show')" icon="trash">
+									<f:setPropertyActionListener value="#{modeloDocumento}" 
 										target="#{ModeloDocumentoListControl.modeloDocumentoExcluir}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>
-
 					</b:column>
 				</b:row>
 			</b:container>
 		</b:panel>
+		<b:modal title="Confirmação de início de processo"
+			id="confirmacaoDialog" styleClass="confirmacaoDialog"
+			message="Confirma o início do processo?"
+			widgetVar="confirmacaoInicioProcesso">
+			<b:row>
+				<b:column>
+					<p:outputLabel value="Confirma a exclusão deste registro?"
+						style="text-align:center; width: 100%;" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column tiny-screen="6">
+					<b:button dismiss="modal" value="Não, manter"
+						onclick="return false;" styleClass="btn-command" />
 
-		<p:confirmDialog message="Confirma a exclusão deste registro?"
-			showEffect="slide" hideEffect="explode"
-			header="Confirmação de exclusão" severity="alert"
-			widgetVar="confirmacaoExclusao">
-			<p:commandButton id="btnSim" value="Sim"
-				oncomplete="PF('confirmacaoExclusao').hide();"
-				actionListener="#{ModeloDocumentoListControl.excluir }"
-				update=":formCorpo:idDocumento" />
-			<p:commandButton id="btnNao" value="Não"
-				onclick="PF('confirmacaoExclusao').hide();" type="button" />
-		</p:confirmDialog>
+				</b:column>
+				<b:column tiny-screen="6">
+					<b:commandButton dismiss="modal" value="Sim, excluir"  look="danger"
+						styleClass="btn-command"
+						oncomplete="$('confirmacaoDialog').modal('hide')"
+						actionListener="#{ModeloDocumentoListControl.excluir }" />
+				</b:column>
+			</b:row>
+		</b:modal>
 
 	</ui:define>
 </ui:composition>
