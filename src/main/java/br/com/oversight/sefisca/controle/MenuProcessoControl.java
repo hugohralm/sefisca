@@ -51,7 +51,7 @@ public class MenuProcessoControl implements Serializable {
             this.controlador.setEtapaProcessoDao(etapaProcessoDao);
             this.controlador.setEtapaProcesso(this.etapas.get(0));
             this.controlador.postConstruct();
-            return "/andamentoProcesso/" + abrirAba(0);
+            return "/processo/" + abrirAba(0);
         } catch (Exception e) {
             UtilFaces.addMensagemFaces(e);
         }
