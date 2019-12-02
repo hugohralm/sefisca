@@ -64,9 +64,9 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
     private MotivoDesativacaoDao motivoDesativacaoDao;
 
     @Override
-    public int atualizarInstituicaoCsv(UploadedFile file) throws Exception {
+    public int atualizarInstituicaoCsv(UploadedFile file, Date ultimaDataAtualizacao) throws Exception {
         try (Reader reader = new InputStreamReader(file.getInputstream());) {
-            return atualizarInstituicao(reader);
+            return atualizarInstituicao(reader, ultimaDataAtualizacao);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,17 +74,19 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
     }
 
     @Transactional
-    private int atualizarInstituicao(Reader reader) {
+    private int atualizarInstituicao(Reader reader, Date ultimaDataAtualizacao) {
         try (CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withDelimiter(';').withQuote('"')
                 .withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
             int i = 0;
+            int instituicaoAtualizada = 0;
             for (CSVRecord csvRecord : csvParser) {
-                Instituicao instituicao = criarObjeto(csvRecord);
+                Instituicao instituicao = criarObjeto(csvRecord, ultimaDataAtualizacao);
                 if (!UtilSefisca.isNullOrEmpty(instituicao)) {
-                    em.persist(criarObjeto(csvRecord));
+                    em.persist(instituicao);
                     i++;
+                    instituicaoAtualizada++;
                     if (i == 100) {
                         i = 0;
                         em.flush();
@@ -95,7 +97,7 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
             }
             em.getTransaction().commit();
             em.close();
-            return csvParser.getRecords().size();
+            return instituicaoAtualizada;
         } catch (IOException e) {
             UtilLog.getLog().error(e.getMessage(), e);
         } catch (ParseException e) {
@@ -104,23 +106,20 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
         return 0;
     }
 
-    private Instituicao criarObjeto(CSVRecord csvRecord) throws ParseException {
-        Instituicao instituicao = new Instituicao();
+    private Instituicao criarObjeto(CSVRecord csvRecord, Date ultimaDataAtualizacao) throws ParseException {
         String dataAtualizacaoCsv = csvRecord.get("TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY')").trim();
         Date dataAtualizacao = null;
         if (!UtilSefisca.isNullOrEmpty(dataAtualizacaoCsv)) {
             dataAtualizacao = new SimpleDateFormat("dd/MM/yyyy").parse(dataAtualizacaoCsv);
         }
-
-        Date teste = new SimpleDateFormat("dd/MM/yyyy").parse("01/09/2019");
-        if (dataAtualizacao.after(teste)) {
-            String dataAtualizacaoGeoCsv = csvRecord.get("TO_CHAR(DT_ATU_GEO,'DD/MM/YYYY')").trim();
-            Date dataAtualizacaoGeo = null;
-            if (!UtilSefisca.isNullOrEmpty(dataAtualizacaoGeoCsv)) {
-                dataAtualizacaoGeo = new SimpleDateFormat("dd/MM/yyyy").parse(dataAtualizacaoGeoCsv);
-            }
-
+        
+        if (UtilSefisca.isNullOrEmpty(ultimaDataAtualizacao) || dataAtualizacao.after(ultimaDataAtualizacao)) {
             String cnes = csvRecord.get("CO_CNES").trim();
+            if (!UtilSefisca.isNullOrEmpty(instituicaoPorCnesCpnj(cnes, EnumTipoCodigoInstituicao.CNES))) {
+                return null;
+            }
+            
+            Instituicao instituicao = new Instituicao();
             String tipoPessoa = csvRecord.get("TP_PFPJ").trim();
             String situacaoInstituicao = csvRecord.get("NIVEL_DEP").trim();
             String tipoGestao = csvRecord.get("TP_GESTAO").trim();
@@ -151,7 +150,12 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
             String codigoUnidade = csvRecord.get("CO_UNIDADE").trim();
             String cpfDiretor = csvRecord.get("CO_CPFDIRETORCLN").trim();
             String conselhoClasseDiretor = csvRecord.get("REG_DIRETORCLN").trim();
-
+            String dataAtualizacaoGeoCsv = csvRecord.get("TO_CHAR(DT_ATU_GEO,'DD/MM/YYYY')").trim();
+            Date dataAtualizacaoGeo = null;
+            if (!UtilSefisca.isNullOrEmpty(dataAtualizacaoGeoCsv)) {
+                dataAtualizacaoGeo = new SimpleDateFormat("dd/MM/yyyy").parse(dataAtualizacaoGeoCsv);
+            }
+            
             instituicao.setCnes(UtilSefisca.isNullOrEmpty(cnes) ? null : cnes);
             instituicao.setTipoPessoa(tipoPessoa.equals("1") ? EnumTipoPessoa.PF : EnumTipoPessoa.PJ);
             instituicao.setSituacaoInstituicao(situacaoInstituicao.equals("1") ? EnumSituacaoInstituicao.INDIVIDUAL
@@ -261,6 +265,22 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
         } catch (Exception e) {
             UtilLog.getLog().error(e.getMessage(), e);
             throw new PersistenciaException("Erro ao consultar instituição por cnes/cnpj.", e);
+        }
+    }
+    
+    @Override
+    public Date ultimaDataAtualizacao() {
+        try {
+            String sql = "select max(i.dataAtualizacao) from Instituicao as i";
+
+            TypedQuery<Date> query = em.createQuery(sql.toString(), Date.class);
+
+            return query.getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        } catch (Exception e) {
+            UtilLog.getLog().error(e.getMessage(), e);
+            throw new PersistenciaException("Erro ao consultar ultima data de atualização.", e);
         }
     }
 }

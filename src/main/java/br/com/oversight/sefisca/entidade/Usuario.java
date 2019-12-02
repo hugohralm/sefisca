@@ -198,7 +198,7 @@ public class Usuario implements Serializable {
     }
     
     public String getDataUltimoAcessoFormatada() {
-    	return UtilSefisca.getDataStringFormatada(this.dataUltimoAcesso);
+    	return UtilSefisca.getDataStringFormatadaMask(this.dataUltimoAcesso, "dd/MM/yyyy HH:mm:ss");
     }
 
     @Override

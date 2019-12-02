@@ -28,14 +28,21 @@
 							value="#{InstituicaoListControl.instituicaoList}"
 							var="instituicao">
 							<b:dataTableColumn value="#{instituicao.cnes}" label="CNES"
-								order="asc"/>
-							<b:dataTableColumn value="#{instituicao.cpfCnpj}" label="CPF/CNPJ"/>
+								order="asc" />
+							<b:dataTableColumn value="#{instituicao.cpfCnpj}"
+								label="CPF/CNPJ" />
 
 							<b:dataTableColumn value="#{instituicao.nomeFantasia}"
 								label="Nome fantasia" />
 
 							<b:dataTableColumn value="#{instituicao.tipoUnidade}"
 								label="Tipo" />
+
+							<b:dataTableColumn label="Data atualização" data-type="date">
+								<h:outputText value="#{instituicao.dataAtualizacao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</b:dataTableColumn>
 
 							<b:dataTableColumn label="" searchable="false" orderable="false">
 								<b:commandButton

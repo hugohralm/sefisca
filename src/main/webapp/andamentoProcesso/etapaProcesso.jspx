@@ -51,18 +51,26 @@
 </style>
 		</ui:insert>
 		<p:panel id="panelGeral">
-			<ui:include src="menuAndamentoProcesso.jspx" />
+			<ui:include src="menuProcesso.jspx" />
 
-			<p:panel id="fsDadosEtapaProcesso"
-				header="Informações da Etapa:">
-				
+			<p:panel id="fsDadosEtapaProcesso" header="Informações da Etapa:">
+				<a:field label="ID">
+					<p:inputText styleClass="obrigatorio"
+						value="#{EtapaProcessoControl.etapaProcesso.id}"
+						style="width:355px;" readonly="true" />
+				</a:field>
+				<a:newLine />
 			</p:panel>
+			<a:field rendered="#{MenuProcessoControl.voltarEnable}">
+				<p:commandButton value="Voltar" icon="ui-icon-arrow-1-w"
+					action="#{MenuProcessoControl.voltar}" />
+			</a:field>
 			<a:field>
 				<p:commandButton value="Avançar" icon="	ui-icon-arrow-1-e"
-					action="#{MenuAndamentoProcessoControl.avancar}" />
+					action="#{MenuProcessoControl.avancar}" />
 			</a:field>
 			<a:newLine />
-			<a:newLine />			
+			<a:newLine />
 		</p:panel>
 	</ui:define>
 </ui:composition>
