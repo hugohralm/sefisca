@@ -5,184 +5,131 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="corpo">
-		<p:panel id="panelProcesso" header="Dados do processo">
-			<a:field label="Número">
-				<p:inputText styleClass="obrigatorio"
-					value="#{ProcessoControl.processo.numero}" style="width:355px;"
-					readonly="true" />
-			</a:field>
-
-			<a:field label="Usuário" spaceLeft="10px">
-				<p:inputText styleClass="obrigatorio"
-					value="#{ProcessoControl.processo.usuario}" style="width:355px;"
-					readonly="true" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-
-			<a:field label="Tipo processo">
-				<p:selectOneMenu value="#{ProcessoControl.processo.tipoProcesso}"
-					style="width:120px;" autoWidth="false">
-					<f:selectItems value="#{ProcessoControl.tiposProcesso}" />
-				</p:selectOneMenu>
-			</a:field>
-
-			<a:field label="Data de abertura" spaceLeft="15px">
-				<p:inputMask styleClass="obrigatorio"
-					value="#{ProcessoControl.processo.dataAbertura}"
-					style="width:120px;" mask="99/99/9999">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
-				</p:inputMask>
-			</a:field>
-
-			<a:field label="Status" spaceLeft="15px">
-				<p:inputText styleClass="obrigatorio"
-					value="#{ProcessoControl.processo.statusProcesso.descricao}"
-					style="width:120px;" readonly="true" />
-			</a:field>
-
-			<a:field label="Etapa" spaceLeft="15px">
-				<p:inputText styleClass="obrigatorio"
-					value="#{ProcessoControl.processo.etapaProcesso.descricao}"
-					style="width:200px;" readonly="true" />
-			</a:field>
-
-			<a:newLine />
-
-			<a:field spaceLeft="10px">
-				<p:commandButton id="btnConfirmarInicioProcesso"
-					title="Clique aqui para iniciar o processo"
-					value="Iniciar processo"
-					onclick="PF('confirmacaoInicioProcesso').show();"
-					icon="ui-icon-folder-open" />
-			</a:field>
-
-			<a:field spaceLeft="10px">
-				<p:commandButton actionListener="#{MenuControl.gerenciarSessao}"
-					value="Fechar" ajax="false" action="inicio?faces-redirect=true"
-					icon="ui-icon-close" immediate="true" />
-			</a:field>
-
-			<a:newLine />
-			<a:newLine />
-			<p:panel id="panelBuscarInstituicao" header="Buscar Instituição">
-				<a:field label="Tipo">
-					<p:selectOneMenu value="#{ProcessoControl.tipoCodigo}">
-						<f:selectItems value="#{ProcessoControl.tiposCodigoInstituicao}" />
-						<p:ajax event="change" update=":formCorpo:panelBuscarInstituicao" />
-					</p:selectOneMenu>
-				</a:field>
-
-				<a:field label="#{ProcessoControl.cnes ? 'CNES' : 'CNPJ'}"
-					spaceLeft="10px">
-					<p:inputMask styleClass="obrigatorio"
-						mask="#{ProcessoControl.cnes ? '9999999' : '99.999.999/9999-99'}"
-						value="#{ProcessoControl.cnesCnpj}" style="width:150px;" />
-				</a:field>
-
-				<a:field spaceLeft="10px">
-					<p:commandButton title="Clique aqui para consultar estabelecimento"
-						icon="ui-icon-search"
-						actionListener="#{ProcessoControl.consultarEstabelecimento}"
-						update=":formCorpo:panelProcesso" />
-				</a:field>
-
-				<a:newLine />
-
-				<p:panel id="panelDadosInstituicao" header="Dados da Instituição">
-					<a:field label="CNES">
-						<p:inputMask styleClass="obrigatorio" mask="9999999"
-							value="#{ProcessoControl.processo.instituicao.cnes}"
-							style="width:140px;" readonly="true" />
-					</a:field>
-
-					<a:field label="CPF/CNPJ" spaceLeft="10px">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.cpfCnpj}"
-							style="width:186px;" readonly="true" />
-					</a:field>
-
-					<a:newLine />
-					<a:newLine />
-
-					<a:field label="Nome Fantasia">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.nomeFantasia}"
-							style="width:720px;" readonly="true" />
-					</a:field>
-
-					<a:newLine />
-					<a:newLine />
-
-					<a:field label="Razão Social">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.razaoSocial}"
-							style="width:720px;" readonly="true" />
-					</a:field>
-
-					<a:newLine />
-					<a:newLine />
-
-					<a:field label="CEP">
-						<p:inputMask styleClass="obrigatorio" mask="99.999-999"
-							value="#{ProcessoControl.processo.instituicao.endereco.cep}"
-							style="width:90px;" readonly="true" />
-					</a:field>
-
-					<a:field label="Logradouro" spaceLeft="10px;">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.logradouro}"
-							style="width:620px;" readonly="true" />
-					</a:field>
-					<a:newLine />
-					<a:newLine />
-
-					<a:field label="Complemento">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.complemento}"
-							style="width:620px;" readonly="true" />
-					</a:field>
-
-					<a:field label="Número" spaceLeft="10px;">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.numero}"
-							style="width:90px;" readonly="true" />
-					</a:field>
-
-					<a:newLine />
-					<a:newLine />
-
-					<a:field label="Bairro">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.bairro}"
-							style="width:355px;" readonly="true" />
-					</a:field>
-
-					<a:field label="Município" spaceLeft="10px;">
-						<p:inputText styleClass="obrigatorio"
-							value="#{ProcessoControl.processo.instituicao.endereco.municipio}"
-							style="width:355px;" readonly="true" />
-					</a:field>
-
-					<a:newLine />
-					<a:newLine />
-				</p:panel>
-			</p:panel>
-		</p:panel>
-
-		<p:confirmDialog message="Confirma o início do processo?"
-			header="Confirmação de início de processo" severity="alert"
+		<b:panel id="panelProcesso" title="Abertura de processo"
+			collapsible="false" look="primary">
+			<b:container>
+				<b:row>
+					<b:column medium-screen="4">
+						<b:inputText label="Número" readonly="true"
+							value="#{ProcessoControl.processo.numero}" />
+					</b:column>
+					<b:column medium-screen="4">
+						<b:inputText label="Usuário registrador" readonly="true"
+							value="#{ProcessoControl.processo.usuario}" />
+					</b:column>
+					<b:column medium-screen="4">
+						<b:dateTimePicker label="Data de abertura"
+							value="#{ProcessoControl.processo.dataAbertura}" readonly="true" />
+					</b:column>
+					<b:row>
+					</b:row>
+					<b:column medium-screen="3">
+						<b:selectOneMenu label="Tipo do processo"
+							value="#{ProcessoControl.processo.tipoProcesso}">
+							<f:selectItems value="#{ProcessoControl.tiposProcesso}" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column medium-screen="3">
+						<b:inputText value="#{ProcessoControl.instituicao}"
+							readonly="true" label="Instituicao">
+							<f:facet name="append">
+								<b:button look="primary"
+									onclick="$('.selecionarInstituicaoModal').modal('show')"
+									icon="pencil" icon-align="right" />
+							</f:facet>
+						</b:inputText>
+					</b:column>
+					<b:column medium-screen="3">
+						<b:inputText label="Etapa" readonly="true"
+							value="#{ProcessoControl.processo.etapaProcesso.descricao}" />
+					</b:column>
+					<b:column medium-screen="3">
+						<b:inputText label="Status" readonly="true"
+							value="#{ProcessoControl.processo.statusProcesso.descricao}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column small-screen="4" offset-md="8" medium-screen="2">
+						<b:commandButton actionListener="#{MenuControl.gerenciarSessao}"
+							value="Fechar" ajax="false" action="inicio?faces-redirect=true"
+							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
+							icon="remove" immediate="true" />
+					</b:column>
+					<b:column small-screen="4" medium-screen="2">
+						<b:button id="btnConfirmarInicioProcesso"
+							title="Clique aqui para iniciar o processo"
+							value="Iniciar processo" styleClass="btn-command"
+							style="margin-bottom:5px;" look="success"
+							onclick="$('.confirmacaoDialog').modal('show')"
+							icon="folder-open" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+		<b:modal id="selecionarInstituicaoModal"
+			styleClass="selecionarInstituicaoModal"
+			title="Selecionar instituicao">
+			<b:form>
+				<b:row>
+					<b:column tiny-screen="3">
+						<b:selectOneMenu label="Tipo"
+							value="#{ProcessoControl.tipoCodigo}">
+							<f:selectItems value="#{ProcessoControl.tiposCodigoInstituicao}" />
+							<p:ajax event="change" update="inputPesquisa" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column tiny-screen="9">
+						<b:inputText id="inputPesquisa"
+							label="#{ProcessoControl.cnes ? 'CNES' : 'CNPJ'}"
+							mask="#{ProcessoControl.cnes ? '9999999' : '99.999.999/9999-99'}"
+							value="#{ProcessoControl.cnesCnpj}">
+							<f:facet name="append">
+								<b:commandButton look="primary" icon="search" icon-align="right"
+									actionListener="#{ProcessoControl.consultarEstabelecimento}" />
+							</f:facet>
+						</b:inputText>
+					</b:column>
+				</b:row>
+				<b:row rendered="false">
+					<b:column small-screen="6">
+						<b:button value="Cancelar" dismiss="modal" onclick="return false;"
+							styleClass="btn-command" iconAlign="right" icon="remove"
+							look="danger" />
+					</b:column>
+					<b:column small-screen="6">
+						<b:commandButton dismiss="modal" value="Salvar" look="success"
+							styleClass="btn-command" iconAlign="right" icon="ok" />
+					</b:column>
+				</b:row>
+				<b:fetchBeanInfos />
+			</b:form>
+		</b:modal>
+		<b:modal title="Confirmação de início de processo"
+			id="confirmacaoDialog" styleClass="confirmacaoDialog"
+			message="Confirma o início do processo?"
 			widgetVar="confirmacaoInicioProcesso">
-			<p:commandButton id="btnSim" value="Sim"
-				oncomplete="PF('confirmacaoInicioProcesso').hide();"
-				actionListener="#{ProcessoControl.confirmar}"
-				update=":formCorpo:panelProcesso" />
-			<p:commandButton id="btnNao" value="Não"
-				onclick="PF('confirmacaoInicioProcesso').hide();" type="button" />
-		</p:confirmDialog>
+			<b:row>
+				<b:column>
+					<p:outputLabel value="Deseja dar início á este processo?"
+						style="text-align:center; width: 100%;" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column tiny-screen="6">
+					<b:button dismiss="modal" value="Cancelar" look="danger"
+						onclick="return false;" styleClass="btn-command"  />
+
+				</b:column>
+				<b:column tiny-screen="6">
+					<b:commandButton dismiss="modal" value="Prosseguir" look="success"
+						styleClass="btn-command"
+						oncomplete="$('confirmacaoDialog').modal('hide')"
+						action="#{ProcessoControl.confirmar}"  />
+				</b:column>
+			</b:row>
+		</b:modal>
 	</ui:define>
 </ui:composition>

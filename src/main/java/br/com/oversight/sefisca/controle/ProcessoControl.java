@@ -46,6 +46,9 @@ public class ProcessoControl implements Serializable {
 
     @Autowired
     private InstituicaoDao instituicaoDao;
+    
+    @Autowired
+    private MenuProcessoControl menuProcessoControl;
 
     @Getter
     @Setter
@@ -100,11 +103,11 @@ public class ProcessoControl implements Serializable {
         }
     }
 
-    public void confirmar() {
+    public String confirmar() {
         this.processo = processoDao.alterar(this.processo);
         primeiraEtapa(this.processo);
-        novoProcesso();
         UtilFaces.addMensagemFaces("Processo salvo com sucesso");
+        return menuProcessoControl.iniciar(this.processo);
     }
 
     private void primeiraEtapa(Processo processo) {
