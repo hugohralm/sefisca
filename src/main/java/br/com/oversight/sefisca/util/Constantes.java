@@ -14,6 +14,5 @@ public interface Constantes {
         String URL_BASE = UtilFaces.getRequest().getScheme() + "://" + UtilFaces.getRequest().getHeader("Host");
         String URL_SISTEMA = URL_BASE + "/" + CONTEXTO;
         String URL_INICIO = "inicio.ovs";
-        String AUTH_TOKEN = System.getProperty("sdl.auth-token");
     }
 }

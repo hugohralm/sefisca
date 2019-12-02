@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:define name="corpo">
+		<ui:insert name="cabecalho">
+			<style type="text/css">
+.ui-fileupload {
+	margin-bottom: -12px
+}
+
+.ui-fileupload.preenchido {
+	margin-top: -17px
+}
+
+.ui-fileupload.nao-preenchido {
+	margin-top: 3px
+}
+
+.ui-fileupload-buttonbar {
+	background: none;
+	border: none;
+	padding-left: 0px
+}
+
+.ui-fileupload-content {
+	padding: 0px;
+	border: none !important
+}
+
+.link-fileupload {
+	color: blue !important;
+	position: relative;
+	left: 160px;
+	text-transform: uppercase;
+	font-size: 0.9em
+}
+
+.link-fileupload.preenchido {
+	top: 10px;
+}
+
+.link-fileupload.nao-preenchido {
+	top: 26px;
+}
+</style>
+		</ui:insert>
+		<p:panel id="panelGeral">
+			<ui:include src="menuProcesso.jspx" />
+
+			<p:panel id="fsDadosEtapaProcesso" header="Informações da Etapa:">
+				<a:field label="ID">
+					<p:inputText styleClass="obrigatorio"
+						value="#{EtapaProcessoControl.etapaProcesso.id}"
+						style="width:355px;" readonly="true" />
+				</a:field>
+				<a:newLine />
+			</p:panel>
+			<a:field rendered="#{MenuProcessoControl.voltarEnable}">
+				<p:commandButton value="Voltar" icon="ui-icon-arrow-1-w"
+					action="#{MenuProcessoControl.voltar}" />
+			</a:field>
+			<a:field>
+				<p:commandButton value="Avançar" icon="	ui-icon-arrow-1-e"
+					action="#{MenuProcessoControl.avancar}" />
+			</a:field>
+			<a:newLine />
+			<a:newLine />
+		</p:panel>
+	</ui:define>
+</ui:composition>

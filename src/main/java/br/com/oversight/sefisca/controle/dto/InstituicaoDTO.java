@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class InstituicaoDTO {
 
-	private String codigoCNES;
+	private String cnes;
 	private String cnpj;
 	private String nomeFantasia;
 	private String razaoSocial;

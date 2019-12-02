@@ -26,7 +26,7 @@
 		document.getElementById("usuario").focus();
 	}
 	function cadastrar() {
-		location.href = "usuario.ovs";
+		location.href = "cadastrarUsuario.ovs";
 	}
 	function recuperarSenha() {
 		location.href = "recuperarSenha.ovs";

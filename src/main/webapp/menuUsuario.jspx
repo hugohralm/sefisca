@@ -1,44 +1,76 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
 		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"
-			id="menubar" style="margin-bottom: 2px;">
+			id="menubar" style="margin-bottom: 1px;">
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
 					action="/inicio?faces-redirect=true" iconAwesome="home" />
-				<b:dropMenu value="Consulta" iconAwesome="search">
+				<b:navCommandLink value="Iniciar Processo"
+					actionListener="#{MenuControl.gerenciarSessao}"
+					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}"
+					action="/processo/processo?faces-redirect=true" iconAwesome="file" />
+				<b:dropMenu value="Cadastros" iconAwesome="search"
+					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}">
 					<b:navCommandLink value="Processos"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						action="/aberturaProcesso?faces-redirect=true" iconAwesome="folder-open" />
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}"
+						action="/processo/processoList?faces-redirect=true"
+						iconAwesome="folder-open" />
+					<b:navCommandLink value="Instituições"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}"
+						action="/cadastro/instituicaoList?faces-redirect=true"
+						iconAwesome="folder-open" />
+					<b:navCommandLink value="Cargos"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}"
+						action="/cadastro/cargoList?faces-redirect=true"
+						iconAwesome="folder-open" />
 				</b:dropMenu>
-				<b:dropMenu value="Configurações" iconAwesome="wrench">
-					<b:navCommandLink value="Perfil"
+
+				<b:dropMenu value="Configurações" iconAwesome="wrench"
+					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}">
+					<b:navCommandLink value="Atualizar instituições"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						action="#{UsuarioControl.verificarUsuarioLogado}"
-						iconAwesome="user" />
-					<b:navCommandLink value="Usuários"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/admin/atualizarInstituicao?faces-redirect=true"
+						iconAwesome="search-plus" />
+					<b:navCommandLink value="Modelo Documento"
 						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN,GERENTE']}"
-						action="/gerencia/usuarioList?faces-redirect=true"
-						iconAwesome="users" />
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
+						action="/gerencia/modeloDocumentoList?faces-redirect=true"
+						iconAwesome="folder-open" />
 					<b:navCommandLink value="Parâmetros do sistema"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"
 						action="/admin/parametroList?faces-redirect=true"
 						iconAwesome="wrench" />
+					<b:navCommandLink value="Termos de uso"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
+						action="/gerencia/termoResponsabilidadeTemplateList?faces-redirect=true"
+						iconAwesome="wrench" />
+					<b:navCommandLink value="Usuários"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
+						action="/gerencia/usuarioList?faces-redirect=true"
+						iconAwesome="users" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
 					<b:navLink value="Modelagem de Negócio" iconAwesome="file"
 						href="/sefisca/documentos/modelagem_de_negocio.pdf"
 						target="_blank" />
 				</b:dropMenu>
+				<b:navCommandLink
+					value="#{UsuarioLogadoControl.usuario.pessoa.primeiroNome}"
+					actionListener="#{MenuControl.gerenciarSessao}"
+					action="#{AtualizarPerfilControl.verificarUsuarioLogado}"
+					iconAwesome="user" />
 				<b:navLink value="Sair" iconAwesome="power-off"
 					onclick="document.location.href='/sefisca/sair.jsp'"
 					immediate="true" />
@@ -50,8 +82,11 @@
 					disabled="true" />
 			</b:navbarLinks>
 		</b:navBar>
+		<b:messages auto-update="true" globalOnly="true" />
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+			show-detail="true" show-summary="true" allowDismiss="true"
+			delay="5000" escape="true" />
+
 		<p:sticky id="stickyMenu" target=":formMenuUsuario:menubar" />
-		<p:growl autoUpdate="true" id="growl" showDetail="true" sticky="true" />
-		<p:messages autoUpdate="true" closable="true" />
 	</h:form>
 </ui:composition>

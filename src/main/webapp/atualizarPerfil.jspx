@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:define name="corpo">
+
+		<b:form>
+			<b:column>
+				<b:panel title="Informações do usuário" look="primary"
+					collapsible="false">
+					<b:container fluid="true">
+						<b:row>
+							<b:column smallScreen="4" medium-screen="3">
+								<b:inputText label="CPF" render-label="true"
+									mask="999.999.999-99" disabled="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.cpf}" />
+							</b:column>
+							<b:column small-screen="8" medium-screen="9">
+								<b:inputText label="Nome" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.nome}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column smallScreen="12" medium-screen="6" large-screen="6">
+								<b:inputText label="Email" render-label="true" mask="email"
+									value="#{AtualizarPerfilControl.usuario.pessoa.email}" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:inputText label="Telefone" render-label="true"
+									mask="(99) 9999-9999"
+									value="#{AtualizarPerfilControl.usuario.pessoa.telefone}" />
+							</b:column>
+							<b:column smallScreen="6" medium-screen="3">
+								<b:inputText label="Celular" render-label="true"
+									mask="(99) 99999-9999"
+									value="#{AtualizarPerfilControl.usuario.pessoa.celular}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="4">
+								<b:selectOneMenu label="Sexo" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.sexo}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{AtualizarPerfilControl.sexos}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="4">
+								<b:selectOneMenu label="Estado civil" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.estadoCivil}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{AtualizarPerfilControl.estadosCivis}" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="4">
+								<b:dateTimePicker id="nascDate" label="Data de nascimento *"
+									mode="popup-icon" showTime="false" format="DD/MM/YYYY"
+									value="#{AtualizarPerfilControl.usuario.pessoa.dataNascimento }" />
+								<b:message for="nascDate" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="4">
+								<b:inputText
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.cep}"
+									label="CEP" mask="99.999-999">
+									<f:facet name="append">
+										<b:commandButton look="primary" icon="search"
+											icon-align="right"
+											actionListener="#{AtualizarPerfilControl.consultarCep}" />
+									</f:facet>
+								</b:inputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column medium-screen="6">
+								<b:inputText id="endereco" label="Endereço" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.endereco}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Bairro" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.bairro}" />
+							</b:column>
+							<b:column small-screen="6" medium-screen="3">
+								<b:inputText label="Numero" render-label="true"
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.numero}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="estado" label="Estado *"
+									render-label="true" style="width:100%;"
+									value="#{AtualizarPerfilControl.uf}" select2="true"
+									update="estado municipio">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{AtualizarPerfilControl.ufs }" />
+									<f:ajax
+										listener="#{AtualizarPerfilControl.listarMunicipiosPorUfs}"
+										process="@this" update="municRequerente" />
+								</b:selectOneMenu>
+							</b:column>
+							<b:column small-screen="6">
+								<b:selectOneMenu id="municipio" label="Município"
+									render-label="true" select2="true" style="width:100%;"
+									value="#{AtualizarPerfilControl.usuario.pessoa.endereco.municipio}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{AtualizarPerfilControl.municipios}" />
+								</b:selectOneMenu>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column smallScreen="3" offset-md="4" medium-screen="2">
+								<b:button styleClass="btn-command" icon="pencil"
+									rendered="#{AtualizarPerfilControl.dadosProfissionais.cargo != null }"
+									iconAlign="right"
+									onclick="$('.dadosProfissionaisModal').modal('show')"
+									value="Dados profissionais" />
+							</b:column>
+							<b:column smallScreen="3"
+								offset-md="#{AtualizarPerfilControl.dadosProfissionais.cargo != null? 0 : 6}"
+								medium-screen="2">
+								<b:button styleClass="btn-command" icon="pencil"
+									iconAlign="right"
+									onclick="$('.trocarSenhaModal').modal('show')"
+									value="Alterar Senha" />
+							</b:column>
+							<b:column small-screen="3" medium-screen="2">
+								<b:commandButton id="btnLimpar" icon="remove" ajax="false"
+									styleClass="btn-command" value="Cancelar  " look="danger"
+									action="inicio?faces-redirect=true" iconAlign="right"
+									immediate="true"
+									actionListener="#{MenuControl.gerenciarSessao}" />
+							</b:column>
+							<b:column small-screen="3" medium-screen="2">
+								<b:commandButton id="btnConcluir" icon="ok"
+									styleClass="btn-command" ajax="false"
+									actionListener="#{AtualizarPerfilControl.confirmar}"
+									value="Salvar" look="success" iconAlign="right"
+									oncomplete="PF('usuario').close();" />
+							</b:column>
+						</b:row>
+						<b:modal id="dadosProfissionaisModal" title="Dados profissionais"
+							styleClass="dadosProfissionaisModal" closable="false"
+							close-on-escape="false" backdrop="false">
+							<b:form>
+								<b:row>
+									<b:column>
+										<b:inputText label="Profissão" maxlength="200"
+											value="#{AtualizarPerfilControl.dadosProfissionais.profissao}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:inputText id="teste" label="Registro profissional"
+											mask="{regex:'[0-9]*'}" maxlength="30"
+											value="#{AtualizarPerfilControl.dadosProfissionais.registroProfissional}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="6">
+										<b:button value="Cancelar" dismiss="modal"
+											onclick="return false;" styleClass="btn-command"
+											iconAlign="right" icon="remove" look="danger" />
+									</b:column>
+									<b:column small-screen="6">
+										<b:button dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command" iconAlign="right" icon="ok" />
+									</b:column>
+								</b:row>
+								<b:fetchBeanInfos />
+							</b:form>
+						</b:modal>
+						<b:modal id="trocarSenhaModal" styleClass="trocarSenhaModal"
+							title="Alteração de Senha" closable="false"
+							close-on-escape="false" backdrop="false">
+							<b:form>
+								<b:row>
+									<b:column>
+										<b:inputSecret label="Informe a senha atual"
+											value="#{AtualizarPerfilControl.senhaAtual}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:inputSecret label="Informe uma nova senha"
+											value="#{AtualizarPerfilControl.novaSenha}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column>
+										<b:inputSecret label="Confirme a nova senha"
+											value="#{AtualizarPerfilControl.novaSenhaConfirm}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column small-screen="6">
+										<b:button value="Cancelar" dismiss="modal"
+											onclick="return false;" styleClass="btn-command"
+											iconAlign="right" icon="remove" look="danger" />
+									</b:column>
+									<b:column small-screen="6">
+										<b:commandButton
+											action="#{AtualizarPerfilControl.alterarSenha}"
+											dismiss="modal" value="Salvar" look="success"
+											styleClass="btn-command"
+											oncomplete="$('.trocarSenhaModal').modal('hide')"
+											iconAlign="right" icon="ok" />
+									</b:column>
+								</b:row>
+								<b:fetchBeanInfos />
+							</b:form>
+						</b:modal>
+					</b:container>
+				</b:panel>
+			</b:column>
+		</b:form>
+
+	</ui:define>
+</ui:composition>

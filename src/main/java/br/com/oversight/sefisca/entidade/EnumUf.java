@@ -74,4 +74,12 @@ public enum EnumUf implements IEnum {
     
     private final int codigoIbge;
 
+    public EnumUf getUfByCode(int cod) {
+    	for (EnumUf item : EnumUf.values()) {
+			if (item.codigoIbge == cod) {
+				return item;
+			}
+		}
+    	return EnumUf.AC;
+    }
 }

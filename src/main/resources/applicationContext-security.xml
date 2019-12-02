@@ -18,14 +18,13 @@
 	<http pattern="/alterarSenhaExterno.ovs" security="none" />
 	<http pattern="/auth.ovs" security="none" />
 	<http pattern="/erroToken.ovs" security="none" />
-	<http pattern="/usuario.ovs" security="none" />
+	<http pattern="/cadastrarUsuario.ovs" security="none" />
 
 	<http auto-config="true" access-denied-page="/acessoNegado.ovs" access-decision-manager-ref="accessDecisionManager">
 
 		<intercept-url pattern="/admin/*" access="ADMIN" />
 		
-		<intercept-url pattern="/gerencia/usuarioList.ovs" access="ADMIN,GERENTE" />
-		<intercept-url pattern="/gerencia/*" access="ADMIN,GERENTE,ORGAO" />
+		<intercept-url pattern="/gerencia/*" access="ADMIN,COORDENADOR" />
 		
 		<intercept-url pattern="/**.ovs" access="USUARIO" />
 		<intercept-url pattern="/**.jspx" access="USUARIO" />

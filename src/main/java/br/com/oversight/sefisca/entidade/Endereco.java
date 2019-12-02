@@ -62,6 +62,12 @@ public class Endereco extends Entidade implements Serializable {
 	@Column(length = 512)
 	@Length(min = 0, max = 512, message = "O limite do campo complemento é de 512 caracteres.", groups = AmbientValidator.class)
 	private String complemento;
+	
+	@Getter	@Setter
+	private String longitude;
+	
+	@Getter	@Setter
+	private String latitude;
 
 	public Endereco() {
 		super();

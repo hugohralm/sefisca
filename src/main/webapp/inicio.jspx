@@ -10,16 +10,29 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<ui:define name="corpo">
-
-		<p:panel>
-
-			<div class="col-md-12 row">
-				<div class="menu-principal"></div>
-			</div>
-			<div class="col-md-12 row ">
-				<div class="col-md-12 ">BODY</div>
-			</div>
-			<a:newLine />
-		</p:panel>
+		<b:panel title="Processos" look="primary" collapsible="false"
+			id="panelConsultaProcessos">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<b:dataTable id="tblProcessos" responsive="true"
+							value="#{InicioControl.processos}" var="processo">
+							<b:dataTableColumn value="#{processo.id}" label="ID"
+								style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.instituicao}"
+								label="Instituição" />
+							<b:dataTableColumn value="#{processo.tipoProcesso.descricao}"
+								label="Tipo processo" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.dataAberturaFormatada}"
+								label="Data abertura" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.etapaProcesso.descricao}"
+								label="Etapa" style="text-align: center;" />
+							<b:dataTableColumn value="#{processo.statusProcesso.descricao}"
+								label="Status" style="text-align: center;" />
+						</b:dataTable>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>
