@@ -59,6 +59,6 @@ public class PapelUsuario extends Entidade implements Serializable {
     }
 
     public boolean isPodeConsultar() {
-        return this.papel.equals(EnumPapel.ADMIN) || this.papel.equals(EnumPapel.GERENTE) ? true : false;
+        return this.papel.equals(EnumPapel.ADMIN) || this.papel.equals(EnumPapel.COORDENADOR) ? true : false;
     }
 }

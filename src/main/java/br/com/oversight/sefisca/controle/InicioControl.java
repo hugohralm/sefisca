@@ -23,11 +23,14 @@ public class InicioControl implements Serializable {
     @Autowired
 	private ProcessoDao processoDao;
     
+    @Autowired
+    private UsuarioLogadoControl usuarioLogadoControl;
+    
     @Getter
     private List<Processo> processos = new ArrayList<>();
     
     @PostConstruct
 	public void init() {
-		this.processos = processoDao.listar();
+		this.processos = processoDao.listarPorUsuario(usuarioLogadoControl.getUsuario());
 	}
 }

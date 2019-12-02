@@ -20,30 +20,30 @@ import lombok.Setter;
 @Controller("ModeloDocumentoControl")
 public class ModeloDocumentoControl {
 
-    @Autowired
-    private ModeloDocumentoDao modeloDocumentoDao;
+	@Autowired
+	private ModeloDocumentoDao modeloDocumentoDao;
 
-    @Getter
-    @Setter
-    private ModeloDocumento modeloDocumento = new ModeloDocumento();
+	@Getter
+	@Setter
+	private ModeloDocumento modeloDocumento = new ModeloDocumento();
 
-    public void confirmar() {
-        try {
-            modeloDocumentoDao.alterar(modeloDocumento);
-            UtilMessages.addMessage(
-                    "ModeloDocumento: " + modeloDocumento.getDescricao() + " adicionado/alterado com sucesso!");
-            modeloDocumento = new ModeloDocumento();
+	public void confirmar() {
+		try {
+			modeloDocumentoDao.alterar(modeloDocumento);
+			UtilMessages.addMessage("Sucesso!", "Registro confirmado!");
+			modeloDocumento = new ModeloDocumento();
 
-        } catch (Exception e) {
-            UtilMessages.addMessage(e);
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			UtilMessages.addMessage(e);
+		}
+	}
 
-    public List<SelectItem> getTiposPessoa() {
-        return UtilFaces.getListEnum(EnumTipoPessoa.values());
-    }
+	public List<SelectItem> getTiposPessoa() {
+		return UtilFaces.getListEnum(EnumTipoPessoa.values());
+	}
 
-    public List<SelectItem> getTamanhosDocumento() {
-        return UtilFaces.getListEnum(EnumTamanhoDocumento.values());
-    }
+	public List<SelectItem> getTamanhosDocumento() {
+		return UtilFaces.getListEnum(EnumTamanhoDocumento.values());
+	}
 }

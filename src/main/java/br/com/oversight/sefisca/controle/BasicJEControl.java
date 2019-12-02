@@ -11,7 +11,7 @@ import lombok.Setter;
 public abstract class BasicJEControl {
 
     @Setter
-    protected MenuAndamentoProcessoControl menuAndamentoProcessoControl;
+    protected MenuProcessoControl menuProcessoControl;
 
     @Setter
     protected ProcessoDao processoDao;
@@ -33,12 +33,9 @@ public abstract class BasicJEControl {
 
     public abstract String getUrl();
 
-//    public abstract boolean isDisabled();
-
     protected abstract void postConstruct();
 
     protected void consultarProcesso() throws PersistenciaException {
-        this.processo = processoDao.consultarPorId(menuAndamentoProcessoControl.getProcesso().getId());
+        this.processo = processoDao.consultarPorId(menuProcessoControl.getProcesso().getId());
     }
-
 }

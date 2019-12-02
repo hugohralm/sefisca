@@ -18,14 +18,13 @@
 					<b>Número da solicitação:</b>
 				</p:column>
 				<p:column style="width:150px">
-					<p:outputLabel value="#{MenuAndamentoProcessoControl.processo.id}" />
+					<p:outputLabel value="#{MenuProcessoControl.processo.id}" />
 				</p:column>
 				<p:column style="width:190px">
 					<b> Código de validação:</b>
 				</p:column>
 				<p:column>
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.numero}" />
+					<p:outputLabel value="#{MenuProcessoControl.processo.numero}" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -33,8 +32,7 @@
 					<b> Data de início:</b>
 				</p:column>
 				<p:column style="width:150px">
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.dataCriacao}">
+					<p:outputLabel value="#{MenuProcessoControl.processo.dataCriacao}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:outputLabel>
 				</p:column>
@@ -43,29 +41,26 @@
 				</p:column>
 				<p:column>
 					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.etapaProcesso.descricao}" />
+						value="#{MenuProcessoControl.processo.tipoProcesso.descricao}" />
 				</p:column>
 				<p:column style="width:190px">
 					<b> Status:</b>
 				</p:column>
 				<p:column>
 					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.statusProcesso.descricao}" />
+						value="#{MenuProcessoControl.processo.statusProcesso.descricao}" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 	</p:panel>
 
-	<p:tabMenu id="tmEtapas"
-		activeIndex="#{MenuAndamentoProcessoControl.menu}"
+	<p:tabMenu id="tmEtapas" activeIndex="#{MenuProcessoControl.menu}"
 		style="margin-bottom: 5px;margin-top: 5px;">
 
-		<c:forEach var="controlador"
-			items="#{MenuAndamentoProcessoControl.controladores}"
-			varStatus="varControlador">
-			<p:menuitem value="#{controlador.titulo}" update="tmEtapas"
-				action="#{MenuAndamentoProcessoControl.abrirAba(varControlador.index)}" />
+		<c:forEach var="etapa" items="#{MenuProcessoControl.etapas}"
+			varStatus="varEtapa">
+			<p:menuitem value="#{etapa.etapaProcesso}" update="tmEtapas"
+				action="#{MenuProcessoControl.abrirAba(varEtapa.index)}" />
 		</c:forEach>
-
 	</p:tabMenu>
 </ui:composition>

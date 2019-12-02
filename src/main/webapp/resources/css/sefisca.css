@@ -5,6 +5,20 @@
 	margin-top: 5px;
 }
 
+.btn-list-action {
+	width: 40px;
+}
+
+.list-boolean-cell {
+	width: 40px;
+	text-align: center;
+}
+
+.table-center-cell {
+	text-align:center;
+	vertical-align: middle;
+}
+
 .selectOneMenu {
 	width: 100%;
 }
@@ -23,6 +37,11 @@
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	padding: 10pxç
+}
+
+.btn-align-bottom {
+	margin-top: 25px;
+	width: 100%;
 }
 
 /*Color icons*/

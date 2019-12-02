@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+
+		<b:panel title="Dados do Documento" look="primary" collapsible="false"
+			id="dadosDocumento">
+			<b:container>
+				<b:row>
+					<b:column>
+						<b:inputText label="Descrição"
+							value="#{ModeloDocumentoControl.modeloDocumento.descricao }"
+							style="text-transform: uppercase" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column small-screen="4">
+						<b:selectOneMenu id="cbTipoDocumento" label="Tamanho documento"
+							value="#{ModeloDocumentoControl.modeloDocumento.tamanhoDocumento }">
+							<f:selectItems
+								value="#{ModeloDocumentoControl.tamanhosDocumento }" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column small-screen="4">
+						<b:selectOneMenu label="É Procuração?"
+							value="#{ ModeloDocumentoControl.modeloDocumento.procuracao }">
+							<f:selectItem itemValue="false" itemLabel="Não" />
+							<f:selectItem itemValue="true" itemLabel="Sim" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column small-screen="4">
+						<b:selectOneMenu label="Opcional?"
+							value="#{ ModeloDocumentoControl.modeloDocumento.opcional }">
+							<f:selectItem itemValue="false" itemLabel="Não" />
+							<f:selectItem itemValue="true" itemLabel="Sim" />
+						</b:selectOneMenu>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column offset-md="8" medium-screen="2">
+						<b:commandButton value="Fechar" look="danger" style-class="btn-command"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							action="modeloDocumentoList?faces-redirect=true" icon="remove"
+							immediate="true" />
+					</b:column>
+					<b:column medium-screen="2">
+						<b:commandButton icon="ok" value="Salvar" look="success" style-class="btn-command"
+							actionListener="#{ModeloDocumentoControl.confirmar}" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+	</ui:define>
+</ui:composition>

@@ -34,6 +34,7 @@ public class ModeloDocumentoListControl {
     public void listar() {
         try {
             this.modelosDeDocumentos = modeloDocumentoDao.listarPorDescricao(this.descricao);
+            if(this.modelosDeDocumentos.isEmpty()) UtilMessages.addMessage("Não foram encontrados registros");
         } catch (Exception e) {
             UtilMessages.addMessage(e);
         }

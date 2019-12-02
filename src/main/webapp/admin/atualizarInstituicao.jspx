@@ -9,14 +9,17 @@
 
 	<ui:define name="corpo">
 		<p:panel id="panelInstituicao">
+			<p:outputLabel
+				value="#{AtualizarInstituicaoControl.mensagemUltimaDataAtualizacao }" />
 			<p:panelGrid columns="2" id="arquivoAtualizacao" style="width:780px">
 				<p:outputLabel value="Selecionar csv para atualização:" />
-				<p:fileUpload mode="advanced" auto="true"
-					allowTypes="/(\.|\/)(csv)$/"
+				<p:fileUpload mode="advanced" allowTypes="/(\.|\/)(csv)$/"
 					invalidFileMessage="Formato de arquivo inválido."
-					dragDropSupport="true"
+					dragDropSupport="true" label="Selecionar arquivo"
 					fileUploadListener="#{AtualizarInstituicaoControl.anexarArquivo }"
-					update=":formCorpo:arquivoAtualizacao">
+					oncomplete="PF('statusDialog').hide()"
+					onstart="PF('statusDialog').show()"
+					update=":formCorpo:arquivoAtualizacao :formCorpo:panelInstituicao">
 				</p:fileUpload>
 			</p:panelGrid>
 		</p:panel>
