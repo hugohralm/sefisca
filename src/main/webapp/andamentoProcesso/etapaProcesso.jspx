@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
 		<ui:insert name="cabecalho">
@@ -50,19 +50,20 @@
 }
 </style>
 		</ui:insert>
-		<p:panel id="panelGeral">
+		<b:panel id="panelGeral">
 			<ui:include src="menuAndamentoProcesso.jspx" />
+			<b:panel id="fsDadosEtapaProcesso" title="Informações da Etapa:"
+				collapsible="false" look="primary">
 
-			<p:panel id="fsDadosEtapaProcesso"
-				header="Informações da Etapa:">
-				
-			</p:panel>
-			<a:field>
-				<p:commandButton value="Avançar" icon="	ui-icon-arrow-1-e"
-					action="#{MenuAndamentoProcessoControl.avancar}" />
-			</a:field>
-			<a:newLine />
-			<a:newLine />			
-		</p:panel>
+			</b:panel>
+			<b:container>
+				<b:row>
+					<b:column medium-screen="2">
+						<b:commandButton value="Avançar" icon="arrow" look="primary" styleClass="command-button"
+							action="#{MenuAndamentoProcessoControl.avancar}" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>

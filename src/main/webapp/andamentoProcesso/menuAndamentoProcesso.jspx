@@ -9,63 +9,49 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<p:panel id="panelMenu" header="INFORMAÇOES DO PROCESSO"
-		style="width:100%;" toggleable="true" toggleSpeed="500"
-		closeSpeed="500" widgetVar="panel">
-		<p:panelGrid style="width:100%;">
-			<p:row>
-				<p:column style="width:220px">
-					<b>Número da solicitação:</b>
-				</p:column>
-				<p:column style="width:150px">
-					<p:outputLabel value="#{MenuAndamentoProcessoControl.processo.id}" />
-				</p:column>
-				<p:column style="width:190px">
-					<b> Código de validação:</b>
-				</p:column>
-				<p:column>
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.numero}" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column style="width:220px">
-					<b> Data de início:</b>
-				</p:column>
-				<p:column style="width:150px">
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.dataCriacao}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:outputLabel>
-				</p:column>
-				<p:column style="width:190px">
-					<b> Tipo Processo:</b>
-				</p:column>
-				<p:column>
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.etapaProcesso.descricao}" />
-				</p:column>
-				<p:column style="width:190px">
-					<b> Status:</b>
-				</p:column>
-				<p:column>
-					<p:outputLabel
-						value="#{MenuAndamentoProcessoControl.processo.statusProcesso.descricao}" />
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</p:panel>
+	<b:panel id="panelMenu" title="INFORMAÇOES DO PROCESSO" look="primary" collapsed="true"
+		collapsible="true"  widgetVar="panel">
+		<b:container fluid="true">
+			<b:row>
+				<b:column small-screen="6" medium-screen="4">
+					<b:inputText label="Número da solicitação"
+						value="#{MenuAndamentoProcessoControl.processo.id}"
+						readonly="true" />
+				</b:column>
+				<b:column small-screen="6" medium-screen="4">
+					<b:inputText label="Tipo Processo"
+						value="#{MenuAndamentoProcessoControl.processo.etapaProcesso.descricao}"
+						readonly="true" />
+				</b:column>
+				<b:column small-screen="6" medium-screen="4" >
+					<b:dateTimePicker label="Data de início"
+						value="#{MenuAndamentoProcessoControl.processo.dataCriacao}"
+						readonly="true" />
+				</b:column>
+				<b:column small-screen="6" medium-screen="4">
+					<b:inputText label="Código de validação"
+						value="#{MenuAndamentoProcessoControl.processo.numero}"
+						readonly="true" />
+				</b:column>
+				<b:column small-screen="6" medium-screen="4">
+					<b:inputText label="Status"
+						value="#{MenuAndamentoProcessoControl.processo.statusProcesso.descricao}"
+						readonly="true" />
+				</b:column>
+			</b:row>
+		</b:container>
+	</b:panel>
 
-	<p:tabMenu id="tmEtapas"
+	<b:tabView id="tmEtapas" pills="true"
 		activeIndex="#{MenuAndamentoProcessoControl.menu}"
 		style="margin-bottom: 5px;margin-top: 5px;">
 
 		<c:forEach var="controlador"
 			items="#{MenuAndamentoProcessoControl.controladores}"
 			varStatus="varControlador">
-			<p:menuitem value="#{controlador.titulo}" update="tmEtapas"
+			<b:tab title="#{controlador.titulo}" update="tmEtapas"
 				action="#{MenuAndamentoProcessoControl.abrirAba(varControlador.index)}" />
 		</c:forEach>
 
-	</p:tabMenu>
+	</b:tabView>
 </ui:composition>

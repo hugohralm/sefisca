@@ -15,7 +15,7 @@
 }
 
 .table-center-cell {
-	text-align:center;
+	text-align: center;
 	vertical-align: middle;
 }
 
@@ -42,6 +42,7 @@
 .btn-align-bottom {
 	margin-top: 25px;
 	width: 100%;
+	
 }
 
 /*Color icons*/
