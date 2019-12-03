@@ -51,7 +51,7 @@ h5, .h5 {
 }
 
 .table-center-cell {
-	text-align:center;
+	text-align: center;
 	vertical-align: middle;
 }
 
@@ -78,6 +78,7 @@ h5, .h5 {
 .btn-align-bottom {
 	margin-top: 25px;
 	width: 100%;
+	
 }
 
 /*Color icons*/
