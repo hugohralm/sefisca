@@ -5,7 +5,7 @@
 	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="formMenuUsuario">
-		<b:navBar brand="SEFISCA" brandHref="/sefisca/inicio.ovs" fluid="true"
+		<b:navBar brand="SEFISCA" brandHref="/inicio.ovs" fluid="true"
 			id="menubar" style="margin-bottom: 1px;">
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
@@ -68,7 +68,7 @@
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" iconAwesome="question">
 					<b:navLink value="Modelagem de Negócio" iconAwesome="file"
-						href="/sefisca/documentos/modelagem_de_negocio.pdf"
+						href="/documentos/modelagem_de_negocio.pdf"
 						target="_blank" />
 				</b:dropMenu>
 				<b:navCommandLink
@@ -77,7 +77,7 @@
 					action="#{AtualizarPerfilControl.verificarUsuarioLogado}"
 					iconAwesome="user" />
 				<b:navLink value="Sair" iconAwesome="power-off"
-					onclick="document.location.href='/sefisca/sair.jsp'"
+					onclick="document.location.href='/sair.jsp'"
 					immediate="true" />
 			</b:navbarLinks>
 			<!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->

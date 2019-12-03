@@ -111,7 +111,7 @@ public class EditarUsuarioControl implements Serializable {
 				this.uf = this.usuario.getPessoa().getEndereco().getMunicipio().getUf();
 			listarMunicipiosPorUfs();
 			iniciarDadosProfissionais();
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/sefisca/gerencia/editarUsuario.ovs");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/gerencia/editarUsuario.ovs");
 		} catch (Exception e) {
 			UtilMessages.addMessage(e);
 		}

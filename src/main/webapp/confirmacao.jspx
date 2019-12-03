@@ -16,7 +16,7 @@
 			<a:newLine />
 			<h:outputText value="Seu cadastro foi confirmado com sucesso." />
 			<a:newLine />
-			<h:outputLink value="/sefisca/login.jsp" style="color: blue">
+			<h:outputLink value="/login.jsp" style="color: blue">
 				<h:outputText value="Clique aqui para efetuar o login" />
 			</h:outputLink>
 		</p:panel>

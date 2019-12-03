@@ -49,7 +49,7 @@
 				<b><h:outputText
 						value="#{AlterarSenhaExternoControl.usuario.pessoa.nome }" /></b>
 				<a:newLine />
-				<h:outputLink value="/sefisca/login.jsp" style="color: blue">
+				<h:outputLink value="/login.jsp" style="color: blue">
 					<h:outputText value="Clique aqui para efetuar o login" />
 				</h:outputLink>
 				<a:newLine />

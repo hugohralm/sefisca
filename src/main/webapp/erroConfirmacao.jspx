@@ -12,7 +12,7 @@
 		<p:panel header="Erro na confirmação de Cadastro" id="panel">
 			<h:outputText value="Não foi possivel confirmar o seu cadastro."></h:outputText>
 			<a:newLine></a:newLine>
-			<h:outputLink value="/sefisca/inicio.ovs" style="color: blue">
+			<h:outputLink value="/inicio.ovs" style="color: blue">
 				<h:outputText value="Clique aqui para retorna a pagina inicial."></h:outputText>
 			</h:outputLink>
 		</p:panel>
