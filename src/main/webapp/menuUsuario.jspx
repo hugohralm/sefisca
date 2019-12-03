@@ -35,6 +35,11 @@
 
 				<b:dropMenu value="Configurações" iconAwesome="wrench"
 					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}">
+					<b:navCommandLink value="Assunto"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
+						action="/gerencia/assuntoList?faces-redirect=true"
+						iconAwesome="folder-open" />
 					<b:navCommandLink value="Atualizar instituições"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN']}"
