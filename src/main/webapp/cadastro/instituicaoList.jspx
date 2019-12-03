@@ -18,7 +18,7 @@
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
 							look="primary" styleClass="btn-command"
 							style="margin-bottom:5px;"
-							action="/gerencia/instituicao?faces-redirect=true"
+							action="/cadastro/instituicao?faces-redirect=true"
 							icon="ui-icon-plusthick" />
 					</b:column>
 				</b:row>
@@ -28,8 +28,9 @@
 							value="#{InstituicaoListControl.instituicaoList}"
 							var="instituicao">
 							<b:dataTableColumn value="#{instituicao.cnes}" label="CNES"
-								order="asc"/>
-							<b:dataTableColumn value="#{instituicao.cpfCnpj}" label="CPF/CNPJ"/>
+								order="asc" />
+							<b:dataTableColumn value="#{instituicao.cpfCnpj}"
+								label="CPF/CNPJ" />
 
 							<b:dataTableColumn value="#{instituicao.nomeFantasia}"
 								label="Nome fantasia" />
@@ -37,9 +38,15 @@
 							<b:dataTableColumn value="#{instituicao.tipoUnidade}"
 								label="Tipo" />
 
+							<b:dataTableColumn label="Data atualização" data-type="date">
+								<h:outputText value="#{instituicao.dataAtualizacao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</b:dataTableColumn>
+
 							<b:dataTableColumn label="" searchable="false" orderable="false">
 								<b:commandButton
-									action="/gerencia/instituicao?faces-redirect=true" ajax="false"
+									action="/cadastro/instituicao?faces-redirect=true" ajax="false"
 									icon="pencil" style-class="btn-command"
 									title="Clique aqui para editar esse cadastro">
 									<f:setPropertyActionListener

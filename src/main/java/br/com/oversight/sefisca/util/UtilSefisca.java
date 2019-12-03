@@ -225,15 +225,6 @@ public class UtilSefisca {
         }
     }
 
-    public static String getDataStringFormatada(Date data) {
-        String dataString = "";
-        if (data != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            dataString = sdf.format(data);
-        }
-        return dataString;
-    }
-
     public static String getDataStringFormatadaMask(Date data, String mask) {
         String dataString = "";
         if (data != null) {

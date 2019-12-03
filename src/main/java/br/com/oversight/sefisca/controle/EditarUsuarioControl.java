@@ -119,7 +119,7 @@ public class EditarUsuarioControl implements Serializable {
 
 	public void adicionarPapel() {
 		try {
-			if (papel.equals(EnumPapel.GERENTE) && !usuarioLogadoControl.getUsuario().isContemPapel(EnumPapel.ADMIN)) {
+			if (papel.equals(EnumPapel.COORDENADOR) && !usuarioLogadoControl.getUsuario().isContemPapel(EnumPapel.ADMIN)) {
 				UtilMessages.addMessage(FacesMessage.SEVERITY_ERROR,
 						"Somente usuários Administradores podem adicionar esse papel.");
 				return;

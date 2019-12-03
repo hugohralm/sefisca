@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ui:composition template="template.xhtml"
+<ui:composition template="../template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -29,19 +29,8 @@
 								searchable="false" orderable="false">
 								<b:commandButton id="btnEditar" icon="pencil"
 									tooltip="Clique para editar esse cadastro."
-									action="#{MenuAndamentoProcessoControl.iniciar(processo)}"
+									action="#{MenuProcessoControl.iniciar(processo)}"
 									style-class="btn-command">
-								</b:commandButton>
-							</b:dataTableColumn>
-							<b:dataTableColumn style="width: 20px;" label=""
-								searchable="false" orderable="false">
-								<b:commandButton id="btnBuscarProfissionais" icon="search"
-									title="Clique aqui para buscar os profissionais da instituição"
-									action="profissionalInstituicaoList?faces-redirect=true"
-									style-class="btn-command"
-									actionListener="#{MenuControl.gerenciarSessao}">
-									<f:setPropertyActionListener value="#{processo.instituicao}"
-										target="#{ProfissionalInstituicaoListControl.instituicao}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>

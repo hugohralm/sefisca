@@ -50,20 +50,27 @@
 }
 </style>
 		</ui:insert>
-		<b:panel id="panelGeral">
-			<ui:include src="menuAndamentoProcesso.jspx" />
-			<b:panel id="fsDadosEtapaProcesso" title="Informações da Etapa:"
-				collapsible="false" look="primary">
+		<p:panel id="panelGeral">
+			<ui:include src="menuProcesso.jspx" />
 
-			</b:panel>
-			<b:container>
-				<b:row>
-					<b:column medium-screen="2">
-						<b:commandButton value="Avançar" icon="arrow" look="primary" styleClass="command-button"
-							action="#{MenuAndamentoProcessoControl.avancar}" />
-					</b:column>
-				</b:row>
-			</b:container>
-		</b:panel>
+			<p:panel id="fsDadosEtapaProcesso" header="Informações da Etapa:">
+				<a:field label="ID">
+					<p:inputText styleClass="obrigatorio"
+						value="#{EtapaProcessoControl.etapaProcesso.id}"
+						style="width:355px;" readonly="true" />
+				</a:field>
+				<a:newLine />
+			</p:panel>
+			<a:field rendered="#{MenuProcessoControl.voltarEnable}">
+				<p:commandButton value="Voltar" icon="ui-icon-arrow-1-w"
+					action="#{MenuProcessoControl.voltar}" />
+			</a:field>
+			<a:field>
+				<p:commandButton value="Avançar" icon="	ui-icon-arrow-1-e"
+					action="#{MenuProcessoControl.avancar}" />
+			</a:field>
+			<a:newLine />
+			<a:newLine />
+		</p:panel>
 	</ui:define>
 </ui:composition>

@@ -15,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
 import br.com.oversight.sefisca.entidade.Atividade;
-import br.com.oversight.sefisca.entidade.DadosProfissionais;
-import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
 import br.com.oversight.sefisca.entidade.EnumTipoPessoa;
 import br.com.oversight.sefisca.entidade.EnumUf;
 import br.com.oversight.sefisca.entidade.Instituicao;
@@ -73,7 +71,6 @@ public class InstituicaoControl implements Serializable {
 	private MotivoDesativacaoDao motivoDesativacaoDao;
 
 	@Getter
-	@Setter
 	private Instituicao instituicao;
 
 	@Getter

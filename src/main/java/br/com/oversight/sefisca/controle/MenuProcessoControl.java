@@ -16,9 +16,9 @@ import br.com.oversight.sefisca.persistencia.ProcessoDao;
 import lombok.Getter;
 import lombok.Setter;
 
-@Controller("MenuAndamentoProcessoControl")
+@Controller("MenuProcessoControl")
 @Scope("conversation")
-public class MenuAndamentoProcessoControl implements Serializable {
+public class MenuProcessoControl implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +28,8 @@ public class MenuAndamentoProcessoControl implements Serializable {
     @Autowired
     private EtapaProcessoDao etapaProcessoDao;
 
+    private BasicJEControl controlador;
+
     @Getter
     @Setter
     private int menu = 0;
@@ -36,30 +38,20 @@ public class MenuAndamentoProcessoControl implements Serializable {
     @Setter
     private Processo processo;
 
-    private static final List<String> NOMES_CONTROLADORES = new ArrayList<>();
-
-    @Getter
-    public List<BasicJEControl> controladores = new ArrayList<>();
-
     @Getter
     public List<EtapaProcesso> etapas = new ArrayList<>();
 
     public String iniciar(Processo processo) {
         try {
-            this.controladores = new ArrayList<>();
             this.processo = processoDao.consultarPorId(processo.getId());
             this.etapas = etapaProcessoDao.listarPorProcesso(processo);
-            for (EtapaProcesso etapaProcesso : this.etapas) {
-                BasicJEControl controlador = (BasicJEControl) UtilFaces.getManagedBean("EtapaProcessoControl");
-                NOMES_CONTROLADORES.add("EtapaProcessoControl");
-                controlador.setMenuAndamentoProcessoControl(this);
-                controlador.setProcessoDao(processoDao);
-                controlador.setEtapaProcessoDao(etapaProcessoDao);
-                controlador.setEtapaProcesso(etapaProcesso);
-                controlador.postConstruct();
-                this.controladores.add(controlador);
-            }
-            return "/andamentoProcesso/" + abrirAba(0);
+            this.controlador = (BasicJEControl) UtilFaces.getManagedBean("EtapaProcessoControl");
+            this.controlador.setMenuProcessoControl(this);
+            this.controlador.setProcessoDao(processoDao);
+            this.controlador.setEtapaProcessoDao(etapaProcessoDao);
+            this.controlador.setEtapaProcesso(this.etapas.get(0));
+            this.controlador.postConstruct();
+            return "/processo/" + abrirAba(0);
         } catch (Exception e) {
             UtilFaces.addMensagemFaces(e);
         }
@@ -68,7 +60,8 @@ public class MenuAndamentoProcessoControl implements Serializable {
 
     public String abrirAba(int index) {
         this.menu = index;
-        return controladores.get(index).getUrl() + "?faces-redirect=true";
+        this.controlador.setEtapaProcesso(etapas.get(index));
+        return this.controlador.getUrl() + "?faces-redirect=true";
     }
 
     public String voltar() {
@@ -77,11 +70,15 @@ public class MenuAndamentoProcessoControl implements Serializable {
 
     public String avancar() {
         try {
-            controladores.get(menu).salvar();
-            return abrirAba(menu < NOMES_CONTROLADORES.size() - 1 ? menu + 1 : menu);
+            this.controlador.salvar();
+            return abrirAba(menu < this.etapas.size() - 1 ? menu + 1 : menu);
         } catch (Exception e) {
             UtilFaces.addMensagemFaces(e);
         }
         return null;
+    }
+    
+    public boolean isVoltarEnable() {
+        return menu != 0;
     }
 }
