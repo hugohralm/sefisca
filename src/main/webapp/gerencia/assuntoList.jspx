@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui:composition template="../template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:define name="corpo">
+		<b:panel title="Pesquisar Documentos" look="primary"
+			collapsible="false" id="documentoList">
+			<b:container fluid="true">
+				<b:row>
+					<b:column small-screen="6">
+						<b:inputText id="inpNome" label="Descrição"
+							value="#{AssuntoListControl.descricao}" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton style-class="btn-align-bottom" look="primary"
+							actionListener="#{AssuntoListControl.listar}" value="Pesquisar"
+							icon="search" update="idAssunto" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton value="Cadastrar" style-class="btn-align-bottom"
+							look="success" actionListener="#{MenuControl.gerenciarSessao}"
+							ajax="false" action="assunto?faces-redirect=true" icon="plus"
+							immediate="true" />
+					</b:column>
+					<b:column small-screen="2">
+						<b:commandButton value="Limpar" style-class="btn-align-bottom"
+							actionListener="#{MenuControl.gerenciarSessao}" look="danger"
+							action="assuntoList?faces-redirect=true" icon="trash"
+							immediate="true" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<b:dataTable id="idAssunto" var="assunto" responsive="true"
+							caption="Assuntos cadastrados" style="margin-top 5px;"
+							value="#{AssuntoListControl.assuntos }">
+
+							<b:dataTableColumn label="Descrição" order="asc"
+								value="#{assunto.descricao}" />
+
+							<b:dataTableColumn style-class="btn-list-action" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnEditar" icon="pencil"
+									action="assunto?faces-redirect=true" tooltipDelayShow="300"
+									tooltip="Clique aqui para editar esse registro"
+									style-class="btn-list-action"
+									actionListener="#{MenuControl.gerenciarSessao}">
+									<f:setPropertyActionListener value="#{assunto}"
+										target="#{AssuntoControl.assunto}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+							<b:dataTableColumn style-class="btn-list-action" label=""
+								searchable="false" orderable="false">
+								<b:commandButton id="btnConfirmarExclusao"
+									style-class="btn-list-action"
+									tooltip="Clique aqui para remover esse registro" update="@this"
+									tooltipDelayShow="300"
+									oncomplete="$('.confirmacaoDialog').modal('show')" icon="trash">
+									<f:setPropertyActionListener value="#{assunto}"
+										target="#{AssuntoListControl.aasuntoExcluir}" />
+								</b:commandButton>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
+		<b:modal title="Confirmação de início de processo"
+			id="confirmacaoDialog" styleClass="confirmacaoDialog"
+			message="Confirma o início do processo?"
+			widgetVar="confirmacaoInicioProcesso">
+			<b:row>
+				<b:column>
+					<p:outputLabel value="Confirma a exclusão deste registro?"
+						style="text-align:center; width: 100%;" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column tiny-screen="6">
+					<b:button dismiss="modal" value="Não, manter"
+						onclick="return false;" styleClass="btn-command" />
+
+				</b:column>
+				<b:column tiny-screen="6">
+					<b:commandButton dismiss="modal" value="Sim, excluir" look="danger"
+						styleClass="btn-command"
+						oncomplete="$('confirmacaoDialog').modal('hide')"
+						actionListener="#{AssuntoListControl.excluir }" />
+				</b:column>
+			</b:row>
+		</b:modal>
+
+	</ui:define>
+</ui:composition>
