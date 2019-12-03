@@ -46,7 +46,7 @@ public class ProcessoControl implements Serializable {
 
     @Autowired
     private InstituicaoDao instituicaoDao;
-    
+
     @Autowired
     private MenuProcessoControl menuProcessoControl;
 
@@ -135,7 +135,7 @@ public class ProcessoControl implements Serializable {
     public List<SelectItem> getTiposCodigoInstituicao() {
         return UtilFaces.getListEnum(EnumTipoCodigoInstituicao.values());
     }
-    
+
     public List<Instituicao> getInstituicoes() {
         return instituicaoDao.listar();
     }
