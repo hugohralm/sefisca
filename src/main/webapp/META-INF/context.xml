@@ -7,9 +7,10 @@
       maxTotal="10" 
       maxIdle="3" 
       name="jdbc/sefisca" 
-      password="123456"
+      password="12345678"
       type="javax.sql.DataSource" 
-      url="jdbc:postgresql://localhost:5432/sefisca"
+      factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+      url="jdbc:postgresql://sefisca.ch62xwfpa5jj.sa-east-1.rds.amazonaws.com:5432/postgres"
       username="postgres" />
 
 </Context>
