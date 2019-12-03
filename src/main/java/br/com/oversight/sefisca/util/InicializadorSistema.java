@@ -41,7 +41,7 @@ public class InicializadorSistema {
 				usuario.addPapel(new PapelUsuario(EnumPapel.ADMIN));
 				usuario.setConfirmado(true);
 				usuario.setAlterarSenha(false);
-				usuario.setPessoa(new Pessoa("Administrador", "111.111.111-11", "121212", EnumSexo.M, "admin@admin",
+				usuario.setPessoa(new Pessoa("Administrador", "111.111.111-11", "121212", EnumSexo.M, "admin@admin.com",
 						new Date(), EnumEstadoCivil.SOLTEIRO, "(62)99999-9999", "(62)99999-9999",
 						new Endereco("Rua", municipioDao.municipioPorCodigoIBGE(5208707), "74000000", "Bairro", "0")));
 
