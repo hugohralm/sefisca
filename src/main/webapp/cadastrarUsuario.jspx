@@ -143,15 +143,15 @@
 						</b:row>
 						<b:row>
 							<b:column small-screen="6" offset-md="8" medium-screen="2">
-								<b:commandButton iconAwesome="home" styleClass="btn-command"
+								<b:commandButton icon="home" styleClass="btn-command"
 									onclick="document.location.href='sair.jsp'" immediate="true"
-									value="Página inicial" iconAlign="right" type="button" />
+									value="Página inicial" type="button" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"
 									styleClass="btn-command"
 									actionListener="#{CadastrarUsuarioControl.concluir}"
-									value="Cadastrar" look="primary" iconAlign="right" />
+									value="Cadastrar" look="primary"/>
 							</b:column>
 						</b:row>
 					</b:container>

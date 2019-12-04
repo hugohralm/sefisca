@@ -36,8 +36,8 @@ public class Instituicao extends Entidade implements Serializable {
 
     @Id
     @Getter
-    @GeneratedValue(generator = "instituicao_csv_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "instituicao_csv_seq", sequenceName = "instituicao_csv_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "instituicao_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "instituicao_seq", sequenceName = "instituicao_seq", allocationSize = 1, initialValue = 1)
     private Integer id;
 
     @Getter
@@ -138,32 +138,32 @@ public class Instituicao extends Entidade implements Serializable {
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private TipoUnidade tipoUnidade;
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private TurnoAtendimento turnoAtendimento;
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private NaturezaJuridica naturezaJuridica;
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private TipoInstituicao tipoInstituicao;
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private Atividade atividadePrincipal;
 
     @Getter
     @Setter
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private MotivoDesativacao motivoDesativacao;
 
     @Getter
