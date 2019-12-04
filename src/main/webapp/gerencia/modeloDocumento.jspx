@@ -24,6 +24,7 @@
 					<b:column small-screen="4">
 						<b:selectOneMenu id="cbTipoDocumento" label="Tamanho documento"
 							value="#{ModeloDocumentoControl.modeloDocumento.tamanhoDocumento }">
+							<f:selectItem itemLabel="Selecione"/>
 							<f:selectItems
 								value="#{ModeloDocumentoControl.tamanhosDocumento }" />
 						</b:selectOneMenu>
@@ -47,6 +48,7 @@
 					<b:column offset-md="8" medium-screen="2">
 						<b:commandButton value="Fechar" look="danger" style-class="btn-command"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							onclick="document.location.href='sair.jsp"
 							action="modeloDocumentoList?faces-redirect=true" icon="remove"
 							immediate="true" />
 					</b:column>

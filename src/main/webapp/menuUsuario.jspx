@@ -10,17 +10,13 @@
 			<b:navbarLinks>
 				<b:navCommandLink value="Início"
 					action="/inicio?faces-redirect=true" icon="home" />
-				<b:navCommandLink value="Iniciar Processo"
+				<b:navCommandLink value="Processos"
 					actionListener="#{MenuControl.gerenciarSessao}"
 					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}"
-					action="/processo/processo?faces-redirect=true" icon="book" />
+					action="/processo/processoList?faces-redirect=true"
+					icon="folder-open" />
 				<b:dropMenu value="Cadastros" icon="search"
 					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}">
-					<b:navCommandLink value="Processos"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}"
-						action="/processo/processoList?faces-redirect=true"
-						icon="folder-open" />
 					<b:navCommandLink value="Instituições"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}"

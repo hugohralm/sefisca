@@ -203,4 +203,9 @@ public class Pessoa extends Entidade implements Serializable {
 	public String getPrimeiroNome() {
     	return this.nome.split(" ")[0];
     }
+
+    @Override
+    public String toString() {
+        return getNome() + " (" + getCpf() + ")";
+    }
 }

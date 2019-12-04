@@ -8,10 +8,10 @@ import lombok.Getter;
 @Getter
 public enum EnumStatusEtapa implements IEnum {
 
-    ATIVO("Ativo"),
-    SUSPENSO("Suspenso"),
-    CANCELADO("Cancelado"),
-    ADMITIDO("Admitido");
+    ATIVA("Ativa"),
+    SUSPENSA("Suspensa"),
+    CANCELADA("Cancelada"),
+    ADMITIDA("Admitida");
 
     private final String descricao;
 }

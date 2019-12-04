@@ -19,16 +19,19 @@
 							value="#{AssuntoControl.assunto.descricao }"
 							style="text-transform: uppercase" />
 					</b:column>
-				</b:row>		
+				</b:row>
 				<b:row>
 					<b:column offset-md="8" medium-screen="2">
-						<b:commandButton value="Fechar" look="danger" style-class="btn-command"
+						<b:commandButton value="Fechar" look="danger"
+							style-class="btn-command"
+							onclick="document.location.href='sair.jsp"
 							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
 							action="assuntoList?faces-redirect=true" icon="remove"
 							immediate="true" />
 					</b:column>
 					<b:column medium-screen="2">
-						<b:commandButton icon="ok" value="Salvar" look="success" style-class="btn-command"
+						<b:commandButton icon="ok" value="Salvar" look="success"
+							style-class="btn-command"
 							actionListener="#{AssuntoControl.confirmar}" />
 					</b:column>
 				</b:row>

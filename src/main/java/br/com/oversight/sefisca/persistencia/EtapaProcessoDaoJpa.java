@@ -35,5 +35,4 @@ public class EtapaProcessoDaoJpa extends PersistenciaJpa<EtapaProcesso> implemen
             throw new PersistenciaException("Erro ao consultar Etapa por Id;", e);
         }
     }
-
 }

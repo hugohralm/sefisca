@@ -64,7 +64,7 @@ public class AtualizarInstituicaoControl implements Serializable {
             return "Tabela instituição não contém registros atualizados.";
         }
 
-        return "Última data de atualização:"
+        return "Última data de atualização das instituições: "
                 + UtilSefisca.getDataStringFormatadaMask(this.ultimaDataAtualizacao, "dd/MM/yyyy");
     }
 

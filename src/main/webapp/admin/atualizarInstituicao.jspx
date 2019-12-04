@@ -5,23 +5,35 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="corpo">
-		<p:panel id="panelInstituicao">
-			<p:outputLabel
-				value="#{AtualizarInstituicaoControl.mensagemUltimaDataAtualizacao }" />
-			<p:panelGrid columns="2" id="arquivoAtualizacao" style="width:780px">
-				<p:outputLabel value="Selecionar csv para atualização:" />
-				<p:fileUpload mode="advanced" allowTypes="/(\.|\/)(csv)$/"
-					invalidFileMessage="Formato de arquivo inválido."
-					dragDropSupport="true" label="Selecionar arquivo"
-					fileUploadListener="#{AtualizarInstituicaoControl.anexarArquivo }"
-					oncomplete="PF('statusDialog').hide()"
-					onstart="PF('statusDialog').show()"
-					update=":formCorpo:arquivoAtualizacao :formCorpo:panelInstituicao">
-				</p:fileUpload>
-			</p:panelGrid>
-		</p:panel>
+		<b:panel id="panelInstituicao" collapsible="false"
+			title="Atualizar instituições" look="primary">
+			<b:container fluid="true">
+				<b:row>
+					<b:column>
+						<p:outputLabel value="Selecionar csv para atualização:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column medium-screen="6">
+						<p:fileUpload mode="advanced" allowTypes="/(\.|\/)(csv)$/"
+							invalidFileMessage="Formato de arquivo inválido." 
+							multiple="false" label="Selecionar arquivo"
+							fileUploadListener="#{AtualizarInstituicaoControl.anexarArquivo }"
+							oncomplete="PF('statusDialog').hide()"
+							onstart="PF('statusDialog').show()"
+							update=":formCorpo:panelInstituicao" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<p:outputLabel style="width:100%; margin-top: 10px"
+							value="#{AtualizarInstituicaoControl.mensagemUltimaDataAtualizacao }" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</b:panel>
 	</ui:define>
 </ui:composition>

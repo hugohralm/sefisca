@@ -2,7 +2,6 @@ package br.com.oversight.sefisca.entidade;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -14,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
@@ -84,12 +82,7 @@ public class Processo extends Entidade implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    private Pessoa fiscalResponsavel;
-
-    @Getter
-    @Setter
-    @ManyToMany
-    private Set<Pessoa> fiscaisEnvolvidos;
+    private Usuario profissionalResponsavel;
 
     @Getter
     @Setter

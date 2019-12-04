@@ -19,8 +19,8 @@ public class HistoricoLogin {
 
     @Id
     @Getter
-    @GeneratedValue(generator="historicologin_seq", strategy=GenerationType.SEQUENCE)
-    @SequenceGenerator(name="historicologin_seq", sequenceName="historicologin_seq", allocationSize=1, initialValue=1)
+    @GeneratedValue(generator="historico_login_seq", strategy=GenerationType.SEQUENCE)
+    @SequenceGenerator(name="historico_login_seq", sequenceName="historico_login_seq", allocationSize=1, initialValue=1)
     private Long id;
 
     @Getter @Setter

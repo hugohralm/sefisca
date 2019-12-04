@@ -35,6 +35,9 @@
 
 </head>
 <body>
+	<b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+		show-detail="true" show-summary="true" allowDismiss="true"
+		delay="10000" escape="true" />
 	<div class="login-form">
 		<form action="j_spring_security_check" method="post">
 			<div class="text-center"

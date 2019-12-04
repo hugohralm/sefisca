@@ -8,7 +8,7 @@ import br.com.oversight.sefisca.persistencia.ProcessoDao;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class BasicJEControl {
+public abstract class BasicProcessoControl {
 
     @Setter
     protected MenuProcessoControl menuProcessoControl;

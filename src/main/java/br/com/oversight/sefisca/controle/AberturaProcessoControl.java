@@ -32,8 +32,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Scope("conversation")
-@Controller("ProcessoControl")
-public class ProcessoControl implements Serializable {
+@Controller("AberturaProcessoControl")
+public class AberturaProcessoControl implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -107,6 +107,7 @@ public class ProcessoControl implements Serializable {
 
     public String confirmar() {
         try {
+            this.processo.setEtapaProcesso(EnumEtapaProcesso.DESIGNACAO);
             this.processo = processoDao.alterar(this.processo);
             primeiraEtapa(this.processo);
             UtilFaces.addMensagemFaces("Processo salvo com sucesso");
@@ -122,7 +123,7 @@ public class ProcessoControl implements Serializable {
         this.etapaProcesso.setDataInicio(new Date());
         this.etapaProcesso.setUsuario(usuarioLogadoControl.getUsuario());
         this.etapaProcesso.setEtapaProcesso(EnumEtapaProcesso.DESIGNACAO);
-        this.etapaProcesso.setStatusEtapa(EnumStatusEtapa.ATIVO);
+        this.etapaProcesso.setStatusEtapa(EnumStatusEtapa.ATIVA);
         this.etapaProcesso.setProcesso(processo);
         this.etapaProcessoDao.alterar(this.etapaProcesso);
     }

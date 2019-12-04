@@ -13,36 +13,21 @@
 			collapsible="false" id="documentoList">
 			<b:container fluid="true">
 				<b:row>
-					<b:column small-screen="6">
-						<b:inputText id="inpNome" label="Descrição"
-							value="#{AssuntoListControl.descricao}" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton style-class="btn-align-bottom" look="primary"
-							actionListener="#{AssuntoListControl.listar}" value="Pesquisar"
-							icon="search" update="idAssunto" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton value="Cadastrar" style-class="btn-align-bottom"
-							look="success" actionListener="#{MenuControl.gerenciarSessao}"
-							ajax="false" action="assunto?faces-redirect=true" icon="plus"
-							immediate="true" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton value="Limpar" style-class="btn-align-bottom"
-							actionListener="#{MenuControl.gerenciarSessao}" look="danger"
-							action="assuntoList?faces-redirect=true" icon="trash"
-							immediate="true" />
+					<b:column offset-md="8" medium-screen="4">
+						<b:commandButton value="Cadastrar" style-class="btn-command"
+							style="margin-bottom:10px;" look="primary"
+							actionListener="#{MenuControl.gerenciarSessao}" ajax="false"
+							action="assunto?faces-redirect=true" icon="plus" immediate="true" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column>
 						<b:dataTable id="idAssunto" var="assunto" responsive="true"
-							caption="Assuntos cadastrados" style="margin-top 5px;"
+							caption="Assuntos cadastrados"
 							value="#{AssuntoListControl.assuntos }">
+							<b:dataTableColumn label="ID" order="asc" value="#{assunto.id}" width="40dp" />
 
-							<b:dataTableColumn label="Descrição" order="asc"
-								value="#{assunto.descricao}" />
+							<b:dataTableColumn label="Descrição" value="#{assunto.descricao}" />
 
 							<b:dataTableColumn style-class="btn-list-action" label=""
 								searchable="false" orderable="false">
@@ -63,7 +48,7 @@
 									tooltipDelayShow="300"
 									oncomplete="$('.confirmacaoDialog').modal('show')" icon="trash">
 									<f:setPropertyActionListener value="#{assunto}"
-										target="#{AssuntoListControl.aasuntoExcluir}" />
+										target="#{AssuntoListControl.assuntoExcluir}" />
 								</b:commandButton>
 							</b:dataTableColumn>
 						</b:dataTable>
