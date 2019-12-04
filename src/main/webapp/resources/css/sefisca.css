@@ -120,3 +120,7 @@ h5, .h5 {
 .ui-menu .ui-menu-parent .ui-menu-child {
 	width: 300px !important; /* exagerated !! */
 }
+
+.panel-group {
+	margin-bottom: 5px !important;
+}

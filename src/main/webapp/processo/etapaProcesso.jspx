@@ -66,10 +66,10 @@
 			</b:panel>
 			<b:container fluid="true">
 				<b:row>
-					<b:column small-screen="6" offset-md="8" medium-screen="2">
+					<b:column small-screen="6" medium-screen="2"
+						rendered="#{MenuProcessoControl.voltarEnable }">
 						<b:commandButton value="Voltar" icon="arrow-left"
-							styleClass="btn-command"
-							action="#{MenuProcessoControl.voltar}" />
+							styleClass="btn-command" action="#{MenuProcessoControl.voltar}" />
 					</b:column>
 					<b:column small-screen="6" medium-screen="2">
 						<b:commandButton value="Avançar" icon="arrow-right"

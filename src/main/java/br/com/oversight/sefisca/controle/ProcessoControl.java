@@ -1,6 +1,7 @@
 package br.com.oversight.sefisca.controle;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
 import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
 import br.com.oversight.sefisca.entidade.EnumEtapaProcesso;
+import br.com.oversight.sefisca.entidade.EnumStatusEtapa;
 import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
 import br.com.oversight.sefisca.entidade.EnumTipoProcesso;
 import br.com.oversight.sefisca.entidade.EtapaProcesso;
@@ -117,8 +119,10 @@ public class ProcessoControl implements Serializable {
 
     private void primeiraEtapa(Processo processo) {
         this.etapaProcesso = new EtapaProcesso();
+        this.etapaProcesso.setDataInicio(new Date());
         this.etapaProcesso.setUsuario(usuarioLogadoControl.getUsuario());
         this.etapaProcesso.setEtapaProcesso(EnumEtapaProcesso.DESIGNACAO);
+        this.etapaProcesso.setStatusEtapa(EnumStatusEtapa.ATIVO);
         this.etapaProcesso.setProcesso(processo);
         this.etapaProcessoDao.alterar(this.etapaProcesso);
     }
