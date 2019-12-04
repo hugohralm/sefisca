@@ -1,7 +1,10 @@
 package br.com.oversight.sefisca.controle;
 
+import javax.faces.application.FacesMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import br.com.oversight.sefisca.entidade.Assunto;
 import br.com.oversight.sefisca.persistencia.AssuntoDao;
@@ -21,9 +24,13 @@ public class AssuntoControl {
 
 	public void confirmar() {
 		try {
-		    assuntoDao.alterar(assunto);
+			if (StringUtils.isEmpty(this.assunto.getDescricao())) {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_INFO, "Preencha a desciçao!");
+				return;
+			}
+		    this.assuntoDao.alterar(this.assunto);
 			UtilMessages.addMessage("Sucesso!", "Registro confirmado!");
-			assunto = new Assunto();
+			this.assunto = new Assunto();
 
 		} catch (Exception e) {
 			e.printStackTrace();
