@@ -92,7 +92,6 @@ public class InstituicaoDaoJpa extends PersistenciaJpa<Instituicao> implements I
                         i = 0;
                         em.flush();
                         em.clear();
-                        break;
                     }
                 }
             }
