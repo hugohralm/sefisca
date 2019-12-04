@@ -124,3 +124,6 @@ h5, .h5 {
 .panel-group {
 	margin-bottom: 5px !important;
 }
+label.bf-required:after {
+    display: none !important;
+}

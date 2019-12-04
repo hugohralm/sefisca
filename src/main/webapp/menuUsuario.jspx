@@ -13,7 +13,7 @@
 				<b:navCommandLink value="Iniciar Processo"
 					actionListener="#{MenuControl.gerenciarSessao}"
 					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}"
-					action="/processo/processo?faces-redirect=true" icon="book" />
+					action="/processo/aberturaProcesso?faces-redirect=true" icon="book" />
 				<b:dropMenu value="Cadastros" icon="search"
 					rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL,AUXILIAR_FISCALIZACAO']}">
 					<b:navCommandLink value="Processos"
