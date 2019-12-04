@@ -32,8 +32,8 @@ public class EtapaProcesso extends Entidade implements Serializable {
 
     @Id
     @Getter
-    @GeneratedValue(generator = "etapaProcesso_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "etapaProcesso_seq", sequenceName = "etapaProcesso_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "etapa_processo_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "etapa_processo_seq", sequenceName = "etapaProcesso_seq", allocationSize = 1, initialValue = 1)
     private Integer id;
 
     @Getter
@@ -41,6 +41,12 @@ public class EtapaProcesso extends Entidade implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     private EnumEtapaProcesso etapaProcesso;
+    
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private EnumStatusEtapa statusEtapa;
 
     @Getter
     @Setter
@@ -51,7 +57,7 @@ public class EtapaProcesso extends Entidade implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    private Profissional profissionalResponsavel;
+    private Pessoa profissionalResponsavel;
 
     @Getter
     @Setter
