@@ -3,10 +3,12 @@ package br.com.oversight.sefisca.controle;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import br.com.oversight.sefisca.entidade.Cargo;
 import br.com.oversight.sefisca.persistencia.CargoDao;
@@ -37,6 +39,11 @@ public class CargoControl implements Serializable {
 
 	public void confirmar() {
 		try {
+
+			if (StringUtils.isEmpty(this.cargo.getNome())) {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_INFO, "Preencha o nome!");
+				return;
+			}
 			this.cargo = cargoDao.alterar(cargo);
 			UtilMessages.addMessage("Sucesso!", "Registro confirmado!");
 		} catch (Exception e) {

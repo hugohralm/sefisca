@@ -3,10 +3,12 @@ package br.com.oversight.sefisca.controle;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.entidade.TermoResponsabilidadeTemplate;
@@ -16,57 +18,61 @@ import br.com.oversight.sefisca.util.UtilMessages;
 @Scope("conversation")
 @Controller("TermoResponsabilidadeTemplateControl")
 public class TermoResponsabilidadeTemplateControl implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
 
-    @Autowired
-    private TermoResponsabilidadeTemplateDao termoResponsabilidadeTemplateDao;
+	private static final long serialVersionUID = 1L;
 
-    @Autowired
-    private UsuarioLogadoControl usuarioLogadoControl;
+	@Autowired
+	private TermoResponsabilidadeTemplateDao termoResponsabilidadeTemplateDao;
 
-    private TermoResponsabilidadeTemplate termoResponsabilidade;
+	@Autowired
+	private UsuarioLogadoControl usuarioLogadoControl;
 
-    boolean editavel;
+	private TermoResponsabilidadeTemplate termoResponsabilidade;
 
-    @PostConstruct
-    private void init() {
-        this.editavel = true;
-        this.termoResponsabilidade = new TermoResponsabilidadeTemplate(usuarioLogadoControl.getUsuario());
-    }
+	boolean editavel;
 
-    public void confirmar() {
-        try {
-            atualizarEditavel();
-            termoResponsabilidadeTemplateDao.validarEditavel(this.termoResponsabilidade);
-            this.termoResponsabilidade = termoResponsabilidadeTemplateDao.alterar(this.termoResponsabilidade);
-            UtilMessages.addMessage("Sucesso!",  "Registro confirmado!");
-        } catch (Exception e) {
-        	e.printStackTrace();
-            UtilFaces.addMensagemFaces(e);
-        }
-    }
+	@PostConstruct
+	private void init() {
+		this.editavel = true;
+		this.termoResponsabilidade = new TermoResponsabilidadeTemplate(usuarioLogadoControl.getUsuario());
+	}
 
-    public TermoResponsabilidadeTemplate getTermoResponsabilidade() {
-        return termoResponsabilidade;
-    }
+	public void confirmar() {
+		try {
+			if (StringUtils.isEmpty(this.termoResponsabilidade.getTexto())) {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_INFO, "Preencha o template do termo!");
+				return;
+			}
+			atualizarEditavel();
+			termoResponsabilidadeTemplateDao.validarEditavel(this.termoResponsabilidade);
+			this.termoResponsabilidade = termoResponsabilidadeTemplateDao.alterar(this.termoResponsabilidade);
+			UtilMessages.addMessage("Sucesso!", "Registro confirmado!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			UtilFaces.addMensagemFaces(e);
+		}
+	}
 
-    public void setTermoResponsabilidade(TermoResponsabilidadeTemplate termoResponsabilidade) {
-        this.termoResponsabilidade = termoResponsabilidade;
-        atualizarEditavel();
-    }
+	public TermoResponsabilidadeTemplate getTermoResponsabilidade() {
+		return termoResponsabilidade;
+	}
 
-    private void atualizarEditavel() {
-        try {
-            this.editavel = termoResponsabilidadeTemplateDao.isEditavel(termoResponsabilidade);
-        } catch (Exception e) {
-        	e.printStackTrace();
-            UtilFaces.addMensagemFaces(e);
-        }
-    }
+	public void setTermoResponsabilidade(TermoResponsabilidadeTemplate termoResponsabilidade) {
+		this.termoResponsabilidade = termoResponsabilidade;
+		atualizarEditavel();
+	}
 
-    public boolean isEditavel() {
-        return editavel;
-    }
+	private void atualizarEditavel() {
+		try {
+			this.editavel = termoResponsabilidadeTemplateDao.isEditavel(termoResponsabilidade);
+		} catch (Exception e) {
+			e.printStackTrace();
+			UtilFaces.addMensagemFaces(e);
+		}
+	}
+
+	public boolean isEditavel() {
+		return editavel;
+	}
 
 }

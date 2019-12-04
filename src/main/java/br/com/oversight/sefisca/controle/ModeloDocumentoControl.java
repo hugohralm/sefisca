@@ -2,10 +2,12 @@ package br.com.oversight.sefisca.controle;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.ambientinformatica.jpa.exception.PersistenciaException;
@@ -29,6 +31,13 @@ public class ModeloDocumentoControl {
 
 	public void confirmar() {
 		try {
+			if (StringUtils.isEmpty(this.modeloDocumento.getDescricao())) {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_INFO, "Preencha a desciçao!");
+				return;
+			} else if (this.modeloDocumento.getTamanhoDocumento() == null) {
+				UtilMessages.addMessage(FacesMessage.SEVERITY_INFO, "Selecione um tamanho!");
+				return;
+			}
 			modeloDocumentoDao.alterar(modeloDocumento);
 			UtilMessages.addMessage("Sucesso!", "Registro confirmado!");
 			modeloDocumento = new ModeloDocumento();
