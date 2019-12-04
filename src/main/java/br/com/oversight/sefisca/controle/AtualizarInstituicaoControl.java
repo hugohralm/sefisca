@@ -27,7 +27,10 @@ public class AtualizarInstituicaoControl implements Serializable {
 
     @Autowired
     private InstituicaoDao instituicaoDao;
-    
+
+    @Autowired
+    private UsuarioLogadoControl usuarioLogadoControl;
+
     @Autowired
     private AmazonService amazonService;
 
@@ -44,7 +47,8 @@ public class AtualizarInstituicaoControl implements Serializable {
         try {
             UploadedFile file = evt.getFile();
             if (!UtilSefisca.isNullOrEmpty(file)) {
-                int instuticoesAtualizadas = instituicaoDao.atualizarInstituicaoCsv(file, this.ultimaDataAtualizacao);
+                int instuticoesAtualizadas = instituicaoDao.atualizarInstituicaoCsv(file, this.ultimaDataAtualizacao,
+                        usuarioLogadoControl.getUsuario());
                 getDataAtualizacao();
                 if (instuticoesAtualizadas == 0) {
                     UtilMessages.addMessage("Nenhuma instituição a ser atualizada.");
