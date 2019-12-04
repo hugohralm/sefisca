@@ -19,21 +19,22 @@
 							look="primary" styleClass="btn-command"
 							style="margin-bottom:5px;"
 							action="/cadastro/instituicao?faces-redirect=true"
-							icon="ui-icon-plusthick" />
+							icon="plus" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column>
-						<b:dataTable id="tblInstituicao" widgetVar="tblInstituicao"
+						<b:dataTable id="tblInstituicao" widgetVar="tblInstituicao" responsive="true"
 							value="#{InstituicaoListControl.instituicaoList}"
 							var="instituicao">
 							<b:dataTableColumn value="#{instituicao.cnes}" label="CNES"
 								order="asc" />
-							<b:dataTableColumn value="#{instituicao.cpfCnpj}"
-								label="CPF/CNPJ" />
-
+								
 							<b:dataTableColumn value="#{instituicao.nomeFantasia}"
 								label="Nome fantasia" />
+								
+							<b:dataTableColumn value="#{instituicao.cpfCnpj}"
+								label="CPF/CNPJ" />
 
 							<b:dataTableColumn value="#{instituicao.tipoUnidade}"
 								label="Tipo" />

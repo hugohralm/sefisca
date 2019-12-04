@@ -36,6 +36,7 @@ public class ModeloDocumentoListControl {
             this.modelosDeDocumentos = modeloDocumentoDao.listarPorDescricao(this.descricao);
             if(this.modelosDeDocumentos.isEmpty()) UtilMessages.addMessage("Não foram encontrados registros");
         } catch (Exception e) {
+        	e.printStackTrace();
             UtilMessages.addMessage(e);
         }
     }
@@ -46,6 +47,7 @@ public class ModeloDocumentoListControl {
             listar();
             UtilFaces.addMensagemFaces("Excluído com sucesso!");
         } catch (Exception e) {
+        	e.printStackTrace();
             UtilMessages.addMessage(e);
         }
     }

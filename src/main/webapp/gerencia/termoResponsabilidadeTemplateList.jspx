@@ -9,7 +9,7 @@
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="corpo">
 
-		<b:panel title="TEMPLATES DO TERMO DE RESPONSABILIDADE DO USUÁRIO"
+		<b:panel title="Templates do termo de responsabilidade do usuário"
 			look="primary" collapsible="false" id="panelTermoResponsabilidade">
 			<b:container fluid="true">
 				<b:row>
@@ -19,13 +19,13 @@
 							look="primary" styleClass="btn-command"
 							style="margin-bottom:5px;"
 							action="/gerencia/termoResponsabilidadeTemplate?faces-redirect=true"
-							icon="ui-icon-plusthick" />
+							icon="plus" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column>
 						<b:dataTable id="tblTermosResponsabilidade"
-							widgetVar="tblTermosResponsabilidade"
+							widgetVar="tblTermosResponsabilidade" responsive="true"
 							caption="Templates de termos de responsabilidade adicionados."
 							value="#{TermoResponsabilidadeTemplateListControl.termosResponsabilidade}"
 							var="termo">

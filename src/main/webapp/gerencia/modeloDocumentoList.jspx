@@ -13,33 +13,18 @@
 			collapsible="false" id="documentoList">
 			<b:container fluid="true">
 				<b:row>
-					<b:column small-screen="6">
-						<b:inputText id="inpNome" label="Descrição"
-							value="#{ModeloDocumentoListControl.descricao}" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton style-class="btn-align-bottom" look="primary"
-							actionListener="#{ModeloDocumentoListControl.listar}"
-							value="Pesquisar" icon="search" update="idDocumento" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton value="Cadastrar" style-class="btn-align-bottom"
-							look="success" actionListener="#{MenuControl.gerenciarSessao}"
-							ajax="false" action="modeloDocumento?faces-redirect=true"
+					<b:column offset-md="8" medium-screen="4">
+						<b:commandButton value="Cadastrar" style-class="btn-command" style="margin-bottom:10px;"
+							look="primary" actionListener="#{MenuControl.gerenciarSessao}"
+							ajax="false" action="modeloDocumento?faces-redirect=true" 
 							icon="plus" immediate="true" />
-					</b:column>
-					<b:column small-screen="2">
-						<b:commandButton value="Limpar" style-class="btn-align-bottom"
-							actionListener="#{MenuControl.gerenciarSessao}" look="danger"
-							action="modeloDocumentoList?faces-redirect=true" icon="trash"
-							immediate="true" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column>
 						<b:dataTable id="idDocumento" var="modeloDocumento"
 							responsive="true" caption="Documentos cadastrados"
-							style="margin-top 5px;"
+							style="margin-top 5px; width: 100%;"
 							value="#{ModeloDocumentoListControl.modelosDeDocumentos }">
 
 							<b:dataTableColumn label="Descrição" order="asc"

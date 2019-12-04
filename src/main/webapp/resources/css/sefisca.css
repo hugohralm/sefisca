@@ -78,7 +78,6 @@ h5, .h5 {
 .btn-align-bottom {
 	margin-top: 25px;
 	width: 100%;
-	
 }
 
 /*Color icons*/
@@ -109,6 +108,15 @@ h5, .h5 {
 	font-size: 14px !important;
 }
 
+/*File uploader*/
+.ui-fileupload-content {
+	border-color: #337ab7;
+}
+
+.ui-fileupload-buttonbar {
+	background-color: #337ab7;
+}
+/**/
 .ui-menu .ui-menu-parent .ui-menu-child {
 	width: 300px !important; /* exagerated !! */
 }

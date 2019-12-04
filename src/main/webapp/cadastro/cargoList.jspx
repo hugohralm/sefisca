@@ -19,12 +19,12 @@
 							look="primary" styleClass="btn-command"
 							style="margin-bottom:5px;"
 							action="/cadastro/cargo?faces-redirect=true"
-							icon="ui-icon-plusthick" />
+							icon="plus" />
 					</b:column>
 				</b:row>
 				<b:row>
 					<b:column>
-						<b:dataTable id="tblcargos" widgetVar="tblCargos"
+						<b:dataTable id="tblcargos" widgetVar="tblCargos" responsive="true"
 							value="#{CargoListControl.cargos}" var="cargo">
 							<b:dataTableColumn value="#{cargo.id}" label="#" order="asc"
 								contentStyle="text-align: center; vertical-align: middle;" />
