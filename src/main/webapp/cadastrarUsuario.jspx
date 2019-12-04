@@ -100,7 +100,8 @@
 									update="estado municipio">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{CadastrarUsuarioControl.ufs }" />
-									<f:ajax listener="#{CadastrarUsuarioControl.listarMunicipiosPorUfs}"
+									<f:ajax
+										listener="#{CadastrarUsuarioControl.listarMunicipiosPorUfs}"
 										process="@this" update="municRequerente" />
 								</b:selectOneMenu>
 							</b:column>
@@ -142,9 +143,9 @@
 						</b:row>
 						<b:row>
 							<b:column small-screen="6" offset-md="8" medium-screen="2">
-								<b:commandButton iconAwesome="home" styleClass="btn-command" disabled="true"
-								action="login?faces-redirect=true" process="@this"
-									value="Página inicial" iconAlign="right" />
+								<b:commandButton iconAwesome="home" styleClass="btn-command"
+									onclick="document.location.href='sair.jsp'" immediate="true"
+									value="Página inicial" iconAlign="right" type="button" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="2">
 								<b:commandButton id="btnConcluir" icon="ok"

@@ -104,10 +104,15 @@ public class ProcessoControl implements Serializable {
     }
 
     public String confirmar() {
-        this.processo = processoDao.alterar(this.processo);
-        primeiraEtapa(this.processo);
-        UtilFaces.addMensagemFaces("Processo salvo com sucesso");
-        return menuProcessoControl.iniciar(this.processo);
+        try {
+            this.processo = processoDao.alterar(this.processo);
+            primeiraEtapa(this.processo);
+            UtilFaces.addMensagemFaces("Processo salvo com sucesso");
+            return menuProcessoControl.iniciar(this.processo);
+        } catch (Exception e) {
+            UtilFaces.addMensagemFaces(e);
+        }
+        return null;
     }
 
     private void primeiraEtapa(Processo processo) {

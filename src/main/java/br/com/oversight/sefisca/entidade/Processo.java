@@ -71,14 +71,14 @@ public class Processo extends Entidade implements Serializable {
 
     @Getter
     @Setter
-    @NotBlank(message = "Informe o numero do processo", groups = AmbientValidator.class)
+    @NotBlank(message = "Informe o número do processo", groups = AmbientValidator.class)
     @Length(min = 0, max = 100, message = "O limite do campo numero é de 100 caracteres.", groups = AmbientValidator.class)
     private String numero;
 
     @Getter
     @Setter
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @NotNull(message = "Informe a instituicao", groups = AmbientValidator.class)
+    @NotNull(message = "Informe a instituição", groups = AmbientValidator.class)
     private Instituicao instituicao;
 
     @Getter
@@ -110,7 +110,6 @@ public class Processo extends Entidade implements Serializable {
         this.usuario = usuario;
         this.statusProcesso = EnumStatusProcesso.ATIVO;
         this.etapaProcesso = EnumEtapaProcesso.ABERTURA;
-        this.instituicao = new Instituicao(usuario);
         this.numero = UUID.randomUUID().toString();
     }
 

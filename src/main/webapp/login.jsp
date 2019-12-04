@@ -42,6 +42,12 @@
 				<img src="resources/imagens/logo_sefisca.png" alt="#Sefisca"
 					width="150" />
 			</div>
+			<%
+			    if (request.getParameter("msg") != null) {
+			        out.print(
+			                "<div class=\"form-group\" style='text-align: center;'><span style='color: red; font-weight: bold;'>Usuário ou senha incorretos.</span></div>");
+			    }
+			%>
 			<div class="form-group">
 				<input type="text" class="form-control" id="usuario"
 					placeholder="Informe seu CPF" name="j_username" required="required">
@@ -56,7 +62,8 @@
 			</div>
 			<div class="clearfix">
 				<a href="#" class="pull-left" onclick="cadastrar()">Cadastrar</a> <a
-					href="#" class="pull-right" onclick="recuperarSenha()">Esqueceu a senha?</a>
+					href="#" class="pull-right" onclick="recuperarSenha()">Esqueceu
+					a senha?</a>
 			</div>
 		</form>
 	</div>

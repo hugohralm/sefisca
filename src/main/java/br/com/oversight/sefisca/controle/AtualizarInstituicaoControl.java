@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.persistencia.InstituicaoDao;
-import br.com.oversight.sefisca.services.AmazonService;
 import br.com.oversight.sefisca.util.UtilMessages;
 import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
@@ -27,9 +26,9 @@ public class AtualizarInstituicaoControl implements Serializable {
 
     @Autowired
     private InstituicaoDao instituicaoDao;
-    
+
     @Autowired
-    private AmazonService amazonService;
+    private UsuarioLogadoControl usuarioLogadoControl;
 
     @Getter
     @Setter
@@ -44,7 +43,8 @@ public class AtualizarInstituicaoControl implements Serializable {
         try {
             UploadedFile file = evt.getFile();
             if (!UtilSefisca.isNullOrEmpty(file)) {
-                int instuticoesAtualizadas = instituicaoDao.atualizarInstituicaoCsv(file, this.ultimaDataAtualizacao);
+                int instuticoesAtualizadas = instituicaoDao.atualizarInstituicaoCsv(file, this.ultimaDataAtualizacao,
+                        usuarioLogadoControl.getUsuario());
                 getDataAtualizacao();
                 if (instuticoesAtualizadas == 0) {
                     UtilMessages.addMessage("Nenhuma instituição a ser atualizada.");
@@ -54,7 +54,6 @@ public class AtualizarInstituicaoControl implements Serializable {
             } else {
                 UtilMessages.addMessage("Erro ao atualizar as instituições.");
             }
-            amazonService.uploadArquivo(file);
         } catch (Exception e) {
             UtilFaces.addMensagemFaces(e);
         }

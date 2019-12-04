@@ -54,7 +54,7 @@
 				<b:row>
 					<b:column small-screen="4" offset-md="8" medium-screen="2">
 						<b:commandButton actionListener="#{MenuControl.gerenciarSessao}"
-							value="Fechar" ajax="false" action="inicio?faces-redirect=true"
+							value="Fechar" ajax="false" action="/inicio?faces-redirect=true"
 							look="danger" styleClass="btn-command" style="margin-bottom:5px;"
 							icon="remove" immediate="true" />
 					</b:column>
