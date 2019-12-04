@@ -11,5 +11,4 @@ import br.com.oversight.sefisca.entidade.Processo;
 public interface EtapaProcessoDao extends Persistencia<EtapaProcesso> {
 
     List<EtapaProcesso> listarPorProcesso(Processo processo) throws PersistenceException;
-
 }
