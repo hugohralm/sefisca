@@ -36,20 +36,11 @@
 						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
 						action="/gerencia/assuntoList?faces-redirect=true"
 						icon="folder-open" />
-					<b:navCommandLink value="Atualizar instituições"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN']}"
-						action="/admin/atualizarInstituicao?faces-redirect=true"
-						icon="cloud-upload" />
 					<b:navCommandLink value="Modelo Documento"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
 						action="/gerencia/modeloDocumentoList?faces-redirect=true"
 						icon="folder-open" />
-					<b:navCommandLink value="Parâmetros do sistema"
-						actionListener="#{MenuControl.gerenciarSessao}"
-						rendered="#{securityScope.userInRole['ADMIN']}"
-						action="/admin/parametroList?faces-redirect=true" icon="wrench" />
 					<b:navCommandLink value="Termos de uso"
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
@@ -59,6 +50,18 @@
 						actionListener="#{MenuControl.gerenciarSessao}"
 						rendered="#{securityScope.userInRole['ADMIN,COORDENADOR']}"
 						action="/gerencia/usuarioList?faces-redirect=true" icon="user" />
+				</b:dropMenu>
+				<b:dropMenu value="Administrativo" icon="lock"
+					rendered="#{securityScope.userInRole['ADMIN']}">
+					<b:navCommandLink value="Atualizar instituições"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/admin/atualizarInstituicao?faces-redirect=true"
+						icon="cloud-upload" />
+					<b:navCommandLink value="Parâmetros do sistema"
+						actionListener="#{MenuControl.gerenciarSessao}"
+						rendered="#{securityScope.userInRole['ADMIN']}"
+						action="/admin/parametroList?faces-redirect=true" icon="wrench" />
 				</b:dropMenu>
 				<b:dropMenu value="Ajuda" icon="question-sign">
 					<b:navLink value="Modelagem de Negócio" icon="file"
