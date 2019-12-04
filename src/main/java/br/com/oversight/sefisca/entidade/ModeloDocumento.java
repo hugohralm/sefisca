@@ -29,8 +29,8 @@ public class ModeloDocumento extends Entidade implements Serializable, Comparabl
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "modelodocumento_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "modelodocumento_seq", sequenceName = "modelodocumento_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "modelo_documento_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "modelo_documento_seq", sequenceName = "modelo_documento_seq", allocationSize = 1, initialValue = 1)
     private Integer id;
 
     @Getter

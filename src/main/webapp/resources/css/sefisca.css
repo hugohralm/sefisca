@@ -124,3 +124,25 @@ h5, .h5 {
 .panel-group {
 	margin-bottom: 5px !important;
 }
+
+label.bf-required:after {
+	display: none !important;
+}
+
+.inicio .centro {
+	display: block;
+	margin: 0px auto;
+}
+
+.inicio {
+	
+}
+
+.inicio table tr td {
+	vertical-align: top;
+}
+
+.inicio h4 {
+	margin-top: 3px;
+	text-align: center;
+}

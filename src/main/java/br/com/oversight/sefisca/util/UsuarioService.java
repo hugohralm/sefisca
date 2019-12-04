@@ -41,7 +41,7 @@ public class UsuarioService implements UserDetailsService {
 
         sql = new StringBuilder();
         sql.append("INSERT INTO HistoricoLogin (id, data, usuario_id) ");
-        sql.append("values ((SELECT nextval('historicologin_seq')), ?, ");
+        sql.append("values ((SELECT nextval('historico_login_seq')), ?, ");
         sql.append("(SELECT u.id ");
         sql.append("FROM Usuario u ");
         sql.append("INNER JOIN Pessoa p ");

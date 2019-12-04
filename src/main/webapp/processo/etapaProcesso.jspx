@@ -8,76 +8,82 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="corpo">
-		<ui:insert name="cabecalho">
-			<style type="text/css">
-.ui-fileupload {
-	margin-bottom: -12px
-}
-
-.ui-fileupload.preenchido {
-	margin-top: -17px
-}
-
-.ui-fileupload.nao-preenchido {
-	margin-top: 3px
-}
-
-.ui-fileupload-buttonbar {
-	background: none;
-	border: none;
-	padding-left: 0px
-}
-
-.ui-fileupload-content {
-	padding: 0px;
-	border: none !important
-}
-
-.link-fileupload {
-	color: blue !important;
-	position: relative;
-	left: 160px;
-	text-transform: uppercase;
-	font-size: 0.9em
-}
-
-.link-fileupload.preenchido {
-	top: 10px;
-}
-
-.link-fileupload.nao-preenchido {
-	top: 26px;
-}
-</style>
-		</ui:insert>
-
 		<b:panel id="panelGeral">
-			<ui:include src="menuProcesso.jspx" />
-			<b:panel id="fsDadosEtapaProcesso" title="Informações da Etapa:"
-				collapsible="false" look="primary">
-				<b:container>
+			<b:panel id="fsDadosEtapaProcesso"
+				title="Processo N° #{EtapaProcessoControl.etapaProcesso.processo.id} / Etapa - #{EtapaProcessoControl.etapaProcesso.etapaProcesso.descricao.toUpperCase()}"
+				collapsible="true" look="primary">
+				<b:container fluid="true">
 					<b:row>
-						<b:column medium-screen="4">
-							<b:inputText label="ID"
-								value="#{EtapaProcessoControl.etapaProcesso.id}" readonly="true" />
+						<b:column medium-screen="2">
+							<b:inputText label="Status:"
+								value="#{EtapaProcessoControl.etapaProcesso.statusEtapa.descricao}"
+								readonly="true" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText label="Data início:"
+								value="#{EtapaProcessoControl.etapaProcesso.dataInicio}"
+								readonly="true">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</b:inputText>
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText label="Data fim:"
+								value="#{EtapaProcessoControl.etapaProcesso.dataFim}"
+								readonly="true">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</b:inputText>
+						</b:column>
+						<b:column medium-screen="6">
+							<b:selectOneMenu label="Profissional responsável:"
+								render-label="true" select2="true" style="width:100%;"
+								value="#{EtapaProcessoControl.etapaProcesso.profissionalResponsavel}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{EtapaProcessoControl.usuarios}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column small-screen="4" offset-md="8" medium-screen="2">
+							<b:commandButton value="Voltar" icon="arrow-left"
+								styleClass="btn-command" look="danger"
+								style="margin-bottom:5px;"
+								action="#{MenuProcessoControl.iniciar(EtapaProcessoControl.processo)}">
+							</b:commandButton>
+						</b:column>
+						<b:column small-screen="4" medium-screen="2">
+							<b:button id="btnConfirmarInicioProcesso"
+								title="Clique aqui para alterar a etapa" value="Alterar etapa"
+								styleClass="btn-command" style="margin-bottom:5px;"
+								look="success" onclick="$('.confirmacaoDialog').modal('show')"
+								icon="check" />
 						</b:column>
 					</b:row>
 				</b:container>
 			</b:panel>
-			<b:container fluid="true">
-				<b:row>
-					<b:column small-screen="6" medium-screen="2"
-						rendered="#{MenuProcessoControl.voltarEnable }">
-						<b:commandButton value="Voltar" icon="arrow-left"
-							styleClass="btn-command" action="#{MenuProcessoControl.voltar}" />
-					</b:column>
-					<b:column small-screen="6" medium-screen="2">
-						<b:commandButton value="Avançar" icon="arrow-right"
-							iconAlign="right" look="primary" styleClass="btn-command"
-							action="#{MenuProcessoControl.avancar}" />
-					</b:column>
-				</b:row>
-			</b:container>
 		</b:panel>
+		<b:modal title="Confirmação"
+			id="confirmacaoDialog" styleClass="confirmacaoDialog"
+			message="Confirma a alteração na etapa?"
+			widgetVar="confirmacaoInicioProcesso">
+			<b:row>
+				<b:column>
+					<p:outputLabel value="Deseja alterar a etapa selecionada?"
+						style="text-align:center; width: 100%;" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column tiny-screen="6">
+					<b:button dismiss="modal" value="Cancelar" look="danger"
+						onclick="return false;" styleClass="btn-command" />
+
+				</b:column>
+				<b:column tiny-screen="6">
+					<b:commandButton dismiss="modal" value="Prosseguir" look="success"
+						styleClass="btn-command"
+						oncomplete="$('confirmacaoDialog').modal('hide')"
+						action="#{EtapaProcessoControl.confirmar}" />
+				</b:column>
+			</b:row>
+		</b:modal>
 	</ui:define>
 </ui:composition>

@@ -28,7 +28,7 @@ public class MenuProcessoControl implements Serializable {
     @Autowired
     private EtapaProcessoDao etapaProcessoDao;
 
-    private BasicJEControl controlador;
+    private BasicProcessoControl controlador;
 
     @Getter
     @Setter
@@ -45,7 +45,7 @@ public class MenuProcessoControl implements Serializable {
         try {
             this.processo = processoDao.consultarPorId(processo.getId());
             this.etapas = etapaProcessoDao.listarPorProcesso(processo);
-            this.controlador = (BasicJEControl) UtilFaces.getManagedBean("EtapaProcessoControl");
+            this.controlador = (BasicProcessoControl) UtilFaces.getManagedBean("AndamentoProcessoControl");
             this.controlador.setMenuProcessoControl(this);
             this.controlador.setProcessoDao(processoDao);
             this.controlador.setEtapaProcessoDao(etapaProcessoDao);

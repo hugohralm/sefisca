@@ -38,8 +38,8 @@ public class ItemEtapa extends Entidade implements Serializable {
 
     @Id
     @Getter
-    @GeneratedValue(generator = "itemEtapa_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "itemEtapa_seq", sequenceName = "itemEtapa_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "item_etapa_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "item_etapa_seq", sequenceName = "item_etapa_seq", allocationSize = 1, initialValue = 1)
     private Integer id;
     
     @Getter
@@ -62,7 +62,7 @@ public class ItemEtapa extends Entidade implements Serializable {
 
     @Getter
     @Setter
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "modelodocumento_id")
     private ModeloDocumento modeloDocumento;
 
@@ -73,12 +73,12 @@ public class ItemEtapa extends Entidade implements Serializable {
     @Getter
     @Setter
     @ManyToMany
-    private Set<Pessoa> profissionaisEnvolvidos;
+    private Set<Usuario> profissionaisEnvolvidos;
     
     @Getter
     @Setter
-    @ManyToMany
-    private Set<Assunto> assuntos;
+    @ManyToOne(optional = false)
+    private Assunto assunto;
 
     @Getter
     @Setter

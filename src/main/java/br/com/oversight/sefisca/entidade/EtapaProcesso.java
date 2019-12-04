@@ -57,7 +57,7 @@ public class EtapaProcesso extends Entidade implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    private Pessoa profissionalResponsavel;
+    private Usuario profissionalResponsavel;
 
     @Getter
     @Setter
