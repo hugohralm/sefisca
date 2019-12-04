@@ -12,7 +12,8 @@ public interface Constantes {
         String NOME = "Sefisca";
         String CONTEXTO = "sefisca";
         String URL_BASE = UtilFaces.getRequest().getScheme() + "://" + UtilFaces.getRequest().getHeader("Host");
-        String URL_SISTEMA = URL_BASE + "/" + CONTEXTO;
+//        String URL_SISTEMA = URL_BASE + "/" + CONTEXTO;
+        String URL_SISTEMA = "http://sefisca.oversight.com.br";
         String URL_INICIO = "inicio.ovs";
     }
 }

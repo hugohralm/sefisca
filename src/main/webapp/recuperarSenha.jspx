@@ -29,11 +29,11 @@
 					</b:column>
 				</b:row>
 				<b:row>
-					<b:column small-screen="6" offset-md="6" medium-screen="3"  offset-lg="8"
-						large-screen="2">
+					<b:column small-screen="6" offset-md="6" medium-screen="3"
+						offset-lg="8" large-screen="2">
 						<b:commandButton value="Pagina inicial" styleClass="btn-command"
 							onclick="document.location.href='sair.jsp'" immediate="true"
-							icon="home" />
+							icon="home" type="button" />
 					</b:column>
 					<b:column small-screen="6" medium-screen="3" large-screen="2">
 						<b:commandButton value="Recuperar senha" styleClass="btn-command"
