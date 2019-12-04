@@ -34,7 +34,7 @@
 					</b:column>
 					<b:column medium-screen="3">
 						<b:inputText value="#{ProcessoControl.instituicao}"
-							readonly="true" label="Instituicao">
+							readonly="true" label="Instituição">
 							<f:facet name="append">
 								<b:button look="primary"
 									onclick="$('.selecionarInstituicaoModal').modal('show')"

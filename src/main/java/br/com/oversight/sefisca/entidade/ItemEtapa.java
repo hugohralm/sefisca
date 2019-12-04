@@ -56,6 +56,7 @@ public class ItemEtapa extends Entidade implements Serializable {
 
     @Getter
     @Setter
+    @ManyToOne(optional = false)
     @NotNull(message = "Informe a etapa do processo.", groups = AmbientValidator.class)
     private EtapaProcesso etapaProcesso;
 
@@ -72,7 +73,7 @@ public class ItemEtapa extends Entidade implements Serializable {
     @Getter
     @Setter
     @ManyToMany
-    private Set<Profissional> profissionaisEnvolvidos;
+    private Set<Pessoa> profissionaisEnvolvidos;
     
     @Getter
     @Setter
