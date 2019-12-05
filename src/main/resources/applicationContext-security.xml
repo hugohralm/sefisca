@@ -23,8 +23,8 @@
 	<http auto-config="true" access-denied-page="/acessoNegado.ovs" access-decision-manager-ref="accessDecisionManager">
 
 		<intercept-url pattern="/admin/*" access="ADMIN" />
-		
 		<intercept-url pattern="/gerencia/*" access="ADMIN,COORDENADOR" />
+		<intercept-url pattern="/processo/*" access="ADMIN,COORDENADOR,FISCAL" />
 		
 		<intercept-url pattern="/**.ovs" access="USUARIO" />
 		<intercept-url pattern="/**.jspx" access="USUARIO" />

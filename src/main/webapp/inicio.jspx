@@ -19,7 +19,7 @@
 }
 </style>
 		</ui:insert>
-		<p:panel styleClass="inicio">
+		<p:panel styleClass="inicio" rendered="#{securityScope.userInRole['ADMIN,COORDENADOR,FISCAL']}">
 			<div class="row" style="text-align: center">
 				<h4>ACESSO RÁPIDO</h4>
 			</div>
