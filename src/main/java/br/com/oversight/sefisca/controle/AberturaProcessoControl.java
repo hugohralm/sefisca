@@ -101,7 +101,7 @@ public class AberturaProcessoControl implements Serializable {
                 UtilFaces.addMensagemFaces(this.tipoCodigo + " não encontrado.", FacesMessage.SEVERITY_WARN);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            UtilFaces.addMensagemFaces(e);
         }
     }
 
