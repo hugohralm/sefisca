@@ -41,14 +41,14 @@ public class ProcessoDaoJpa extends PersistenciaJpa<Processo> implements Process
             StringBuilder sql = new StringBuilder();
             sql.append("select distinct p from Processo p ");
             if(!usuario.isPodeConsultar()) {
-                sql.append("where p.fiscalResponsavel =:fiscalResponsavel ");
+                sql.append("where p.profissionalResponsavel =:profissionalResponsavel ");
                 sql.append("or p.usuario =:usuario ");
             }
             sql.append("ORDER BY p.dataCriacao");
             
             TypedQuery<Processo> query = em.createQuery(sql.toString(), Processo.class);
             if(!usuario.isPodeConsultar()) {
-                query.setParameter("fiscalResponsavel", usuario.getPessoa());
+                query.setParameter("profissionalResponsavel", usuario);
                 query.setParameter("usuario", usuario);
             }
             return query.getResultList();
