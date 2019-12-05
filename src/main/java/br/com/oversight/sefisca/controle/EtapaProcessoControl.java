@@ -67,16 +67,21 @@ public class EtapaProcessoControl implements Serializable {
     public String confirmar() {
         try {
             if(!UtilSefisca.isNullOrEmpty(this.etapaProcesso.getProfissionalResponsavel())) {
+                EnumStatusEtapa statusEtapa = this.etapaProcesso.getStatusEtapa();
                 this.etapaProcesso.setStatusEtapa(EnumStatusEtapa.ADMITIDA);
                 this.etapaProcesso.setDataFim(new Date());
                 this.etapaProcesso = etapaProcessoDao.alterar(this.etapaProcesso);
                 this.processo.setEtapaProcesso(EnumEtapaProcesso.FISCALIZACAO);
                 this.processo.setProfissionalResponsavel(this.etapaProcesso.getProfissionalResponsavel());
                 this.processo = processoDao.alterar(this.processo);
+                if(statusEtapa.equals(EnumStatusEtapa.ATIVA)) {
+                    etapaFiscalizacao(this.processo);
+                }
+                UtilFaces.addMensagemFaces(this.etapaProcesso.getEtapaProcesso().getDescricao() + " alterada com sucesso");
+                return menuProcessoControl.iniciar(this.processo);
+            }else {
+                UtilFaces.addMensagemFaces("Informe o profissional responsável.");
             }
-            etapaFiscalizacao(this.processo);
-            UtilFaces.addMensagemFaces(this.etapaProcesso.getEtapaProcesso().getDescricao() + " alterada com sucesso");
-            return menuProcessoControl.iniciar(this.processo);
         } catch (Exception e) {
             UtilFaces.addMensagemFaces(e);
         }
