@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.controle.dto.InstituicaoDTO;
-import br.com.oversight.sefisca.controle.dto.ViaCEPDTO;
 import br.com.oversight.sefisca.entidade.EnumEtapaProcesso;
 import br.com.oversight.sefisca.entidade.EnumStatusEtapa;
 import br.com.oversight.sefisca.entidade.EnumTipoCodigoInstituicao;
@@ -26,7 +25,6 @@ import br.com.oversight.sefisca.entidade.Usuario;
 import br.com.oversight.sefisca.persistencia.EtapaProcessoDao;
 import br.com.oversight.sefisca.persistencia.InstituicaoDao;
 import br.com.oversight.sefisca.persistencia.ProcessoDao;
-import br.com.oversight.sefisca.services.CepService;
 import br.com.oversight.sefisca.util.UtilSefisca;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,9 +75,6 @@ public class AberturaProcessoControl implements Serializable {
     @Getter
     private Instituicao instituicao;
 
-    @Autowired
-    private CepService cepService;
-
     @PostConstruct
     public void init() {
         novoProcesso();
@@ -95,7 +90,6 @@ public class AberturaProcessoControl implements Serializable {
             this.instituicao = instituicaoDao.instituicaoPorCnesCpnj(this.cnesCnpj, this.tipoCodigo);
             if (!UtilSefisca.isNullOrEmpty(this.instituicao)) {
                 this.instituicao.setUsuario(usuarioLogadoControl.getUsuario());
-                this.instituicao = atualizarMunicipio(this.instituicao);
                 this.processo.setInstituicao(this.instituicao);
             } else {
                 UtilFaces.addMensagemFaces(this.tipoCodigo + " não encontrado.", FacesMessage.SEVERITY_WARN);
@@ -148,20 +142,5 @@ public class AberturaProcessoControl implements Serializable {
 
     public List<Instituicao> getInstituicoes() {
         return instituicaoDao.listar();
-    }
-
-    public Instituicao atualizarMunicipio(Instituicao instituicao) {
-        try {
-            ViaCEPDTO viaCEPDTO = cepService.consultarCep(instituicao.getEndereco().getCep());
-
-            if (viaCEPDTO != null) {
-                instituicao.getEndereco().setMunicipio(viaCEPDTO.getMunicipio());
-                return instituicaoDao.alterar(instituicao);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            UtilFaces.addMensagemFaces(e);
-        }
-        return instituicao;
     }
 }

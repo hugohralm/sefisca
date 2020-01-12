@@ -3,8 +3,10 @@ package br.com.oversight.sefisca.entidade;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -26,10 +29,16 @@ public class EnderecoInstituicao extends Entidade implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Getter
     @GeneratedValue(generator = "endereco_instituicao_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "endereco_instituicao_seq", sequenceName = "endereco_instituicao_seq", allocationSize = 1, initialValue = 1)
-    @Getter
     private Long id;
+    
+    @Getter
+    @Setter
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @NotNull(message = "Informe a instituição.", groups = AmbientValidator.class)
+    private Instituicao instituicao;
 
     @Getter
     @Setter

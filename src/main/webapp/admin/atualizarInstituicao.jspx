@@ -27,12 +27,6 @@
 							update=":formCorpo:panelInstituicao" />
 					</b:column>
 				</b:row>
-				<b:row>
-					<b:column>
-						<p:outputLabel style="width:100%; margin-top: 10px"
-							value="#{AtualizarInstituicaoControl.mensagemUltimaDataAtualizacao }" />
-					</b:column>
-				</b:row>
 			</b:container>
 		</b:panel>
 	</ui:define>

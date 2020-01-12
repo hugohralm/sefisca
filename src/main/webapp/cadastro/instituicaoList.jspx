@@ -39,12 +39,6 @@
 							<b:dataTableColumn value="#{instituicao.tipoUnidade}"
 								label="Tipo" />
 
-							<b:dataTableColumn label="Data atualização" data-type="date">
-								<h:outputText value="#{instituicao.dataAtualizacao}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</b:dataTableColumn>
-
 							<b:dataTableColumn label="" searchable="false" orderable="false">
 								<b:commandButton
 									action="/cadastro/instituicao?faces-redirect=true" ajax="false"

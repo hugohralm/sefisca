@@ -10,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import br.com.ambientinformatica.ambientjsf.util.UtilFaces;
 import br.com.oversight.sefisca.entidade.Instituicao;
-import br.com.oversight.sefisca.entidade.TermoResponsabilidadeTemplate;
 import br.com.oversight.sefisca.persistencia.InstituicaoDao;
-import br.com.oversight.sefisca.persistencia.TermoResponsabilidadeTemplateDao;
 import br.com.oversight.sefisca.util.UtilMessages;
 import lombok.Getter;
 

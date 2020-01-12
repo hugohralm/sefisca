@@ -42,7 +42,7 @@
 							</b:column>
 							<b:column smallScreen="6" medium-screen="3">
 								<b:dateTimePicker label="Data de atualização"
-									value="#{InstituicaoControl.instituicao.dataAtualizacao}"
+									value="#{InstituicaoControl.dadosInstituicao.dataAtualizacao}"
 									readonly="true" />
 							</b:column>
 						</b:row>
@@ -60,13 +60,13 @@
 							<b:column smallScreen="6">
 								<b:inputText label="Cpf do diretor" render-label="true"
 									mask="999.999.999-99"
-									value="#{InstituicaoControl.instituicao.cpfDiretor}" />
+									value="#{InstituicaoControl.dadosInstituicao.cpfDiretor}" />
 							</b:column>
 							<b:column smallScreen="6">
 								<b:inputText label="Registro de conselho do diretor"
 									tooltip="Registro do conselho de classe do diretor"
 									render-label="true" mask="{regex:'[0-9]*'}"
-									value="#{InstituicaoControl.instituicao.conselhoClasseDiretor}" />
+									value="#{InstituicaoControl.dadosInstituicao.conselhoClasseDiretor}" />
 							</b:column>
 						</b:row>
 						<b:row>
@@ -81,7 +81,7 @@
 							<b:column small-screen="6" medium-screen="4">
 								<b:selectOneMenu label="Turno de atendimento"
 									render-label="true" select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.turnoAtendimento}">
+									value="#{InstituicaoControl.dadosInstituicao.turnoAtendimento}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.turnosAtendimento}" />
 								</b:selectOneMenu>
@@ -89,7 +89,7 @@
 							<b:column small-screen="6" medium-screen="4">
 								<b:selectOneMenu label="Natureza juridica" render-label="true"
 									select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.naturezaJuridica}">
+									value="#{InstituicaoControl.dadosInstituicao.naturezaJuridica}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.naturezasJuridica}" />
 								</b:selectOneMenu>
@@ -97,7 +97,7 @@
 							<b:column small-screen="6" medium-screen="4">
 								<b:selectOneMenu label="Tipo instituição" render-label="true"
 									select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.tipoInstituicao}">
+									value="#{InstituicaoControl.dadosInstituicao.tipoInstituicao}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.tiposInstituicao}" />
 								</b:selectOneMenu>
@@ -105,7 +105,7 @@
 							<b:column small-screen="6" medium-screen="4">
 								<b:selectOneMenu label="Atividade principal" render-label="true"
 									select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.atividadePrincipal}">
+									value="#{InstituicaoControl.dadosInstituicao.atividadePrincipal}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.atividades}" />
 								</b:selectOneMenu>
@@ -113,7 +113,7 @@
 							<b:column small-screen="6" medium-screen="4">
 								<b:selectOneMenu label="Motivo desativação" render-label="true"
 									select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.motivoDesativacao}">
+									value="#{InstituicaoControl.dadosInstituicao.motivoDesativacao}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.motivosDesativacao}" />
 								</b:selectOneMenu>
@@ -122,11 +122,11 @@
 						<b:row>
 							<b:column small-screen="6">
 								<b:selectBooleanCheckbox caption="Instituição sempre aberta"
-									value="#{ InstituicaoControl.instituicao.instituicaoSempreAberta }" />
+									value="#{ InstituicaoControl.dadosInstituicao.instituicaoSempreAberta }" />
 							</b:column>
 							<b:column small-screen="6">
 								<b:selectBooleanCheckbox caption="Contrato formalizado SUS"
-									value="#{ InstituicaoControl.instituicao.contratoFormalizadoSus }" />
+									value="#{ InstituicaoControl.dadosInstituicao.contratoFormalizadoSus }" />
 							</b:column>
 						</b:row>
 					</b:container>
@@ -137,7 +137,7 @@
 						<b:row>
 							<b:column medium-screen="4">
 								<b:inputText
-									value="#{InstituicaoControl.instituicao.endereco.cep}"
+									value="#{InstituicaoControl.enderecoInstituicao.cep}"
 									label="CEP" mask="99.999-999">
 									<f:facet name="append">
 										<b:commandButton look="primary" icon="search"
@@ -150,15 +150,15 @@
 						<b:row>
 							<b:column medium-screen="6">
 								<b:inputText id="endereco" label="Endereço" render-label="true"
-									value="#{InstituicaoControl.instituicao.endereco.logradouro}" />
+									value="#{InstituicaoControl.enderecoInstituicao.logradouro}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Bairro" render-label="true"
-									value="#{InstituicaoControl.instituicao.endereco.bairro}" />
+									value="#{InstituicaoControl.enderecoInstituicao.bairro}" />
 							</b:column>
 							<b:column small-screen="6" medium-screen="3">
 								<b:inputText label="Numero" render-label="true"
-									value="#{InstituicaoControl.instituicao.endereco.numero}" />
+									value="#{InstituicaoControl.enderecoInstituicao.numero}" />
 							</b:column>
 						</b:row>
 						<b:row>
@@ -176,7 +176,7 @@
 							<b:column small-screen="6">
 								<b:selectOneMenu id="municipio" label="Município"
 									render-label="true" select2="true" style="width:100%;"
-									value="#{InstituicaoControl.instituicao.endereco.municipio}">
+									value="#{InstituicaoControl.enderecoInstituicao.municipio}">
 									<f:selectItem itemLabel="Selecione" />
 									<f:selectItems value="#{InstituicaoControl.municipios}" />
 								</b:selectOneMenu>
@@ -186,20 +186,20 @@
 							<b:column small-screen="6">
 								<b:inputText label="Telefone" render-label="true"
 									mask="(99) 9999-9999"
-									value="#{InstituicaoControl.instituicao.telefone}" />
+									value="#{InstituicaoControl.dadosInstituicao.telefone}" />
 							</b:column>
 							<b:column small-screen="6">
 								<b:inputText label="Fax" render-label="true"
 									mask="(99) 9999-9999"
-									value="#{InstituicaoControl.instituicao.fax}" />
+									value="#{InstituicaoControl.dadosInstituicao.fax}" />
 							</b:column>
 							<b:column small-screen="6">
 								<b:inputText label="Email" render-label="true" mask="email"
-									value="#{InstituicaoControl.instituicao.email}" />
+									value="#{InstituicaoControl.dadosInstituicao.email}" />
 							</b:column>
 							<b:column small-screen="6">
 								<b:inputText label="Site" render-label="true"
-									value="#{InstituicaoControl.instituicao.url}" />
+									value="#{InstituicaoControl.dadosInstituicao.url}" />
 							</b:column>
 						</b:row>
 					</b:container>

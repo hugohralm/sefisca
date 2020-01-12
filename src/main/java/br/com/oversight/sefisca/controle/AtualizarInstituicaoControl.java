@@ -36,7 +36,7 @@ public class AtualizarInstituicaoControl implements Serializable {
 
     @PostConstruct
     public void init() {
-        getDataAtualizacao();
+//        getDataAtualizacao();
     }
 
     public void anexarArquivo(FileUploadEvent evt) {
@@ -45,7 +45,7 @@ public class AtualizarInstituicaoControl implements Serializable {
             if (!UtilSefisca.isNullOrEmpty(file)) {
                 int instuticoesAtualizadas = instituicaoDao.atualizarInstituicaoCsv(file, this.ultimaDataAtualizacao,
                         usuarioLogadoControl.getUsuario());
-                getDataAtualizacao();
+//                getDataAtualizacao();
                 if (instuticoesAtualizadas == 0) {
                     UtilMessages.addMessage("Nenhuma instituição a ser atualizada.");
                 } else {
@@ -59,16 +59,16 @@ public class AtualizarInstituicaoControl implements Serializable {
         }
     }
 
-    public String getMensagemUltimaDataAtualizacao() {
-        if (UtilSefisca.isNullOrEmpty(this.ultimaDataAtualizacao)) {
-            return "Tabela instituição não contém registros atualizados.";
-        }
-
-        return "Última data de atualização das instituições: "
-                + UtilSefisca.getDataStringFormatadaMask(this.ultimaDataAtualizacao, "dd/MM/yyyy");
-    }
-
-    private void getDataAtualizacao() {
-        this.ultimaDataAtualizacao = instituicaoDao.ultimaDataAtualizacao();
-    }
+//    public String getMensagemUltimaDataAtualizacao() {
+//        if (UtilSefisca.isNullOrEmpty(this.ultimaDataAtualizacao)) {
+//            return "Tabela instituição não contém registros atualizados.";
+//        }
+//
+//        return "Última data de atualização das instituições: "
+//                + UtilSefisca.getDataStringFormatadaMask(this.ultimaDataAtualizacao, "dd/MM/yyyy");
+//    }
+//
+//    private void getDataAtualizacao() {
+//        this.ultimaDataAtualizacao = instituicaoDao.ultimaDataAtualizacao();
+//    }
 }
